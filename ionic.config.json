@@ -1,0 +1,7 @@
+{
+  "name": "csme-mobile-x",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
