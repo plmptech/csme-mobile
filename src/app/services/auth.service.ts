@@ -19,9 +19,8 @@ export class AuthService {
   ) { }
 
    login(email: string, password: string) {
-    return this.http.post(this.env.API_URL + 'user/login',
-        {email, password}
-    ).pipe(
+    return this.http.get(this.env.API_URL + 'user/login?email='
+     + email + '&password=' + password).pipe(
         tap(token => {
           // this.storage.setItem('token', token)
           //     .then(
