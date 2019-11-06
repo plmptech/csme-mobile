@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ModalController, NavController} from '@ionic/angular';
 import {LoginPage} from '../pages/auth/login/login.page';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,9 @@ import {LoginPage} from '../pages/auth/login/login.page';
 
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {}
+  constructor(public navCtrl: NavController,
+              public modalCtrl: ModalController,
+              private authService: AuthService, ) {}
 
   async openProfilePage() {
     this.navCtrl.navigateRoot('/login');

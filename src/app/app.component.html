@@ -6,6 +6,20 @@
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
+      <ion-header>
+        <ion-toolbar >
+          <ion-item margin-bottom>
+            <ion-avatar slot="start" class="user-avatar">
+              <img src="assets/img/ic_nonprofile.png">
+            </ion-avatar>
+            <ion-label>
+              <ion-button size="medium" color="light" (click)="loginOrRegister()">Login / Register</ion-button>
+
+            </ion-label>
+          </ion-item>
+
+        </ion-toolbar>
+      </ion-header>
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">

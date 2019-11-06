@@ -10,6 +10,7 @@ import {RegisterPage} from '../register/register.page';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
 
@@ -26,6 +27,8 @@ export class LoginPage implements OnInit {
 
   dismissLogin() {
     this.modalCtrl.dismiss();
+    this.navCtrl.navigateRoot('/home');
+
   }
 
   // On Register button tap, dismiss login modal and open register modal
@@ -47,7 +50,8 @@ export class LoginPage implements OnInit {
         },
         () => {
           this.dismissLogin();
-          this.navCtrl.navigateRoot('/dashboard');
+          this.authService.isLoggedIn = true;
+          this.navCtrl.navigateRoot('/home');
         }
     );
   }

@@ -28,7 +28,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private navCtrl: NavController,
   ) {
     this.initializeApp();
   }
@@ -38,5 +39,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  loginOrRegister() {
+    this.navCtrl.navigateRoot('/login');
   }
 }

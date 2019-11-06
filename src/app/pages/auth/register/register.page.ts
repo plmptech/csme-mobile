@@ -33,17 +33,19 @@ export class RegisterPage implements OnInit {
     return await loginModal.present();
   }
   register(form: NgForm) {
-    this.authService.register(form.value.name, form.value.email, form.value.password).subscribe(
+    this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe(
         data => {
           this.authService.login(form.value.email, form.value.password).subscribe(
-              data => {
+              data1 => {
+                  this.alertService.presentToast('Logged In');
               },
               error => {
-                console.log(error);
+                  console.log(error);
               },
               () => {
-                this.dismissRegister();
-                this.navCtrl.navigateRoot('/dashboard');
+                  this.dismissRegister();
+                  this.authService.isLoggedIn = true;
+                  this.navCtrl.navigateRoot('/home');
               }
           );
           this.alertService.presentToast(data);
