@@ -6,18 +6,17 @@
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
+
       <ion-header>
-        <ion-toolbar >
-          <ion-item margin-bottom>
-            <ion-avatar slot="start" class="user-avatar">
-              <img src="assets/img/ic_nonprofile.png">
-            </ion-avatar>
+        <ion-toolbar class="menu-item-pos">
+          <ion-avatar slot="start" >
+            <img src="assets/img/ic_nonprofile.png">
+          </ion-avatar>
+          <ion-row>
             <ion-label>
-              <ion-button size="medium" color="light" (click)="loginOrRegister()">Login / Register</ion-button>
-
+              <ion-button size="medium" class="button-full" color="light" (click)="loginOrRegister()">Login / Register</ion-button>
             </ion-label>
-          </ion-item>
-
+          </ion-row>
         </ion-toolbar>
       </ion-header>
       <ion-content>

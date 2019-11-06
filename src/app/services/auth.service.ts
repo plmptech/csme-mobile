@@ -3,8 +3,6 @@ import {EnvService} from './env.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {User} from '../models/user';
-import {ToastController} from '@ionic/angular';
-import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +16,23 @@ export class AuthService {
       private env: EnvService,
   ) { }
 
+    // login(accountInfo: any) {
+    //     const seq = this.http.get(this.env.API_URL + 'user/login', accountInfo);
+    //     seq.subscribe((res: any) => {
+    //         if (res.status === 'success') {
+    //             this.isLoggedIn = true;
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     });
+    //     return false;
+    //
+    // }
    login(email: string, password: string) {
+
     return this.http.get(this.env.API_URL + 'user/login?email='
-      + email + '&password=' + password); // .pipe(
+     + email + '&password=' + password); // .pipe(
     //     tap(token => {
     //       // this.storage.setItem('token', token)
     //       //     .then(
@@ -34,7 +46,7 @@ export class AuthService {
     //       return token;
     //     }),
     // );
-  }
+   }
 
   register(email: string,  name: string, password: string, confirmPw: string) {
     return this.http.post(this.env.API_URL + 'user/register?email=' + email + '&name=' + name +

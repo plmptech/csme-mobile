@@ -14,6 +14,7 @@ import {RegisterPageModule} from './pages/auth/register/register.module';
 import {AuthGuard} from './guard/auth.guard';
 import {AuthService} from './services/auth.service';
 import {HomePageModule} from './home/home.module';
+import {LandingPageModule} from './pages/landing/landing.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,6 +27,7 @@ import {HomePageModule} from './home/home.module';
         LoginPageModule,
         RegisterPageModule,
         HomePageModule,
+        LandingPageModule
     ],
     providers: [
         StatusBar,

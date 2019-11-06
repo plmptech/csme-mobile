@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, NavController} from '@ionic/angular';
-import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
+import {ModalController, NavController, ToastController} from '@ionic/angular';
+import {FormGroup, NgForm, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from '../../../services/alert.service';
 import {RegisterPage} from '../register/register.page';
@@ -12,14 +12,15 @@ import {RegisterPage} from '../register/register.page';
 })
 
 export class LoginPage implements OnInit {
-  public onLoginForm: FormGroup;
 
   constructor(
       private modalCtrl: ModalController,
       private authService: AuthService,
       private alertService: AlertService,
       private navCtrl: NavController,
-  ) { }
+      public toastCtrl: ToastController,
+  ) {
+  }
 
   ngOnInit() {
 
@@ -40,19 +41,25 @@ export class LoginPage implements OnInit {
     return await registerModal.present();
   }
 
+
   login(form: NgForm) {
-    this.authService.login(form.value.email, form.value.password).subscribe(
-        data => {
-          this.alertService.presentToast('Logged In');
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          this.dismissLogin();
-          this.authService.isLoggedIn = true;
-          this.navCtrl.navigateRoot('/home');
-        }
-    );
+    if (form.value.email !== '' && form.value.password !== '') {
+      this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
+        if (res.status !== 'error') {
+              this.alertService.presentToast('Logged In');
+              this.dismissLogin();
+              this.authService.isLoggedIn = true;
+              this.navCtrl.navigateRoot('/home');
+            } else {
+              this.alertService.presentToast('Invalid login. Please try again.');
+            }
+          },
+          error => {
+            console.log(error);
+          }
+      );
+    } else {
+      this.alertService.presentToast('Please fill in the required fields');
+    }
   }
 }

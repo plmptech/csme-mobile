@@ -32,30 +32,65 @@ export class RegisterPage implements OnInit {
     });
     return await loginModal.present();
   }
+  validateFields(form: NgForm) {
+    if (form.value.name !== '' && form.value.email !== '' && form.value.password !== '' && form.value.confirmPw !== '') {
+      if (form.value.password === form.value.confirmPw) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   register(form: NgForm) {
-    this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe(
-        data => {
-          this.authService.login(form.value.email, form.value.password).subscribe(
-              data1 => {
+    const validatedField = this.validateFields(form);
+    if (validatedField) {
+      this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe((res: any) => {
+        console.log(res);
+        if (res.status !== 'error') {
+          this.authService.login(form.value.email, form.value.password).subscribe((d: any) => {
+                if (d.status !== 'error') {
                   this.alertService.presentToast('Logged In');
-              },
-              error => {
-                  console.log(error);
-              },
-              () => {
                   this.dismissRegister();
                   this.authService.isLoggedIn = true;
                   this.navCtrl.navigateRoot('/home');
+                }
+              },
+              error => {
+                console.log(error);
               }
           );
-          this.alertService.presentToast(data);
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-
+        } else {
+          this.alertService.presentToast(res.message);
         }
-    );
+      });
+    }
   }
 }
+
+    // this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe(
+    //     data => {
+    //       this.authService.login(form.value.email, form.value.password).subscribe(
+    //           data1 => {
+    //               this.alertService.presentToast('Logged In');
+    //           },
+    //           error => {
+    //               console.log(error);
+    //           },
+    //           () => {
+    //               this.dismissRegister();
+    //               this.authService.isLoggedIn = true;
+    //               this.navCtrl.navigateRoot('/home');
+    //           }
+    //       );
+    //       this.alertService.presentToast(data);
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     },
+    //     () => {
+    //
+    //     }
+    // );
+
+
