@@ -48,10 +48,9 @@ export class AuthService {
     // );
    }
 
-  register(email: string,  name: string, password: string, confirmPw: string) {
-    return this.http.post(this.env.API_URL + 'user/register?email=' + email + '&name=' + name +
-        '&password=' + password + '&confirm=' + confirmPw,
-        {email, name, password, confirmPw},
+  register(email: string,  name: string, password: string, confirm: string) {
+    return this.http.post(this.env.API_URL + 'user/register',
+        {email, name, password, confirm},
     );
   }
 
