@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MenuController, ModalController, NavController} from '@ionic/angular';
 import {AuthService} from '../services/auth.service';
 import {LoginPage} from '../pages/auth/login/login.page';
+import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -13,6 +15,7 @@ import {LoginPage} from '../pages/auth/login/login.page';
 
 export class HomePage implements OnInit {
   cardItems: any[];
+  private smth: Observable<any>;
 
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,
@@ -46,7 +49,24 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
       this.menuCtrl.enable(true);
+      console.log('stored token: ' + localStorage.getItem('token'));
+      if (localStorage.getItem('token') !== null) {
+        this.authService.getUserInfo();
+
+          // this.authService.getUserInfo().subscribe(res => {
+          //     console.log(res);
+          // });
+      }
   }
+
+  async searchFilter() {
+    const modal = await this.modalCtrl.create({
+      component: SearchFilterPage
+    });
+    return await modal.present();
+  }
+
+
 
   // async openProfilePage() {
   //   this.navCtrl.navigateRoot('/login');

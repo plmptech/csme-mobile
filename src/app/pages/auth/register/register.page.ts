@@ -48,18 +48,38 @@ export class RegisterPage implements OnInit {
       this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe((res: any) => {
         console.log(res);
         if (res.status !== 'error') {
-          this.authService.login(form.value.email, form.value.password).subscribe((d: any) => {
-                if (d.status !== 'error') {
+          this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
+                if (res.status !== 'error') {
+                  console.log(res);
+                  localStorage.setItem('token', res.token);
+                  console.log('stored token: ' + localStorage.getItem('token'));
                   this.alertService.presentToast('Logged In');
                   this.dismissRegister();
                   this.authService.isLoggedIn = true;
+                  // this.authService.token = res.token;
                   this.navCtrl.navigateRoot('/home');
+                } else {
+                  this.alertService.presentToast('Invalid login. Please try again.');
                 }
               },
               error => {
                 console.log(error);
               }
           );
+
+          // this.authService.login(form.value.email, form.value.password).subscribe((d: any) => {
+          //       if (d.status !== 'error') {
+          //         this.alertService.presentToast('Logged In');
+          //         this.dismissRegister();
+          //         this.authService.isLoggedIn = true;
+          //         this.authService.token = res.token;
+          //         this.navCtrl.navigateRoot('/home');
+          //       }
+          //     },
+          //     error => {
+          //       console.log(error);
+          //     }
+          // );
         } else {
           this.alertService.presentToast(res.message);
         }
@@ -67,30 +87,3 @@ export class RegisterPage implements OnInit {
     }
   }
 }
-
-    // this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe(
-    //     data => {
-    //       this.authService.login(form.value.email, form.value.password).subscribe(
-    //           data1 => {
-    //               this.alertService.presentToast('Logged In');
-    //           },
-    //           error => {
-    //               console.log(error);
-    //           },
-    //           () => {
-    //               this.dismissRegister();
-    //               this.authService.isLoggedIn = true;
-    //               this.navCtrl.navigateRoot('/home');
-    //           }
-    //       );
-    //       this.alertService.presentToast(data);
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     },
-    //     () => {
-    //
-    //     }
-    // );
-
-

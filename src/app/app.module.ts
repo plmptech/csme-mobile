@@ -15,6 +15,8 @@ import {AuthGuard} from './guard/auth.guard';
 import {AuthService} from './services/auth.service';
 import {HomePageModule} from './home/home.module';
 import {LandingPageModule} from './pages/landing/landing.module';
+import {SearchFilterPageModule} from './pages/modal/search-filter/search-filter.module';
+import {NativeStorage} from '@ionic-native/native-storage';
 
 @NgModule({
     declarations: [AppComponent],
@@ -27,13 +29,15 @@ import {LandingPageModule} from './pages/landing/landing.module';
         LoginPageModule,
         RegisterPageModule,
         HomePageModule,
-        LandingPageModule
+        LandingPageModule,
+        SearchFilterPageModule
     ],
     providers: [
         StatusBar,
         SplashScreen,
         AuthGuard,
         AuthService,
+        // NativeStorage,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
 
     ],

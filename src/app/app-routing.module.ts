@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'landing', loadChildren: './pages/landing/landing.module#LandingPageModule' },
   { path: 'login', loadChildren: './pages/auth/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './pages/auth/register/register.module#RegisterPageModule'},
-  { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' }
+  { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'search-filter', loadChildren: './pages/modal/search-filter/search-filter.module#SearchFilterPageModule' }
 ];
 
 @NgModule({

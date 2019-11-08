@@ -44,8 +44,17 @@ export class AppComponent {
   }
 
   loginOrRegister() {
-    this.menuCtrl.enable(false);
-    this.navCtrl.navigateRoot('landing');
+    if (localStorage.getItem('token') !== null) {
+      this.navCtrl.navigateRoot('landing');
+      console.log('clearing token');
+      localStorage.clear();
+      console.log('stored token: ' + localStorage.getItem('token'));
+
+    } else {
+      this.menuCtrl.enable(false);
+      this.navCtrl.navigateRoot('landing');
+    }
+
   }
 
 }
