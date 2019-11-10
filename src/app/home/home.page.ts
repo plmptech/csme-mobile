@@ -68,14 +68,19 @@ export class HomePage implements OnInit {
 
 
 
-  // async openProfilePage() {
-  //   this.navCtrl.navigateRoot('/login');
-  //
-  //   const modal = await this.modalCtrl.create({
-  //     component: LoginPage
-  //   });
-  //   return await modal.present();
-  // }
+  async openProfilePage() {
+    if (localStorage.getItem('token') !== null) {
+      this.navCtrl.navigateForward('profile-menu');
+
+    } else {
+      this.navCtrl.navigateForward('/login');
+    }
+
+    // const modal = await this.modalCtrl.create({
+    //   component: LoginPage
+    // });
+    // return await modal.present();
+  }
 
 
 }

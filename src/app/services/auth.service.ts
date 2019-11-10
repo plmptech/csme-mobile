@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
 import {User} from '../models/user';
 import {Observable, Subscription} from 'rxjs';
-import {NativeStorage} from '@ionic-native/native-storage';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthService {
     constructor(
         private http: HttpClient,
         private env: EnvService,
-        // private storage: NativeStorage
+        private storage: Storage,
     ) {
     }
 
@@ -69,7 +69,7 @@ export class AuthService {
         );
     }
 
-    logout() {
+    /*logout() {
         const headers = new HttpHeaders({
             Authorization: this.token.token_type + ' ' + this.token.access_token
         });
@@ -82,9 +82,9 @@ export class AuthService {
                     return data;
                 })
             );
-    }
+    }*/
 
-    user() {
+    /*user() {
         const headers = new HttpHeaders({
             Authorization: this.token.token_type + ' ' + this.token.access_token
         });
@@ -94,10 +94,15 @@ export class AuthService {
                     return user;
                 })
             );
-    }
+    }*/
 
     getUserInfo() {
-        this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'));
+        this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
+            .pipe(
+                tap(user => {
+                    // this.storage.setItem('currentUser', user);
+                })
+            );
     }
 
 }

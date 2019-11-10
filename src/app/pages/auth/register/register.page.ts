@@ -20,13 +20,13 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  dismissRegister() {
-    this.modalCtrl.dismiss();
+  goHome() {
+    this.navCtrl.navigateForward('/home');
   }
 
   // On Login button tap, dismiss Register modal and open login Modal
   async loginModal() {
-    this.dismissRegister();
+    // this.dismissRegister();
     const loginModal = await this.modalCtrl.create({
       component: LoginPage,
     });
@@ -46,17 +46,12 @@ export class RegisterPage implements OnInit {
     const validatedField = this.validateFields(form);
     if (validatedField) {
       this.authService.register(form.value.email, form.value.name, form.value.password, form.value.confirmPw).subscribe((res: any) => {
-        console.log(res);
         if (res.status !== 'error') {
           this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                 if (res.status !== 'error') {
-                  console.log(res);
                   localStorage.setItem('token', res.token);
-                  console.log('stored token: ' + localStorage.getItem('token'));
                   this.alertService.presentToast('Logged In');
-                  this.dismissRegister();
                   this.authService.isLoggedIn = true;
-                  // this.authService.token = res.token;
                   this.navCtrl.navigateRoot('/home');
                 } else {
                   this.alertService.presentToast('Invalid login. Please try again.');

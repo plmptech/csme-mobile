@@ -17,6 +17,7 @@ import {HomePageModule} from './home/home.module';
 import {LandingPageModule} from './pages/landing/landing.module';
 import {SearchFilterPageModule} from './pages/modal/search-filter/search-filter.module';
 import {NativeStorage} from '@ionic-native/native-storage';
+import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,6 +27,7 @@ import {NativeStorage} from '@ionic-native/native-storage';
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
+        IonicStorageModule.forRoot(),
         LoginPageModule,
         RegisterPageModule,
         HomePageModule,
@@ -37,7 +39,6 @@ import {NativeStorage} from '@ionic-native/native-storage';
         SplashScreen,
         AuthGuard,
         AuthService,
-        // NativeStorage,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
 
     ],

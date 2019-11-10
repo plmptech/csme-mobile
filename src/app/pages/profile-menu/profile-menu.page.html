@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="goHome()">
+        <ion-icon name="md-arrow-back" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+  <div  class="success-background">
+    <ion-grid>
+      <ion-row align-items-center text-center class="row-header">
+        <ion-col>
+          <ion-avatar (click)="takePicture()">
+          <img src="assets/img/ic_nonprofile.png">
+          </ion-avatar>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center text-center>
+        <ion-col>
+          <p text-center>user</p>
+          <p text-center>type</p>
+        </ion-col>
+      </ion-row>
+      <ion-row align-items-center text-center>
+        <ion-col>
+          <ion-menu-toggle class="mto" auto-hide="false">
+            <a class="text08" tappable (click)="goToEditProgile()">
+              <ion-text color="medium">
+                <ion-icon name="contact"></ion-icon>
+                <strong>edit profile</strong>
+              </ion-text>
+            </a> <ion-text color="secondary"> | </ion-text>
+            <a class="text08" tappable (click)="logout()">
+              <ion-text color="medium">
+                <ion-icon name="log-out"></ion-icon>
+                <strong>logout</strong>
+              </ion-text>
+            </a>
+          </ion-menu-toggle>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+    <ion-item [routerLink]="[p.url]">
+      <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
+      <ion-label>
+        {{p.title}}
+      </ion-label>
+    </ion-item>
+  </ion-menu-toggle>
+
+</ion-content>
