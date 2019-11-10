@@ -5,12 +5,12 @@
         <ion-icon name="md-arrow-back" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title class="ion-text-uppercase">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content text-center>
-  <div  class="success-background">
+  <div *ngIf="user"  class="success-background">
     <ion-grid>
       <ion-row align-items-center text-center class="row-header">
         <ion-col>
@@ -21,8 +21,8 @@
       </ion-row>
       <ion-row align-items-center text-center>
         <ion-col>
-          <p text-center>user</p>
-          <p text-center>type</p>
+          <div class="ion-text-uppercase">{{ user.name }}</div>
+          <div class="ion-text-uppercase">{{ user.type }}</div>
         </ion-col>
       </ion-row>
       <ion-row align-items-center text-center>
@@ -30,13 +30,11 @@
           <ion-menu-toggle class="mto" auto-hide="false">
             <a class="text08" tappable (click)="goToEditProgile()">
               <ion-text color="medium">
-                <ion-icon name="contact"></ion-icon>
                 <strong>edit profile</strong>
               </ion-text>
             </a> <ion-text color="secondary"> | </ion-text>
             <a class="text08" tappable (click)="logout()">
               <ion-text color="medium">
-                <ion-icon name="log-out"></ion-icon>
                 <strong>logout</strong>
               </ion-text>
             </a>
@@ -45,7 +43,7 @@
       </ion-row>
     </ion-grid>
   </div>
-
+<br>
   <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
     <ion-item [routerLink]="[p.url]">
       <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>

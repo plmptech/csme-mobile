@@ -52,11 +52,8 @@ export class HomePage implements OnInit {
       console.log('stored token: ' + localStorage.getItem('token'));
       if (localStorage.getItem('token') !== null) {
         this.authService.getUserInfo();
-
-          // this.authService.getUserInfo().subscribe(res => {
-          //     console.log(res);
-          // });
       }
+      this.authService.getAllListings();
   }
 
   async searchFilter() {

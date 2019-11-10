@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EnvService} from './env.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
 import {User} from '../models/user';
 import {Observable, Subscription} from 'rxjs';
 import { Storage } from '@ionic/storage';
@@ -11,6 +10,10 @@ import { Storage } from '@ionic/storage';
 })
 export class AuthService {
     isLoggedIn = false;
+    listOfListing: any;
+    currentPageNo: number;
+    lastPageNo: number;
+    totalNoPages: number;
     // token: any;
     private userInfo: Subscription;
     private setDetails: Observable<any>;
@@ -98,11 +101,23 @@ export class AuthService {
 
     getUserInfo() {
         this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
-            .pipe(
-                tap(user => {
-                    // this.storage.setItem('currentUser', user);
-                })
-            );
+            .subscribe(user => {
+                this.storage.set('currentUser', user);
+            });
+
+    }
+
+    getAllListings() {
+        this.http.get<Listing>(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+            '&cashflow&direction=&sort=&page=&perPage=').subscribe(result => {
+                console.log(result);
+
+        });
+    }
+
+    clearStoredInfo() {
+        this.storage.clear();
+        localStorage.clear();
     }
 
 }

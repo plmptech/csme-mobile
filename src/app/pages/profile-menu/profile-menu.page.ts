@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NavController} from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -7,14 +9,16 @@ import {NavController} from '@ionic/angular';
   styleUrls: ['./profile-menu.page.scss'],
 })
 export class ProfileMenuPage implements OnInit {
-
+  user: any;
   public appPages: Array<Pages>;
   constructor(
-      private navCtrl: NavController
+      private navCtrl: NavController,
+      private storage: Storage,
+      private authService: AuthService,
   ) {
     this.appPages = [
       {
-        title: 'My Listings',
+        title: 'MY LISTING',
         url: '/mylistings',
         direct: 'root',
         icon: 'list'
@@ -25,8 +29,17 @@ export class ProfileMenuPage implements OnInit {
 
 
   ngOnInit() {
-  }
+    this.storage.get('currentUser').then(value => {
+      console.log(value);
+      if (value.status !== 'ok') {
+        this.navCtrl.navigateRoot('/home');
+        this.authService.clearStoredInfo();
+      } else {
+          this.user = value.user;
+      }
 
+    });
+  }
 
 
   goHome() {

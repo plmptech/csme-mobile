@@ -3,9 +3,7 @@ import {ModalController, NavController, ToastController} from '@ionic/angular';
 import {FormGroup, NgForm, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from '../../../services/alert.service';
-import {RegisterPage} from '../register/register.page';
 import {Observable} from 'rxjs';
-import {NativeStorage} from '@ionic-native/native-storage';
 
 
 
@@ -34,7 +32,6 @@ export class LoginPage implements OnInit {
 
     goHome() {
         this.navCtrl.navigateBack('/home');
-
     }
 
     // On Register button tap, dismiss login modal and open register modal
