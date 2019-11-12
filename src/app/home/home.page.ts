@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {AuthService} from '../services/auth.service';
-import {LoginPage} from '../pages/auth/login/login.page';
-import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { MenuController, ModalController, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { LoginPage } from '../pages/auth/login/login.page';
+import { SearchFilterPage } from '../pages/modal/search-filter/search-filter.page';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -14,74 +14,63 @@ import {Observable} from 'rxjs';
 
 
 export class HomePage implements OnInit {
-  resultList: any;
-  businessListing;
+	resultList: any;
+	businessListing;
 
-  constructor(public navCtrl: NavController,
-              public modalCtrl: ModalController,
-              private authService: AuthService,
-              private menuCtrl: MenuController) {
+	constructor(public navCtrl: NavController,
+		public modalCtrl: ModalController,
+		private authService: AuthService,
+		private menuCtrl: MenuController) {
 
-    // this.businessListings = [
-    //
-    //   {
-    //     user_avtar: 'assets/img/marty-avatar.png',
-    //     user_name: 'Marty McFly',
-    //     date: 'November 5, 1955',
-    //     image: 'assets/img/advance-card-bttf.png',
-    //     content: 'Wait a minute. Wait a minute, Doc. Uhhh.... out of a DeLorean?! Whoa. This is heavy.',
-    //   },
-    //   {
-    //     user_avtar: 'assets/img/sarah-avatar.png.jpeg',
-    //     user_name: 'Sarah Connor',
-    //     date: 'May 12, 1984',
-    //     image: 'assets/img/advance-card-tmntr.jpg',
-    //     content: 'I face the unknown future, wialue of human life, maybe we can too.'
-    //   },
-    //   {
-    //     user_avtar: 'assets/img/ian-avatar.png',
-    //     user_name: 'Dr. Ian Malcolm',
-    //     date: 'June 28, 1990',
-    //     image: 'assets/img/advance-card-jp.jpg',
-    //     content: 'Your scientists were y didn\'t stop to think if they should.'
-    //   }
-    // ];
-  }
+		// this.businessListings = [
+		//
+		//   {
+		//     user_avtar: 'assets/img/marty-avatar.png',
+		//     user_name: 'Marty McFly',
+		//     date: 'November 5, 1955',
+		//     image: 'assets/img/advance-card-bttf.png',
+		//     content: 'Wait a minute. Wait a minute, Doc. Uhhh.... out of a DeLorean?! Whoa. This is heavy.',
+		//   },
+		//   {
+		//     user_avtar: 'assets/img/sarah-avatar.png.jpeg',
+		//     user_name: 'Sarah Connor',
+		//     date: 'May 12, 1984',
+		//     image: 'assets/img/advance-card-tmntr.jpg',
+		//     content: 'I face the unknown future, wialue of human life, maybe we can too.'
+		//   },
+		//   {
+		//     user_avtar: 'assets/img/ian-avatar.png',
+		//     user_name: 'Dr. Ian Malcolm',
+		//     date: 'June 28, 1990',
+		//     image: 'assets/img/advance-card-jp.jpg',
+		//     content: 'Your scientists were y didn\'t stop to think if they should.'
+		//   }
+		// ];
+	}
 
+	async ngOnInit() {
+		this.menuCtrl.enable(true);
+		console.log('stored token: ' + localStorage.getItem('token'))
+		if (localStorage.getItem('token') !== null) {
+		this.authService.getUserInfo()
+		}
 
+		const b = this.authService.getAllListings()
+		console.log(b)
+		this.resultList = b
+	}
 
-  ngOnInit() {
-      this.menuCtrl.enable(true);
-      console.log('stored token: ' + localStorage.getItem('token'));
-      if (localStorage.getItem('token') !== null) {
-        this.authService.getUserInfo();
-      }
+	async searchFilter() {
+		const modal = await this.modalCtrl.create({
+			component: SearchFilterPage
+		})
+		return await modal.present()
+	}
 
-      this.authService.getAllListings();
-  }
-
-  async searchFilter() {
-    const modal = await this.modalCtrl.create({
-      component: SearchFilterPage
-    });
-    return await modal.present();
-  }
-
-
-
-  async openProfilePage() {
-    if (localStorage.getItem('token') !== null) {
-      this.navCtrl.navigateForward('profile-menu');
-
-    } else {
-      this.navCtrl.navigateForward('/login');
-    }
-
-    // const modal = await this.modalCtrl.create({
-    //   component: LoginPage
-    // });
-    // return await modal.present();
-  }
-
-
+	async openProfilePage() {
+		if (localStorage.getItem('token'))
+			this.navCtrl.navigateForward('profile-menu')
+		else
+			this.navCtrl.navigateForward('/login')
+	}
 }
