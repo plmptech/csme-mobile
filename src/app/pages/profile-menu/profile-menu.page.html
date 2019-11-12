@@ -23,16 +23,19 @@
         <ion-col>
           <div class="ion-text-uppercase">{{ user.name }}</div>
           <div class="ion-text-uppercase">{{ user.type }}</div>
+          <div class="ion-text-uppercase">{{ user.email }}</div>
+          <div class="ion-text-uppercase">{{ user.phone }}</div>
         </ion-col>
       </ion-row>
       <ion-row align-items-center text-center>
         <ion-col>
           <ion-menu-toggle class="mto" auto-hide="false">
-            <a class="text08" tappable (click)="goToEditProfile()">
+            <!--<a class="text08" tappable (click)="goToEditProfile()">
               <ion-text color="medium">
                 <strong>edit profile</strong>
               </ion-text>
-            </a> <ion-text color="secondary"> | </ion-text>
+            </a> -->
+            <ion-text color="secondary"> | </ion-text>
             <a class="text08" tappable (click)="logout()">
               <ion-text color="medium">
                 <strong>logout</strong>

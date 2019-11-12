@@ -65,6 +65,10 @@ export class AuthService {
             );
     }*/
 
+    getUserListing() {
+        return this.http.get(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
+    }
+
     getUserInfo() {
         this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
             .subscribe(user => {
@@ -73,13 +77,11 @@ export class AuthService {
 
     }
 
-    getAllListings() {
+    async getAllListings() {
         this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
-            '&cashflow&direction=&sort=&page=&perPage=').subscribe(res => {
-                console.log(res);
-            }
-        );
-
+            '&cashflow&direction=&sort=&page=&perPage=').subscribe(user => {
+                return user
+            })
     }
 
     clearStoredInfo() {

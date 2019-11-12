@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import {AuthService} from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -12,9 +12,9 @@ export class ProfileMenuPage implements OnInit {
   user: any;
   public appPages: Array<Pages>;
   constructor(
-      private navCtrl: NavController,
-      private storage: Storage,
-      private authService: AuthService,
+    private navCtrl: NavController,
+    private storage: Storage,
+    private authService: AuthService,
   ) {
     this.appPages = [
       {
@@ -28,17 +28,14 @@ export class ProfileMenuPage implements OnInit {
 
 
 
-  ngOnInit() {
-    this.storage.get('currentUser').then(value => {
-      console.log(value);
-      if (value.status !== 'ok') {
-        this.navCtrl.navigateRoot('/home');
-        this.authService.clearStoredInfo();
-      } else {
-          this.user = value.user;
-      }
-
-    });
+  async ngOnInit() {
+    this.authService.getUserInfo()
+    const res = await this.storage.get('currentUser')
+    if (!res || !res.user) {
+      this.navCtrl.navigateRoot('/home')
+      this.authService.clearStoredInfo()
+    }
+    this.user = res.user
   }
 
   goToEditProfile() {
