@@ -41,6 +41,9 @@ export class ProfileMenuPage implements OnInit {
     });
   }
 
+  goToEditProfile() {
+    this.navCtrl.navigateRoot('profile-edit');
+  }
 
   goHome() {
     this.navCtrl.navigateRoot('/home');

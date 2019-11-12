@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button icon-only (click)="goHome()">
+        <ion-icon name="md-arrow-back" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-uppercase">Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <ion-list>
+
+      <!--user info-->
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" name="name" id="name" placeholder="Your Name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input type="email" name="email" id="email" placeholder="Your Email"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <!--button-->
+    <ion-button > Save</ion-button>
+    <!--<button class="login-btn" ion-button type="submit">{{'Save'}}</button>-->
+  </form>
+
+</ion-content>

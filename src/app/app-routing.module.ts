@@ -23,7 +23,8 @@ const routes: Routes = [
   { path: 'search-filter', loadChildren: './pages/modal/search-filter/search-filter.module#SearchFilterPageModule' },
   { path: 'profile-menu', loadChildren: './pages/profile-menu/profile-menu.module#ProfileMenuPageModule' },
   { path: 'mylistings', loadChildren: './pages/listing/mylistings/mylistings.module#MylistingsPageModule' },
-  { path: 'addlisting', loadChildren: './pages/listing/addlisting/addlisting.module#AddlistingPageModule' }
+  { path: 'addlisting', loadChildren: './pages/listing/addlisting/addlisting.module#AddlistingPageModule' },
+  { path: 'profile-edit', loadChildren: './pages/profile-edit/profile-edit.module#ProfileEditPageModule' }
 ];
 
 @NgModule({
