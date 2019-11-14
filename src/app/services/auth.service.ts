@@ -5,17 +5,13 @@ import {User} from '../models/user';
 import {Observable, Subscription} from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
+import {NavController} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-
-    constructor(
-        private http: HttpClient,
-        private env: EnvService,
-        private storage: Storage) {
-    }
+    private allListings: Promise<any>;
     isLoggedIn = false;
     listOfListing: any[] = [];
     currentPageNo: number;
@@ -24,7 +20,12 @@ export class AuthService {
     // token: any;
     private userInfo: Subscription;
     private setDetails: Observable<any>;
-    data = undefined;
+
+    constructor(
+        private http: HttpClient,
+        private env: EnvService,
+        private storage: Storage) {
+    }
 
     login(email: string, password: string) {
 
@@ -66,7 +67,7 @@ export class AuthService {
     }*/
 
     getUserListing() {
-        return this.http.get(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
+        return this.http.get(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'));
     }
 
     getUserInfo() {
@@ -77,11 +78,27 @@ export class AuthService {
 
     }
 
+    // async getAllListings() {
+    //     return this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+    //         '&cashflow&direction=&sort=&page=&perPage=').pipe(map((res: Response) => {
+    //         this.allListings = res.json();
+    //         console.log(this.allListings);
+    //     }));
+    // }
+
     async getAllListings() {
-        this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
-            '&cashflow&direction=&sort=&page=&perPage=').subscribe(user => {
-                return user
+        return this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+            '&cashflow&direction=&sort=&page=&perPage=')
+            .toPromise()
+            .then((data: any) => {
+                console.log(data);
+                console.log('Success', data.listings);
+                return data.listings;
             })
+            .catch(err => {
+                console.log('Error', err);
+                return err;
+            });
     }
 
     clearStoredInfo() {

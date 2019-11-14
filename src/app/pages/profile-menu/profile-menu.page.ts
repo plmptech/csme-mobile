@@ -29,10 +29,10 @@ export class ProfileMenuPage implements OnInit {
 
 
   async ngOnInit() {
-    this.authService.getUserInfo()
-    const res = await this.storage.get('currentUser')
+    this.authService.getUserInfo();
+    const res = await this.storage.get('currentUser');
     if (!res || !res.user) {
-      this.navCtrl.navigateRoot('/home')
+      this.navCtrl.navigateRoot('/home');
       this.authService.clearStoredInfo()
     }
     this.user = res.user

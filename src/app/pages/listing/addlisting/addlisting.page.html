@@ -1,9 +1,48 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>addlisting</ion-title>
+    <ion-title>New Listing</ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only (click)="goBack()">
+        <ion-icon ios="ios-close" md="md-close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+
 </ion-header>
 
 <ion-content>
+  <form (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label>Todo</ion-label>
+      <ion-input type="text"  name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Listing Name</ion-label>
+      <!--<ion-textarea [(ngModel)]="todo.description" name="type"></ion-textarea>-->
+      <ion-textarea name="name"></ion-textarea>
+    </ion-item>
 
+    <ion-item>
+      <ion-label>Business Type</ion-label>
+      <ion-textarea name="type"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-textarea name="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Price</ion-label>
+      <ion-textarea name="price"></ion-textarea>
+    </ion-item>
+
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-button (click)="submitListing()"  expand="full">Submit</ion-button>
+      </ion-toolbar>
+    </ion-footer>
+  </form>
 </ion-content>

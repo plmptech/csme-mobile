@@ -29,6 +29,39 @@
 
 
 <ion-content>
+ <div class="ion-padding">
+   <ion-refresher slot="fixed"
+                  (ionRefresh)="refreshListings($event)">
+     <ion-refresher-content
+             pullingIcon="arrow-dropdown"
+             pullingText="Pull to refresh"
+             refreshingSpinner="circles"
+             refreshingText="Refreshing...">
+     </ion-refresher-content>
+
+
+   </ion-refresher>
+
+
+   <ion-card *ngFor="let item of (allListing | async)" class="welcome-card">
+       <img src="/assets/shapes.svg" alt="" />
+       <ion-card-header>
+         <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
+         <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
+         <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle>
+       </ion-card-header>
+       <!--<ion-card-content>-->
+         <!--<p>{{item.description}}</p>-->
+       <!--</ion-card-content>-->
+   </ion-card>
+ </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
+    <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <!--<ion-card class="bg-white">-->
     <!--<ion-img [src]="themeCover"></ion-img>-->
@@ -36,19 +69,6 @@
       <!--Modal 1: open modal-->
     <!--</ion-button>-->
   <!--</ion-card>-->
-  <ion-card *ngFor="let item of businessListing">
-
-    <ion-card class="welcome-card">
-      <img src="/assets/shapes.svg" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>{{item.user_name}}</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>{{item.content}}</p>
-      </ion-card-content>
-    </ion-card>
-  </ion-card>
 
 </ion-content>
 

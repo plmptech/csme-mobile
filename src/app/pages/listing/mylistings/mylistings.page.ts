@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { EnvService } from '../../../services/env.service';
@@ -13,6 +14,7 @@ export class MylistingsPage implements OnInit {
   resultList: any;
   businessListing;
 
+
   constructor(
     private navCtrl: NavController,
     private http: HttpClient,
@@ -22,13 +24,17 @@ export class MylistingsPage implements OnInit {
   async ngOnInit() {
     this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token')).subscribe(res => {
       if (res) {
-        console.log(res)
-        this.resultList = res.user.listings
+        console.log(res);
+        this.resultList = res.user.listings;
       }
-    })
+    });
   }
 
   goHome() {
     this.navCtrl.navigateBack('/home');
+  }
+
+  openAddListing() {
+    this.navCtrl.navigateForward('/addlisting');
   }
 }
