@@ -35,7 +35,7 @@ export class HomePage implements OnInit {
 
         this.currentPage = 1;
         this.lastPage = 1;
-        this.perPage = 2;
+        this.perPage = 3;
         this.countNewListing = 0;
         this.businessListing = [
 

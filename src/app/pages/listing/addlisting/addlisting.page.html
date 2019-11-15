@@ -12,11 +12,8 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="logForm()">
-    <ion-item>
-      <ion-label>Todo</ion-label>
-      <ion-input type="text"  name="title"></ion-input>
-    </ion-item>
+  <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
+    <br>
     <ion-item>
       <ion-label>Listing Name</ion-label>
       <!--<ion-textarea [(ngModel)]="todo.description" name="type"></ion-textarea>-->
@@ -25,23 +22,42 @@
 
     <ion-item>
       <ion-label>Business Type</ion-label>
-      <ion-textarea name="type"></ion-textarea>
+      <ion-textarea name="type" ngModel></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-textarea name="category" ngModel></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>City</ion-label>
+      <ion-textarea name="city" ngModel></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label>Description</ion-label>
-      <ion-textarea name="description"></ion-textarea>
+      <ion-textarea name="description" ngModel></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-label>Price</ion-label>
-      <ion-textarea name="price"></ion-textarea>
+      <ion-textarea name="price" ngModel></ion-textarea>
     </ion-item>
 
+    <ion-item>
+      <ion-label>Age</ion-label>
+      <ion-textarea name="age" ngModel></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Cash Flow</ion-label>
+      <ion-textarea name="cashflow" ngModel></ion-textarea>
+    </ion-item>
 
     <ion-footer>
       <ion-toolbar>
-        <ion-button (click)="submitListing()"  expand="full">Submit</ion-button>
+        <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
       </ion-toolbar>
     </ion-footer>
   </form>

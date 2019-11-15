@@ -39,6 +39,15 @@ export class AuthService {
         );
     }
 
+    createListingNow(name: string, type: string, category: string, city: string, description: string,
+                     price: number, age: number, cashflow: number, token: string ) {
+        return this.http.post(this.env.API_URL + 'listing',
+            {name, type, category, city, description, price, age, cashflow, token},
+        );
+    }
+
+
+
     /*logout() {
         const headers = new HttpHeaders({
             Authorization: this.token.token_type + ' ' + this.token.access_token

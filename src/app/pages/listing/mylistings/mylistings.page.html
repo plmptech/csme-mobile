@@ -10,12 +10,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let item of resultList">
+  <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card">
 
     <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
         <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.category}}</ion-card-subtitle>
