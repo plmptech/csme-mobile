@@ -3,8 +3,6 @@ import {NavController} from '@ionic/angular';
 import {AuthService} from '../../../services/auth.service';
 import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
-import {MylistingsPage} from '../mylistings/mylistings.page';
-import {MylistingsPageModule} from '../mylistings/mylistings.module';
 
 @Component({
   selector: 'app-addlisting',
@@ -12,12 +10,15 @@ import {MylistingsPageModule} from '../mylistings/mylistings.module';
   styleUrls: ['./addlisting.page.scss'],
 })
 export class AddlistingPage implements OnInit {
+  private purpose: string;
+  private industry: string;
+  private userTypeResult: boolean;
+  private userType: string;
 
   constructor(
       private navCtrl: NavController,
       private authService: AuthService,
-      private alertService: AlertService,
-      private myListingPage: MylistingsPage) { }
+      private alertService: AlertService,) { }
 
   ngOnInit() {
   }
@@ -32,15 +33,19 @@ export class AddlistingPage implements OnInit {
 
   createListing(form: NgForm) {
     const validatedField = this.validateForm(form);
-    this.authService.createListingNow(form.value.name, form.value.type, form.value.category, form.value.city,
-        form.value.description, form.value.price, form.value.age, form.value.cashflow,
+    this.purpose = 'Business For Sale';
+    this.industry = form.value.category;
+    this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+        form.value.age, form.value.price, form.value.revenue, form.value.cashflow, form.value.description,
         localStorage.getItem('token')).subscribe((res: any) => {
-          if (res.status !== 'error') {
-            console.log(res);
-          } else {
-            this.navCtrl.pop();
-            this.alertService.presentToast(res.message);
-          }
+      if (res.status !== 'error') {
+        console.log(res);
+        this.navCtrl.pop();
+        this.alertService.presentToast(res.message);
+      } else {
+        this.navCtrl.pop();
+        this.alertService.presentToast(res.message);
+      }
     });
   }
 

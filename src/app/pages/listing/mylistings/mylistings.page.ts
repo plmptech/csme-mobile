@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { EnvService } from '../../../services/env.service';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import {AddlistingPage} from '../addlisting/addlisting.page';
 
 @Component({
   selector: 'app-mylistings',
@@ -21,7 +20,6 @@ export class MylistingsPage implements OnInit {
     private navCtrl: NavController,
     private http: HttpClient,
     private env: EnvService,
-    private createListingPage: AddlistingPage,
   ) { }
 
   async ngOnInit() {
@@ -32,10 +30,7 @@ export class MylistingsPage implements OnInit {
     this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
         .toPromise()
         .then((data: any) => {
-          console.log('user listing: ');
-          this.ownListingCount = (data.user.listing).length;
-          console.log((data.user.listings).length);
-          console.log(data);
+          console.log(data.user.listings);
           return data.user.listings;
         })
         .catch(err => {

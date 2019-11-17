@@ -6,6 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../services/env.service';
 import {map} from 'rxjs/operators';
+import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
 
 
 @Component({
@@ -121,9 +122,9 @@ export class HomePage implements OnInit {
     }
 
     getFilteredListings(result) {
-        console.log('current page: ' + this.currentPage);
-        console.log('last page: ' + this.lastPage);
+        this.currentPage = 1;
         const askingPrice = result.lowerPrice + ',' + result.upperPrice;
+
         this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
             '&city=' + result.city + '&askingPrice=' + askingPrice + '&revenue&cashflow&direction=&sort=' +
             '&page=' + this.currentPage + '&perPage=' + this.perPage)
@@ -186,4 +187,16 @@ export class HomePage implements OnInit {
             this.navCtrl.navigateForward('/login');
         }
     }
+
+    async openListingDetail(item: any) {
+        console.log(item);
+        const modal = await this.modalCtrl.create({
+            component: ListingDetailPage,
+            componentProps: { id: item.id, name: item.name, type: item.type,
+                created: item.created, country: item.country, city: item.city,
+                revenue: item.revenue, description: item.description, user: item.user}
+        });
+        return await modal.present();
+    }
+
 }

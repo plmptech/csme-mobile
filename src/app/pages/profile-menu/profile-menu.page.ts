@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProfileMenuPage implements OnInit {
   user: any;
+  res: any;
   public appPages: Array<Pages>;
   constructor(
     private navCtrl: NavController,
@@ -30,12 +31,13 @@ export class ProfileMenuPage implements OnInit {
 
   async ngOnInit() {
     this.authService.getUserInfo();
-    const res = await this.storage.get('currentUser');
-    if (!res || !res.user) {
+    this.res = await this.storage.get('currentUser');
+    if (! this.res  || ! this.res.user) {
       this.navCtrl.navigateRoot('/home');
-      this.authService.clearStoredInfo()
+      this.authService.clearStoredInfo();
     }
-    this.user = res.user
+    this.user =  this.res.user;
+    localStorage.setItem('usertype',  this.res.user.type);
   }
 
   goToEditProfile() {
@@ -49,6 +51,10 @@ export class ProfileMenuPage implements OnInit {
   logout() {
     localStorage.clear();
     this.navCtrl.navigateRoot('home');
+  }
+
+  upgradeUser() {
+
   }
 
 }

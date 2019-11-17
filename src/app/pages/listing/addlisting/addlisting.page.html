@@ -13,52 +13,70 @@
 
 <ion-content>
   <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
+    <ion-item-group padding>
+      <div class="group-header">Basic Information</div>
+      <br>
+      <ion-item no-padding>
+        <ion-label>Purpose of Listing: </ion-label>
+        <ion-input readonly name="type" ngModel>Business For Sale</ion-input>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">Name of Business</ion-label>
+        <ion-textarea name="name"></ion-textarea>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">Industry</ion-label>
+        <ion-textarea name="category" ngModel placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">Country</ion-label>
+        <ion-textarea name="country" ngModel></ion-textarea>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">City</ion-label>
+        <ion-textarea name="city" ngModel></ion-textarea>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">Years In Business</ion-label>
+        <ion-textarea name="age" ngModel></ion-textarea>
+      </ion-item>
+
+      <ion-item no-padding>
+        <ion-label position="floating">Description of Business</ion-label>
+        <ion-textarea name="description" ngModel rows="5" maxlength="500"></ion-textarea>
+      </ion-item>
+
+
+    </ion-item-group>
     <br>
-    <ion-item>
-      <ion-label>Listing Name</ion-label>
-      <!--<ion-textarea [(ngModel)]="todo.description" name="type"></ion-textarea>-->
-      <ion-textarea name="name"></ion-textarea>
-    </ion-item>
+    <ion-item-group padding>
+      <div class="group-header">Sale Information</div>
+      <ion-item no-padding>
+        <ion-label position="floating">Asking Price</ion-label>
+        <ion-textarea name="price" ngModel></ion-textarea>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Business Type</ion-label>
-      <ion-textarea name="type" ngModel></ion-textarea>
-    </ion-item>
+      <ion-item no-padding>
+        <ion-label position="floating">Revenue</ion-label>
+        <ion-textarea name="revenue" ngModel></ion-textarea>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Category</ion-label>
-      <ion-textarea name="category" ngModel></ion-textarea>
-    </ion-item>
+      <ion-item no-padding>
+        <ion-label position="floating">Cash Flow</ion-label>
+        <ion-textarea name="cashflow" ngModel></ion-textarea>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>City</ion-label>
-      <ion-textarea name="city" ngModel></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Description</ion-label>
-      <ion-textarea name="description" ngModel></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Price</ion-label>
-      <ion-textarea name="price" ngModel></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Age</ion-label>
-      <ion-textarea name="age" ngModel></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Cash Flow</ion-label>
-      <ion-textarea name="cashflow" ngModel></ion-textarea>
-    </ion-item>
-
-    <ion-footer>
-      <ion-toolbar>
-        <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
-      </ion-toolbar>
-    </ion-footer>
+    </ion-item-group>
   </form>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+  </ion-toolbar>
+</ion-footer>

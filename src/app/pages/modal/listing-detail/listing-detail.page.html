@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Name of Business</ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only (click)="closeModal()">
+        <ion-icon ios="ios-close" md="md-close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content fullscreen>
+    <ion-grid>
+      <ion-row>
+        <img src="/assets/shapes.svg" alt="" />
+        <ion-card-header>
+          <ion-card-subtitle>Business For Sale</ion-card-subtitle>
+          <ion-card-title>{{name}}</ion-card-title>
+          <ion-card-subtitle hidden>{{id}}</ion-card-subtitle>
+          <!--<ion-card-subtitle>Posted on: {{created}}</ion-card-subtitle>-->
+        </ion-card-header>
+      </ion-row>
+      <ion-row>
+        <ion-card-content>
+          <ion-label>{{country | uppercase}}, {{city | uppercase}}</ion-label><br>
+        </ion-card-content>
+
+      </ion-row>
+      <ion-row>
+        <ion-card-content>
+          <ion-label>{{description}}</ion-label><br>
+        </ion-card-content>
+
+      </ion-row>
+      <ion-row>
+        <ion-card-content>
+          <ion-label>Revenue: USD ${{revenue}}</ion-label><br>
+          <ion-label>Cash Flow: USD ${{cashflow}}</ion-label><br>
+          <ion-label>Asking Price: USD ${{[price]}}</ion-label>
+        </ion-card-content>
+
+
+      </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button type="submit" expand="full" color="primary">Send Enquiry</ion-button>
+  </ion-toolbar>
+</ion-footer>

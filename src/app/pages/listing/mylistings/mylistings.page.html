@@ -11,23 +11,16 @@
 
 <ion-content>
   <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card">
-
-    <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
-        <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.category}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.askingPrice}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.age}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.cashflow}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.country}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.city}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.country }} | {{item.city}}</ion-card-subtitle>
       </ion-card-header>
-      <ion-card-content>
-        <p>{{item.description}}</p>
-      </ion-card-content>
-    </ion-card>
+      <!--<ion-card-content>-->
+        <!--<p>{{item.description}}</p>-->
+      <!--</ion-card-content>-->
   </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

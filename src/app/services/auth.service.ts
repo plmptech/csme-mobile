@@ -39,10 +39,15 @@ export class AuthService {
         );
     }
 
-    createListingNow(name: string, type: string, category: string, city: string, description: string,
-                     price: number, age: number, cashflow: number, token: string ) {
+    /*
+    this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+         form.value.price, form.value.revenue, form.value.cashflow, form.value.age, form.value.description,
+        localStorage.getItem('token'))
+     */
+    createListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
+                     price: number, revenue: number, cashflow: number,  description: string, token: string ) {
         return this.http.post(this.env.API_URL + 'listing',
-            {name, type, category, city, description, price, age, cashflow, token},
+            {name, purpose, industry, country, city, age, price, revenue, cashflow, description, token},
         );
     }
 

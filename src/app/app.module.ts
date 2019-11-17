@@ -18,6 +18,10 @@ import {LandingPageModule} from './pages/landing/landing.module';
 import {SearchFilterPageModule} from './pages/modal/search-filter/search-filter.module';
 import {NativeStorage} from '@ionic-native/native-storage';
 import {IonicStorageModule} from '@ionic/storage';
+import {MylistingsPageModule} from './pages/listing/mylistings/mylistings.module';
+import {AddlistingPage} from './pages/listing/addlisting/addlisting.page';
+import {AddlistingPageModule} from './pages/listing/addlisting/addlisting.module';
+import {ListingDetailPageModule} from './pages/modal/listing-detail/listing-detail.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -32,7 +36,10 @@ import {IonicStorageModule} from '@ionic/storage';
         RegisterPageModule,
         HomePageModule,
         LandingPageModule,
-        SearchFilterPageModule
+        SearchFilterPageModule,
+        MylistingsPageModule,
+        AddlistingPageModule,
+        ListingDetailPageModule,
     ],
     providers: [
         StatusBar,

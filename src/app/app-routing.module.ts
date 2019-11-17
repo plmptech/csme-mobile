@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'profile-menu', loadChildren: './pages/profile-menu/profile-menu.module#ProfileMenuPageModule' },
   { path: 'mylistings', loadChildren: './pages/listing/mylistings/mylistings.module#MylistingsPageModule' },
   { path: 'addlisting', loadChildren: './pages/listing/addlisting/addlisting.module#AddlistingPageModule' },
-  { path: 'profile-edit', loadChildren: './pages/profile-edit/profile-edit.module#ProfileEditPageModule' }
+  { path: 'profile-edit', loadChildren: './pages/profile-edit/profile-edit.module#ProfileEditPageModule' },
+  { path: 'listing-detail', loadChildren: './pages/modal/listing-detail/listing-detail.module#ListingDetailPageModule' }
 ];
 
 @NgModule({

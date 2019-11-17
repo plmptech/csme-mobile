@@ -20,12 +20,11 @@
 
 <ion-content>
  <div class="ion-padding">
-
-   <ion-title text-left>
+   <div class="card-title">
      <ion-text color="dark">
        <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
      </ion-text>
-   </ion-title>
+   </div>
 
    <ion-refresher slot="fixed"
                   (ionRefresh)="refreshListings($event)">
@@ -35,21 +34,17 @@
              refreshingSpinner="circles"
              refreshingText="Refreshing...">
      </ion-refresher-content>
-
-
    </ion-refresher>
-
-
-   <ion-card *ngFor="let item of (allListing | async)" class="welcome-card">
+   <ion-card *ngFor="let item of (allListing | async)" class="welcome-card" (click)="openListingDetail(item)">
        <img src="/assets/shapes.svg" alt="" />
        <ion-card-header>
          <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
-         <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle>
+         <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle> <!--Business For Sale-->
        </ion-card-header>
-       <!--<ion-card-content>-->
-         <!--<p>{{item.description}}</p>-->
-       <!--</ion-card-content>-->
+       <ion-card-content>
+         <p>{{item.description | slice:0:200}}..</p>
+       </ion-card-content>
    </ion-card>
  </div>
 
