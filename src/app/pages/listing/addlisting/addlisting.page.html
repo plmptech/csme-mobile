@@ -17,8 +17,8 @@
       <div class="group-header">Basic Information</div>
       <br>
       <ion-item no-padding>
-        <ion-label>Purpose of Listing: </ion-label>
-        <ion-input readonly name="type" ngModel>Business For Sale</ion-input>
+        <ion-label>Type:   </ion-label>
+        <ion-input readonly name="type" ngModel float-right> &nbsp;Business For Sale</ion-input>
       </ion-item>
 
       <ion-item no-padding>
@@ -72,11 +72,10 @@
       </ion-item>
 
     </ion-item-group>
+    <ion-toolbar>
+      <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+    </ion-toolbar>
+
   </form>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
-  </ion-toolbar>
-</ion-footer>

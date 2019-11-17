@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../services/env.service';
 import {map} from 'rxjs/operators';
 import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
+import {forEach} from '@angular-devkit/schematics';
 
 
 @Component({
@@ -104,7 +105,8 @@ export class HomePage implements OnInit {
     }
 
     getNextPage() {
-        this.nextPageListing = this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+        this.nextPageListing = this.http.get(this.env.API_URL +
+            'listings/search?category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
             .then((data: any) => {
@@ -113,12 +115,15 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
+
                 return data.listings;
             })
             .catch(err => {
                 console.log('Error', err);
-                return err;
+                // return err;
             });
+
+        // this.mergeList();
     }
 
     getFilteredListings(result) {
@@ -159,15 +164,21 @@ export class HomePage implements OnInit {
                 this.currentPage = this.currentPage + 1;
                 console.log('fetching more');
                 this.getNextPage();
-                this.mergeList();
+                // this.mergeList();
             }
             event.target.complete();
         }, 500);
     }
 
     mergeList() {
-        Promise.all([this.allListing, this.nextPageListing]);
+        console.log('before');
+        this.allListing = this.allListing.__zone_symbol__value;
+        console.log(this.allListing);
+        this.nextPageListing = this.nextPageListing.__zone_symbol__value;
+        console.log('after');
+
     }
+
     async searchFilter() {
         const modal = await this.modalCtrl.create({
             component: SearchFilterPage

@@ -19,6 +19,15 @@
 
 
 <ion-content>
+    <ion-refresher slot="fixed"
+                   (ionRefresh)="refreshListings($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="Pull to refresh"
+                refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+
  <div class="ion-padding">
    <div class="card-title">
      <ion-text color="dark">
@@ -26,17 +35,8 @@
      </ion-text>
    </div>
 
-   <ion-refresher slot="fixed"
-                  (ionRefresh)="refreshListings($event)">
-     <ion-refresher-content
-             pullingIcon="arrow-dropdown"
-             pullingText="Pull to refresh"
-             refreshingSpinner="circles"
-             refreshingText="Refreshing...">
-     </ion-refresher-content>
-   </ion-refresher>
    <ion-card *ngFor="let item of (allListing | async)" class="welcome-card" (click)="openListingDetail(item)">
-       <img src="/assets/shapes.svg" alt="" />
+       <img src="/assets/image2.jpg" alt="" />
        <ion-card-header>
          <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
@@ -46,7 +46,6 @@
          <p>{{item.description | slice:0:200}}..</p>
        </ion-card-content>
    </ion-card>
- </div>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
     <ion-infinite-scroll-content
@@ -55,12 +54,6 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <!--<ion-card class="bg-white">-->
-    <!--<ion-img [src]="themeCover"></ion-img>-->
-    <!--<ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>-->
-      <!--Modal 1: open modal-->
-    <!--</ion-button>-->
-  <!--</ion-card>-->
-
+ </div>
 </ion-content>
 

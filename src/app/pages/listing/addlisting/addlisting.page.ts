@@ -18,7 +18,7 @@ export class AddlistingPage implements OnInit {
   constructor(
       private navCtrl: NavController,
       private authService: AuthService,
-      private alertService: AlertService,) { }
+      private alertService: AlertService) { }
 
   ngOnInit() {
   }

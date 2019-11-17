@@ -17,6 +17,7 @@ export class EditlistingPage implements OnInit {
   cashflow: number;
   price: number;
   created: string;
+  private age: any;
 
   constructor(private modalCtrl: ModalController,
               private navParams: NavParams,
@@ -29,10 +30,10 @@ export class EditlistingPage implements OnInit {
     this.country = this.navParams.data.country;
     this.city = this.navParams.data.city;
     this.description = this.navParams.data.description;
-    // this.revenue = this.navParams.data.revenue;
-    // this.cashflow = this.navParams.data.cashflow;
-    // this.price = this.navParams.data.price;
-    // this.age = this.navParams.data.age;
+    this.revenue = this.navParams.data.revenue;
+    this.cashflow = this.navParams.data.cashflow;
+    this.price = this.navParams.data.price;
+    this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
   }
 

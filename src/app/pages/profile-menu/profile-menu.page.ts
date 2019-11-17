@@ -22,8 +22,7 @@ export class ProfileMenuPage implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private env: EnvService,
-    private alertService: AlertService,
-  ) {
+    private alertService: AlertService, ) {
     this.appPages = [
       {
         title: 'MY LISTING',
@@ -32,20 +31,23 @@ export class ProfileMenuPage implements OnInit {
         icon: 'list'
       },
     ];
-  }
+
+   }
 
 
 
   async ngOnInit() {
     this.authService.getUserInfo();
     this.res = await this.storage.get('currentUser');
-    if (! this.res  || ! this.res.user) {
-      this.navCtrl.navigateRoot('/home');
+    if ( this.res  === '' || ! this.res.user) {
+      this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
+      localStorage.clear();
+    } else {
+      this.user =  this.res.user;
+      console.log(this.user);
+      localStorage.setItem('usertype',  this.res.user.type);
     }
-    this.user =  this.res.user;
-    console.log(this.user);
-    localStorage.setItem('usertype',  this.res.user.type);
   }
 
   goToEditProfile() {

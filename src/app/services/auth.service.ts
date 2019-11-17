@@ -87,7 +87,12 @@ export class AuthService {
     getUserInfo() {
         this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
             .subscribe(user => {
-                this.storage.set('currentUser', user);
+                if (user.status !== 'error') {
+                    this.storage.set('currentUser', user);
+                } else {
+                    this.storage.set('currentUser', '');
+                }
+
             });
 
     }
