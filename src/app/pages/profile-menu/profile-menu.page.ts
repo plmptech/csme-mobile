@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
+import {HttpClient} from '@angular/common/http';
+import {EnvService} from '../../services/env.service';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -16,6 +19,9 @@ export class ProfileMenuPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage,
     private authService: AuthService,
+    private http: HttpClient,
+    private env: EnvService,
+    private alertService: AlertService,
   ) {
     this.appPages = [
       {
@@ -37,6 +43,7 @@ export class ProfileMenuPage implements OnInit {
       this.authService.clearStoredInfo();
     }
     this.user =  this.res.user;
+    console.log(this.user);
     localStorage.setItem('usertype',  this.res.user.type);
   }
 
@@ -54,7 +61,16 @@ export class ProfileMenuPage implements OnInit {
   }
 
   upgradeUser() {
-
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    this.http.put(this.env.API_URL + 'user/' + this.res.user._id + '/upgrade', headers) .subscribe(
+        response => {
+          console.log(response);
+          this.alertService.presentToast(response.message);
+        },
+        error => {
+          alert(error.text());
+          console.log(error.text());
+        });
   }
 
 }

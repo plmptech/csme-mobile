@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card">
+  <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" (click)="openListingDetail(item)">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>

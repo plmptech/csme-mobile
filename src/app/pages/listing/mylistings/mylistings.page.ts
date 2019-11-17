@@ -1,8 +1,10 @@
 /* tslint:disable */
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import {ModalController, NavController} from '@ionic/angular';
 import { EnvService } from '../../../services/env.service';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {ListingDetailPage} from '../../modal/listing-detail/listing-detail.page';
+import {EditlistingPage} from '../editlisting/editlisting.page';
 
 @Component({
   selector: 'app-mylistings',
@@ -20,6 +22,7 @@ export class MylistingsPage implements OnInit {
     private navCtrl: NavController,
     private http: HttpClient,
     private env: EnvService,
+    private modalCtrl: ModalController,
   ) { }
 
   async ngOnInit() {
@@ -45,5 +48,16 @@ export class MylistingsPage implements OnInit {
 
   openAddListing() {
     this.navCtrl.navigateForward('/addlisting');
+  }
+
+  async openListingDetail(item: any) {
+    console.log(item);
+    const modal = await this.modalCtrl.create({
+      component: EditlistingPage,
+      componentProps: { id: item.id, name: item.name, type: item.type,
+        created: item.created, country: item.country, city: item.city,
+        revenue: item.revenue, description: item.description, user: item.user}
+    });
+    return await modal.present();
   }
 }

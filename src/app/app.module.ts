@@ -22,6 +22,7 @@ import {MylistingsPageModule} from './pages/listing/mylistings/mylistings.module
 import {AddlistingPage} from './pages/listing/addlisting/addlisting.page';
 import {AddlistingPageModule} from './pages/listing/addlisting/addlisting.module';
 import {ListingDetailPageModule} from './pages/modal/listing-detail/listing-detail.module';
+import {EditlistingPageModule} from './pages/listing/editlisting/editlisting.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -40,6 +41,7 @@ import {ListingDetailPageModule} from './pages/modal/listing-detail/listing-deta
         MylistingsPageModule,
         AddlistingPageModule,
         ListingDetailPageModule,
+        EditlistingPageModule,
     ],
     providers: [
         StatusBar,
