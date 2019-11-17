@@ -41,7 +41,7 @@ export class EditlistingPage implements OnInit {
   }
 
   editListing() {
-    
+
   }
 
 

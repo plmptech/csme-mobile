@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../../services/env.service';
 import {AlertService} from '../../services/alert.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-profile-menu',
@@ -62,10 +63,10 @@ export class ProfileMenuPage implements OnInit {
 
   upgradeUser() {
     const headers = new Headers({ 'Content-Type': 'application/json' });
-    this.http.put(this.env.API_URL + 'user/' + this.res.user._id + '/upgrade', headers) .subscribe(
-        response => {
-          console.log(response);
-          this.alertService.presentToast(response.message);
+    this.http.put<ReturnMessage>(this.env.API_URL + 'user/' + this.res.user._id + '/upgrade', headers).subscribe(
+        res => {
+          console.log(res);
+          this.alertService.presentToast(res.message);
         },
         error => {
           alert(error.text());
