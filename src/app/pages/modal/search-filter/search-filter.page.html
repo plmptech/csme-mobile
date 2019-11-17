@@ -13,25 +13,43 @@
 
 
 <ion-content padding>
-  <ion-item margin-bottom>
-    <ion-label color="primary" stacked>
-      <ion-text color="dark" class="fw500">ZipCode </ion-text>
-    </ion-label>
-    <ion-input type="number" placeholder="Enter your zipcode"></ion-input>
+  <form #form="ngForm" (ngSubmit)="applyChanges(form)" method="post">
+  <!--<ion-item margin-bottom>-->
+    <!--<ion-label color="primary" stacked>-->
+      <!--<ion-text color="dark" class="fw500">Country </ion-text>-->
+    <!--</ion-label>-->
+    <!--<ion-input type="type" placeholder="Enter  country"></ion-input>-->
+  <!--</ion-item>-->
+
+  <ion-item>
+    <ion-label class="fw500" color="dark">Country</ion-label>
+    <ion-select ngModel name="selectCountry">
+      <ion-select-option>Singapore</ion-select-option>
+      <ion-select-option>Vietnam</ion-select-option>
+    </ion-select>
   </ion-item>
 
   <ion-item>
-    <ion-label class="no-margin-bottom" stacked>
-      <ion-text color="dark" class="fw500">Radius:</ion-text>
-    </ion-label>
-    <ion-range min="1" max="50" step="1" value="1" class="no-padding-top" [(ngModel)]="radiusmiles">
-      <ion-label slot="start"><ion-text color="primary"> {{radiusmiles}} Mile(s)</ion-text></ion-label>
-    </ion-range>
+    <ion-label class="fw500" color="dark">City</ion-label>
+    <ion-select ngModel name="selectCity">
+      <ion-select-option>Ho Chi Minh City</ion-select-option>
+      <ion-select-option>Hanoi</ion-select-option>
+      <ion-select-option>Da Nang</ion-select-option>
+    </ion-select>
   </ion-item>
 
+  <!--<ion-item>-->
+    <!--<ion-label class="no-margin-bottom" stacked>-->
+      <!--<ion-text color="dark" class="fw500">Radius:</ion-text>-->
+    <!--</ion-label>-->
+    <!--<ion-range min="1" max="50" step="1" value="1" class="no-padding-top" [(ngModel)]="radiusmiles">-->
+      <!--<ion-label slot="start"><ion-text color="primary"> {{radiusmiles}} Mile(s)</ion-text></ion-label>-->
+    <!--</ion-range>-->
+  <!--</ion-item>-->
+
   <ion-item>
-    <ion-label class="fw500" color="dark">Filter by</ion-label>
-    <ion-select [(ngModel)]="organizeby">
+    <ion-label class="fw500" color="dark">Sort by</ion-label>
+    <ion-select ngModel name="sortBy">
       <ion-select-option>Most Relevant</ion-select-option>
       <ion-select-option>Closest</ion-select-option>
       <ion-select-option>Low Price</ion-select-option>
@@ -59,46 +77,48 @@
   -->
 
 
-  <ion-item>
-    <ion-label class="fw500" color="dark">Location</ion-label>
-    <ion-select [(ngModel)]="dishnationality" multiple="true">
-      <ion-select-option>German</ion-select-option>
-      <ion-select-option>Japanese</ion-select-option>
-      <ion-select-option>Korean</ion-select-option>
-      <ion-select-option>Indian</ion-select-option>
-      <ion-select-option>Arabian</ion-select-option>
-      <ion-select-option>Italian</ion-select-option>
-      <ion-select-option>Chinese</ion-select-option>
-      <ion-select-option>Brazilian</ion-select-option>
-      <ion-select-option>Thai</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <!--<ion-item>-->
+    <!--<ion-label class="fw500" color="dark">Location</ion-label>-->
+    <!--<ion-select [(ngModel)]="dishnationality" multiple="true">-->
+      <!--<ion-select-option>German</ion-select-option>-->
+      <!--<ion-select-option>Japanese</ion-select-option>-->
+      <!--<ion-select-option>Korean</ion-select-option>-->
+      <!--<ion-select-option>Indian</ion-select-option>-->
+      <!--<ion-select-option>Arabian</ion-select-option>-->
+      <!--<ion-select-option>Italian</ion-select-option>-->
+      <!--<ion-select-option>Chinese</ion-select-option>-->
+      <!--<ion-select-option>Brazilian</ion-select-option>-->
+      <!--<ion-select-option>Thai</ion-select-option>-->
+    <!--</ion-select>-->
+  <!--</ion-item>-->
 
-  <ion-item>
-    <ion-label class="fw500" color="dark">Area</ion-label>
-    <ion-select [(ngModel)]="dishnationality" multiple="true">
-      <ion-select-option>German</ion-select-option>
-      <ion-select-option>Japanese</ion-select-option>
-      <ion-select-option>Korean</ion-select-option>
-      <ion-select-option>Indian</ion-select-option>
-      <ion-select-option>Arabian</ion-select-option>
-      <ion-select-option>Italian</ion-select-option>
-      <ion-select-option>Chinese</ion-select-option>
-      <ion-select-option>Brazilian</ion-select-option>
-      <ion-select-option>Thai</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <!--<ion-item>-->
+    <!--<ion-label class="fw500" color="dark">Area</ion-label>-->
+    <!--<ion-select [(ngModel)]="dishnationality" multiple="true">-->
+      <!--<ion-select-option>German</ion-select-option>-->
+      <!--<ion-select-option>Japanese</ion-select-option>-->
+      <!--<ion-select-option>Korean</ion-select-option>-->
+      <!--<ion-select-option>Indian</ion-select-option>-->
+      <!--<ion-select-option>Arabian</ion-select-option>-->
+      <!--<ion-select-option>Italian</ion-select-option>-->
+      <!--<ion-select-option>Chinese</ion-select-option>-->
+      <!--<ion-select-option>Brazilian</ion-select-option>-->
+      <!--<ion-select-option>Thai</ion-select-option>-->
+    <!--</ion-select>-->
+  <!--</ion-item>-->
 
   <ion-item margin-bottom>
     <ion-label class="no-margin-bottom">
       <ion-text color="dark" class="fw500">Min/Max Price:</ion-text>
     </ion-label>
 
-    <ion-range dualKnobs="true" [(ngModel)]="minmaxprice" min="10" max="1000" step="10" class="no-padding-top">
+    <ion-range dualKnobs="true" ngModel name="minmaxprice" min="100" max="10000000" step="10" class="no-padding-top">
       <ion-label slot="start"><ion-text color="primary">$ {{minmaxprice.lower}}</ion-text></ion-label>
       <ion-label slot="end"><ion-text color="primary">$ {{minmaxprice.upper}}</ion-text></ion-label>
     </ion-range>
   </ion-item>
 
-  <ion-button expand="full" color="primary" (click)="closeModal()">Filter Results</ion-button>
+  <!--<ion-button expand="full" color="primary" (click)="applyChanges()">Filter Results</ion-button>-->
+    <ion-button type="submit" expand="full" color="primary">Filter Results</ion-button>
+  </form>
 </ion-content>

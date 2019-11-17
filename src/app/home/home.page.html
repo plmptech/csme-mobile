@@ -1,21 +1,5 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title text-left>
-      <ion-text color="dark">
-        <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
-      </ion-text>
-    </ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="openProfilePage()">
-        <ion-icon ios="ios-person" md="md-person"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-
+  <div class="ion-padding-header">
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="searchKey"></ion-searchbar>
     <ion-buttons slot="end">
@@ -23,13 +7,26 @@
         <ion-icon name="options"></ion-icon>
       </ion-button>
     </ion-buttons>
-  </ion-toolbar>
 
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium" (click)="openProfilePage()">
+        <ion-icon ios="ios-person" md="md-person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </div>
 </ion-header>
 
 
 <ion-content>
  <div class="ion-padding">
+
+   <ion-title text-left>
+     <ion-text color="dark">
+       <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
+     </ion-text>
+   </ion-title>
+
    <ion-refresher slot="fixed"
                   (ionRefresh)="refreshListings($event)">
      <ion-refresher-content

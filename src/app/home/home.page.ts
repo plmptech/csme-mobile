@@ -26,6 +26,14 @@ export class HomePage implements OnInit {
     nextPageListing: any;
     countNewListing: number;
 
+    category: string;
+    country: string;
+    city: string;
+    askingPrice: string;
+    revenue: string;
+    sort: string;
+    cashflow: string;
+
     constructor(public navCtrl: NavController,
                 public modalCtrl: ModalController,
                 private authService: AuthService,
@@ -73,6 +81,7 @@ export class HomePage implements OnInit {
         this.getAllListing();
     }
 
+    // fresh listing
     getAllListing() {
         console.log('current page: ' + this.currentPage);
         console.log('last page: ' + this.lastPage);
@@ -96,6 +105,28 @@ export class HomePage implements OnInit {
     getNextPage() {
         this.nextPageListing = this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
+            .toPromise()
+            .then((data: any) => {
+                console.log(data);
+                this.currentPage = data.currentPage;
+                this.lastPage = data.lastPage;
+                this.perPage = data.perPage;
+                this.totalCount = data.totalCount;
+                return data.listings;
+            })
+            .catch(err => {
+                console.log('Error', err);
+                return err;
+            });
+    }
+
+    getFilteredListings(result) {
+        console.log('current page: ' + this.currentPage);
+        console.log('last page: ' + this.lastPage);
+        const askingPrice = result.lowerPrice + ',' + result.upperPrice;
+        this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
+            '&city=' + result.city + '&askingPrice=' + askingPrice + '&revenue&cashflow&direction=&sort=' +
+            '&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
             .then((data: any) => {
                 console.log(data);
@@ -140,7 +171,12 @@ export class HomePage implements OnInit {
         const modal = await this.modalCtrl.create({
             component: SearchFilterPage
         });
-        return await modal.present();
+        modal.present();
+
+        await modal.onDidDismiss().then((res) => {
+            console.log(res.data);
+            this.getFilteredListings(res.data);
+        });
     }
 
     async openProfilePage() {
