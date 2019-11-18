@@ -22,8 +22,10 @@
       </ion-row>
       <ion-row>
         <ion-card-content>
-          <ion-label>{{country | uppercase}}, {{city | uppercase}}</ion-label><br>
-          <ion-label>{{description}}</ion-label><br>
+          <ion-label><ion-icon ios="ios-pin" md="md-pin"> &nbsp;</ion-icon>{{country | uppercase}}, {{city | uppercase}}<br></ion-label>
+          <br><ion-label>Years in Business: &nbsp;&nbsp;{{age}} </ion-label><br>
+          <ion-label>Industry:&nbsp; &nbsp;{{industry}}</ion-label><br>
+          <br><ion-label>{{description}}</ion-label><br>
         </ion-card-content>
 
       </ion-row>

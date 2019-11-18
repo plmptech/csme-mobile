@@ -2,13 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MenuController, ModalController, NavController} from '@ionic/angular';
 import {AuthService} from '../services/auth.service';
 import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
-import {Observable, Subscription} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../services/env.service';
-import {map} from 'rxjs/operators';
 import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
-import {forEach} from '@angular-devkit/schematics';
-
 
 @Component({
     selector: 'app-home',
@@ -35,42 +31,23 @@ export class HomePage implements OnInit {
     revenue: string;
     sort: string;
     cashflow: string;
+    res: string;
+    user: any;
 
     constructor(public navCtrl: NavController,
                 public modalCtrl: ModalController,
                 private authService: AuthService,
                 private http: HttpClient,
                 private menuCtrl: MenuController,
-                private env: EnvService ) {
+                private env: EnvService) {
 
         this.currentPage = 1;
         this.lastPage = 1;
         this.perPage = 3;
         this.countNewListing = 0;
-        this.businessListing = [
 
-            {
-                user_avtar: 'assets/img/marty-avatar.png',
-                user_name: 'Marty McFly',
-                date: 'November 5, 1955',
-                image: 'assets/img/advance-card-bttf.png',
-                content: 'Wait a minute. Wait a minute, Doc. Uhhh.... out of a DeLorean?! Whoa. This is heavy.',
-            },
-            {
-                user_avtar: 'assets/img/sarah-avatar.png.jpeg',
-                user_name: 'Sarah Connor',
-                date: 'May 12, 1984',
-                image: 'assets/img/advance-card-tmntr.jpg',
-                content: 'I face the unknown future, wialue of human life, maybe we can too.'
-            },
-            {
-                user_avtar: 'assets/img/ian-avatar.png',
-                user_name: 'Dr. Ian Malcolm',
-                date: 'June 28, 1990',
-                image: 'assets/img/advance-card-jp.jpg',
-                content: 'Your scientists were y didn\'t stop to think if they should.'
-            }
-        ];
+        this.load();
+
     }
 
     async ngOnInit() {
@@ -80,6 +57,9 @@ export class HomePage implements OnInit {
             this.authService.getUserInfo();
         }
 
+    }
+
+    async load() {
         this.getAllListing();
     }
 
@@ -102,6 +82,23 @@ export class HomePage implements OnInit {
                 console.log('Error', err);
                 return err;
             });
+
+
+        // this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+        //     '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
+        //     .subscribe(res => )
+        //     .then((data: any) => {
+        //         console.log(data);
+        //         this.currentPage = data.currentPage;
+        //         this.lastPage = data.lastPage;
+        //         this.perPage = data.perPage;
+        //         this.totalCount = data.totalCount;
+        //         return data.listings;
+        //     })
+        //     .catch(err => {
+        //         console.log('Error', err);
+        //         return err;
+        //     });
     }
 
     getNextPage() {
@@ -203,9 +200,9 @@ export class HomePage implements OnInit {
         console.log(item);
         const modal = await this.modalCtrl.create({
             component: ListingDetailPage,
-            componentProps: { id: item.id, name: item.name, type: item.type,
-                created: item.created, country: item.country, city: item.city,
-                revenue: item.revenue, description: item.description, user: item.user}
+            componentProps: { id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
+                age: item.age, created: item.created, country: item.country, city: item.city,
+                revenue: item.revenue, description: item.description, cashflow: item.cashFlow, price: item.askingPrice, user: item.user}
         });
         return await modal.present();
     }

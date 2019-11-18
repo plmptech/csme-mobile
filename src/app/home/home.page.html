@@ -36,8 +36,9 @@
    </div>
 
    <ion-card *ngFor="let item of (allListing | async)" class="welcome-card" (click)="openListingDetail(item)">
-       <img src="/assets/image2.jpg" alt="" />
+       <img src="/assets/shapes.svg" alt="" />
        <ion-card-header>
+           <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle> <!--Business For Sale-->

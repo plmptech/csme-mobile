@@ -23,12 +23,12 @@
 
       <ion-item no-padding>
         <ion-label position="floating">Name of Business</ion-label>
-        <ion-textarea ngModel="name" name="name"></ion-textarea>
+        <ion-textarea [ngModel]="name" name="name"></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Industry</ion-label>
-        <ion-textarea name="category" [ngModel]="category" placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
+        <ion-textarea name="industry" [ngModel]="industry" placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
@@ -58,7 +58,7 @@
       <div class="group-header">Sale Information</div>
       <ion-item no-padding>
         <ion-label position="floating">Asking Price</ion-label>
-        <ion-textarea name="price" [ngModel]="price"></ion-textarea>
+        <ion-textarea name="askingPrice" [ngModel]="askingPrice"></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
@@ -68,13 +68,13 @@
 
       <ion-item no-padding>
         <ion-label position="floating">Cash Flow</ion-label>
-        <ion-textarea name="cashflow" [ngModel]="cashflow"></ion-textarea>
+        <ion-textarea name="cashFlow" [ngModel]="cashFlow"></ion-textarea>
       </ion-item>
 
     </ion-item-group>
     <ion-footer>
-      <ion-toolbar>
-        <ion-button type="submit" expand="full" color="primary">Save Changes</ion-button>
+        <ion-toolbar>
+        <ion-button type="submit" expand="full" color="primary" (click)="saveListing()">Save Changes</ion-button>
       </ion-toolbar>
     </ion-footer>
   </form>

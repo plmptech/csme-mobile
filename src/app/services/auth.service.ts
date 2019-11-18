@@ -17,6 +17,7 @@ export class AuthService {
     currentPageNo: number;
     lastPageNo: number;
     totalNoPages: number;
+    id: string;
     // token: any;
     private userInfo: Subscription;
     private setDetails: Observable<any>;
@@ -28,9 +29,8 @@ export class AuthService {
     }
 
     login(email: string, password: string) {
-
         return this.http.get(this.env.API_URL + 'user/login?email='
-            + email + '&password=' + password); // .pipe(
+            + email + '&password=' + password);
     }
 
     register(email: string, name: string, password: string, confirm: string) {
@@ -39,15 +39,26 @@ export class AuthService {
         );
     }
 
+    setId(no: any) {
+        this.id = no;
+    }
+
     /*
     this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
          form.value.price, form.value.revenue, form.value.cashflow, form.value.age, form.value.description,
         localStorage.getItem('token'))
      */
     createListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-                     price: number, revenue: number, cashflow: number,  description: string, token: string ) {
+                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string ) {
         return this.http.post(this.env.API_URL + 'listing',
-            {name, purpose, industry, country, city, age, price, revenue, cashflow, description, token},
+            {name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token},
+        );
+    }
+
+    updateListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
+                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string ) {
+        return this.http.post(this.env.API_URL + 'listing/' + this.id,
+            {name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token},
         );
     }
 
@@ -89,8 +100,12 @@ export class AuthService {
             .subscribe(user => {
                 if (user.status !== 'error') {
                     this.storage.set('currentUser', user);
+                    this.isLoggedIn = true;
+                    console.log(user);
                 } else {
-                    this.storage.set('currentUser', '');
+                    this.clearStoredInfo();
+                    this.isLoggedIn = false;
+                    console.log(user);
                 }
 
             });

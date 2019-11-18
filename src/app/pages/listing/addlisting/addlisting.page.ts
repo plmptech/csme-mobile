@@ -35,24 +35,32 @@ export class AddlistingPage implements OnInit {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
     this.industry = form.value.category;
-    this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-        form.value.age, form.value.price, form.value.revenue, form.value.cashflow, form.value.description,
-        localStorage.getItem('token')).subscribe((res: any) => {
-      if (res.status !== 'error') {
-        console.log(res);
-        this.navCtrl.pop();
-        this.alertService.presentToast(res.message);
-      } else {
-        this.navCtrl.pop();
-        this.alertService.presentToast(res.message);
-      }
-    });
+    console.log(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+        form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
+        localStorage.getItem('token'));
+
+    if (!validatedField) {
+      this.alertService.presentToast('Please fill in the all fields');
+    } else {
+      this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
+          localStorage.getItem('token')).subscribe((res: any) => {
+        if (res.status !== 'error') {
+          console.log(res);
+          this.navCtrl.pop();
+          this.alertService.presentToast(res.message);
+        } else {
+          this.navCtrl.pop();
+          this.alertService.presentToast(res.message);
+        }
+      });
+    }
   }
 
   validateForm(form: NgForm) {
-    if (form.value.name !== '' && form.value.type !== '' && form.value.category !== '' &&
-        form.value.city !== '' && form.value.description !== ''
-        && form.value.price !== '' && form.value.age !== '' && form.value.cashflow !== '') {
+    if (form.value.name !== '' && form.value.industry !== '' &&
+        form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
+        && form.value.askingPrice !== '' && form.value.age !== '' && form.value.cashFlow !== '' && form.value.revenue !== '') {
         return true;
     }
     return false;

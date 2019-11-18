@@ -47,6 +47,7 @@ export class LoginPage implements OnInit {
         if (form.value.email !== '' && form.value.password !== '') {
             this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                     if (res.status !== 'error') {
+                        console.log(res);
                         localStorage.setItem('token', res.token);
                         this.alertService.presentToast('Logged In');
                         this.authService.isLoggedIn = true;
