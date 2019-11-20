@@ -13,5 +13,7 @@ class Listing {
     photo: any;
     description: string;
     created: string;
+    industry: string;
+    purpose: string;
 
 }

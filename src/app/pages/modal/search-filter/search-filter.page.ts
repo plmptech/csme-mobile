@@ -14,6 +14,8 @@ export class SearchFilterPage implements OnInit {
     lower: 10
   };
 
+  dualRange: number;
+
   private selectCountry: string;
   private selectCity: string;
   private sortBy: string;

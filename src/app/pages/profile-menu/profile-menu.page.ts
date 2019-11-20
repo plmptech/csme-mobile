@@ -36,18 +36,21 @@ export class ProfileMenuPage implements OnInit {
       },
     ];
 
-    this.load();
 
    }
 
-  async load() {
+  ionViewWillEnter() {
     if (!this.authService.isLoggedIn) {
       this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
       localStorage.clear();
     } else {
-        this.res = await this.storage.get('currentUser');
-        this.user = this.res.user;
+      this.authService.getUserInfo();
+      this.storage.get('currentUser').then(res => {
+          console.log(res);
+          this.user = res.user;
+        });
+
       // localStorage.setItem('usertype',  this.res.user.type);
     }
   }

@@ -52,6 +52,7 @@ export class LoginPage implements OnInit {
                         this.alertService.presentToast('Logged In');
                         this.authService.isLoggedIn = true;
                         this.navCtrl.navigateRoot('/home');
+
                     } else {
                         this.alertService.presentToast('Invalid login. Please try again.');
                     }

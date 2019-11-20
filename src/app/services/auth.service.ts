@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EnvService} from './env.service';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {User} from '../models/user';
 import {Observable, Subscription} from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
@@ -56,8 +55,8 @@ export class AuthService {
     }
 
     updateListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string ) {
-        return this.http.post(this.env.API_URL + 'listing/' + this.id,
+                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string, id: string ) {
+        return this.http.put(this.env.API_URL + 'listing/' + id,
             {name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token},
         );
     }

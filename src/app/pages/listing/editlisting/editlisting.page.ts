@@ -31,6 +31,7 @@ export class EditlistingPage implements OnInit {
 
   ngOnInit() {
     this.id = this.navParams.data.id;
+    console.log(this.id);
     this.name = this.navParams.data.name;
     this.purpose = this.navParams.data.purpose;
     this.industry = this.navParams.data.industry;
@@ -52,38 +53,32 @@ export class EditlistingPage implements OnInit {
 
   saveListing(form: NgForm) {
     this.purpose = 'Business For Sale';
-    this.industry = form.value.industry;
+    const validatedField = this.validateForm(form);
 
-
-    // console.log(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-    //     form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
-    //     localStorage.getItem('token'));
-    // const validatedField = this.validateForm(form);
-
-    this.authService.setId(this.id);
-
-   // if (!validatedField) {
-    this.alertService.presentToast('Please fill in the all fields');
-   // } else {
-    this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-        form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
-        localStorage.getItem('token')).subscribe((res: any) => {
-      if (res.status !== 'error') {
-        console.log(res);
-        this.navCtrl.pop();
-        this.alertService.presentToast(res.message);
-      } else {
-        this.navCtrl.pop();
-        this.alertService.presentToast(res.message);
-      }
-    });
-   //  }
+    if (!validatedField) {
+      this.alertService.presentToast('Please fill in the all fields');
+    } else {
+      this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
+          localStorage.getItem('token'), form.value.id).subscribe((res: any) => {
+        if (res.status !== 'error') {
+          console.log(res);
+          this.modalCtrl.dismiss();
+          this.alertService.presentToast(res.message);
+          window.location.reload();
+        } else {
+          this.modalCtrl.dismiss();
+          this.alertService.presentToast(res.message);
+        }
+      });
+    }
   }
 
   validateForm(form: NgForm) {
     if (form.value.name !== '' && form.value.industry !== '' &&
         form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
-        && form.value.askingPrice !== '' && form.value.age !== '' && form.value.cashFlow !== '' && form.value.revenue !== '') {
+        && form.value.askingPrice !== undefined && form.value.age !== '' && form.value.cashFlow !== undefined
+        && form.value.revenue !== undefined) {
       return true;
     }
     return false;

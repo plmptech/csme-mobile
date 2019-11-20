@@ -15,15 +15,14 @@ import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.pa
 
 export class HomePage implements OnInit {
 
-    businessListing: any;
-    private allListing: any;
+    private allListing: Array<Listing> = [];
     currentPage: number;
     lastPage: number;
     perPage: number;
     totalCount: number;
-    nextPageListing: any;
     countNewListing: number;
 
+    industry: string;
     category: string;
     country: string;
     city: string;
@@ -39,35 +38,34 @@ export class HomePage implements OnInit {
                 private authService: AuthService,
                 private http: HttpClient,
                 private menuCtrl: MenuController,
-                private env: EnvService) {
+                private env: EnvService,
+    ) {
 
         this.currentPage = 1;
         this.lastPage = 1;
         this.perPage = 3;
         this.countNewListing = 0;
 
-        this.load();
 
     }
 
     async ngOnInit() {
-        this.menuCtrl.enable(true);
-        console.log('stored token: ' + localStorage.getItem('token'));
-        if (localStorage.getItem('token') !== null) {
-            this.authService.getUserInfo();
-        }
-
-    }
-
-    async load() {
         this.getAllListing();
     }
 
+    ionViewWillEnter() {
+        console.log('stored token: ' + localStorage.getItem('token'));
+        // if (localStorage.getItem('token') !== null) {
+        //     this.authService.getUserInfo();
+        // }
+    }
+
+
     // fresh listing
     getAllListing() {
-        console.log('current page: ' + this.currentPage);
-        console.log('last page: ' + this.lastPage);
-        this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+         console.log('current page: ' + this.currentPage);
+         console.log('last page: ' + this.lastPage);
+         this.http.get<Listing>(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
             .then((data: any) => {
@@ -76,7 +74,10 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
-                return data.listings;
+                (data.listings).forEach(item => {
+                    console.log(item);
+                    this.allListing.push(item);
+                });
             })
             .catch(err => {
                 console.log('Error', err);
@@ -84,25 +85,10 @@ export class HomePage implements OnInit {
             });
 
 
-        // this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
-        //     '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
-        //     .subscribe(res => )
-        //     .then((data: any) => {
-        //         console.log(data);
-        //         this.currentPage = data.currentPage;
-        //         this.lastPage = data.lastPage;
-        //         this.perPage = data.perPage;
-        //         this.totalCount = data.totalCount;
-        //         return data.listings;
-        //     })
-        //     .catch(err => {
-        //         console.log('Error', err);
-        //         return err;
-        //     });
     }
 
     getNextPage() {
-        this.nextPageListing = this.http.get(this.env.API_URL +
+        this.http.get<Listing>(this.env.API_URL +
             'listings/search?category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
@@ -112,22 +98,22 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
-
-                return data.listings;
+                (data.listings).forEach(item => {
+                    console.log(item);
+                    this.allListing.push(item);
+                });
             })
             .catch(err => {
                 console.log('Error', err);
                 // return err;
             });
-
-        // this.mergeList();
     }
 
     getFilteredListings(result) {
         this.currentPage = 1;
         const askingPrice = result.lowerPrice + ',' + result.upperPrice;
 
-        this.allListing = this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
+        this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
             '&city=' + result.city + '&askingPrice=' + askingPrice + '&revenue&cashflow&direction=&sort=' +
             '&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
@@ -167,14 +153,6 @@ export class HomePage implements OnInit {
         }, 500);
     }
 
-    mergeList() {
-        console.log('before');
-        this.allListing = this.allListing.__zone_symbol__value;
-        console.log(this.allListing);
-        this.nextPageListing = this.nextPageListing.__zone_symbol__value;
-        console.log('after');
-
-    }
 
     async searchFilter() {
         const modal = await this.modalCtrl.create({
@@ -202,7 +180,8 @@ export class HomePage implements OnInit {
             component: ListingDetailPage,
             componentProps: { id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
                 age: item.age, created: item.created, country: item.country, city: item.city,
-                revenue: item.revenue, description: item.description, cashflow: item.cashFlow, price: item.askingPrice, user: item.user}
+                revenue: item.revenue, description: item.description, cashFlow: item.cashFlow,
+                askingPrice: item.askingPrice, user: item.user}
         });
         return await modal.present();
     }

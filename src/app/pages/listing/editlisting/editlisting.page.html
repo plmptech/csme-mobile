@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)="editListing(form)" method="post">
+  <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
     <ion-item-group padding>
       <div class="group-header">Basic Information</div>
       <br>
@@ -23,6 +23,7 @@
 
       <ion-item no-padding>
         <ion-label position="floating">Name of Business</ion-label>
+        <ion-textarea hidden [ngModel]="id" name="id"></ion-textarea>
         <ion-textarea [ngModel]="name" name="name"></ion-textarea>
       </ion-item>
 
@@ -74,7 +75,7 @@
     </ion-item-group>
     <ion-footer>
         <ion-toolbar>
-        <ion-button type="submit" expand="full" color="primary" (click)="saveListing()">Save Changes</ion-button>
+        <ion-button type="submit" expand="full" color="primary" >Save Changes</ion-button>
       </ion-toolbar>
     </ion-footer>
   </form>

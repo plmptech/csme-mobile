@@ -35,17 +35,16 @@
      </ion-text>
    </div>
 
-   <ion-card *ngFor="let item of (allListing | async)" class="welcome-card" (click)="openListingDetail(item)">
+   <ion-card *ngFor="let item of (allListing )" class="welcome-card" (click)="openListingDetail(item)">
        <img src="/assets/shapes.svg" alt="" />
        <ion-card-header>
            <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
          <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle> <!--Business For Sale-->
+           <p>{{item.country | uppercase}} {{item.city | uppercase}}</p>
+           <p>{{item.industry | uppercase }}</p>
        </ion-card-header>
-       <ion-card-content>
-         <p>{{item.description | slice:0:200}}..</p>
-       </ion-card-content>
    </ion-card>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
@@ -57,4 +56,5 @@
 
  </div>
 </ion-content>
+
 
