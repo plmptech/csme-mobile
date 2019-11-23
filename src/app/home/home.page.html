@@ -1,60 +1,53 @@
 <ion-header>
   <div class="ion-padding-header">
-  <ion-toolbar>
-    <ion-searchbar [(ngModel)]="searchKey"></ion-searchbar>
-    <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
-        <ion-icon name="options"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="searchKey" (keyup.enter)="searchListing()"></ion-searchbar>
+      <ion-buttons slot="end">
+        <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
+          <ion-icon name="options"></ion-icon>
+        </ion-button>
+      </ion-buttons>
 
-    <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="openProfilePage()">
-        <ion-icon ios="ios-person" md="md-person"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button size="small" shape="round" color="medium" (click)="openProfilePage()">
+          <ion-icon ios="ios-person" md="md-person"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </div>
 </ion-header>
 
 
 <ion-content>
-    <ion-refresher slot="fixed"
-                   (ionRefresh)="refreshListings($event)">
-        <ion-refresher-content
-                pullingIcon="arrow-dropdown"
-                pullingText="Pull to refresh"
-                refreshingSpinner="circles">
-        </ion-refresher-content>
-    </ion-refresher>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshListings($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
 
- <div class="ion-padding">
-   <div class="card-title">
-     <ion-text color="dark">
-       <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
-     </ion-text>
-   </div>
+  <div class="ion-padding">
+    <div class="card-title">
+      <ion-text color="dark">
+        <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
+      </ion-text>
+    </div>
 
-   <ion-card *ngFor="let item of (allListing )" class="welcome-card" (click)="openListingDetail(item)">
-       <img src="/assets/shapes.svg" alt="" />
-       <ion-card-header>
-           <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
-         <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
-         <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
-         <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle> <!--Business For Sale-->
-           <p>{{item.country | uppercase}} {{item.city | uppercase}}</p>
-           <p>{{item.industry | uppercase }}</p>
-       </ion-card-header>
-   </ion-card>
+    <ion-card *ngFor="let item of (allListing )" class="welcome-card" (click)="openListingDetail(item)">
+      <img [src]="item.photo" alt="" />
+      <ion-card-header>
+        <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle>
+        <!--Business For Sale-->
+        <p>{{item.country | uppercase}} {{item.city | uppercase}}</p>
+        <p>{{item.industry | uppercase }}</p>
+      </ion-card-header>
+    </ion-card>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
-    <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
- </div>
+  </div>
 </ion-content>
-
-

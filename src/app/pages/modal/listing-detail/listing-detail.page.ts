@@ -19,6 +19,7 @@ export class ListingDetailPage implements OnInit {
   price: number;
   created: string;
   age: number;
+  photo: any;
   industry: string;
 
   constructor(private modalCtrl: ModalController,
@@ -37,6 +38,7 @@ export class ListingDetailPage implements OnInit {
     this.cashflow = this.navParams.data.cashFlow;
     this.price = this.navParams.data.askingPrice;
     this.age = this.navParams.data.age;
+    this.photo = this.navParams.data.photo;
     this.created = this.navParams.data.created;
 
   }

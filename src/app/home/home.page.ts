@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {AuthService} from '../services/auth.service';
-import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
-import {HttpClient} from '@angular/common/http';
-import {EnvService} from '../services/env.service';
-import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
+import { Component, OnInit } from '@angular/core';
+import { MenuController, ModalController, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { SearchFilterPage } from '../pages/modal/search-filter/search-filter.page';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { EnvService } from '../services/env.service';
+import { ListingDetailPage } from '../pages/modal/listing-detail/listing-detail.page';
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-
 
 export class HomePage implements OnInit {
 
@@ -34,23 +34,21 @@ export class HomePage implements OnInit {
     user: any;
 
     constructor(public navCtrl: NavController,
-                public modalCtrl: ModalController,
-                private authService: AuthService,
-                private http: HttpClient,
-                private menuCtrl: MenuController,
-                private env: EnvService,
+        public modalCtrl: ModalController,
+        private authService: AuthService,
+        private http: HttpClient,
+        private sanitizer: DomSanitizer,
+        private menuCtrl: MenuController,
+        private env: EnvService,
     ) {
-
         this.currentPage = 1;
         this.lastPage = 1;
         this.perPage = 3;
         this.countNewListing = 0;
-
-
     }
 
     async ngOnInit() {
-        this.getAllListing();
+        this.getListing();
     }
 
     ionViewWillEnter() {
@@ -62,10 +60,10 @@ export class HomePage implements OnInit {
 
 
     // fresh listing
-    getAllListing() {
-         console.log('current page: ' + this.currentPage);
-         console.log('last page: ' + this.lastPage);
-         this.http.get<Listing>(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
+    async getListing() {
+        console.log('current page: ' + this.currentPage);
+        console.log('last page: ' + this.lastPage);
+        this.http.get<Listing>(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
             .then((data: any) => {
@@ -76,36 +74,18 @@ export class HomePage implements OnInit {
                 this.totalCount = data.totalCount;
                 (data.listings).forEach(item => {
                     console.log(item);
+                    if (item.photo.data.length != 0) {
+                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
+                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
+                      }
+                      else
+                        item.photo = '/assets/shapes.svg'
                     this.allListing.push(item);
                 });
             })
             .catch(err => {
                 console.log('Error', err);
                 return err;
-            });
-
-
-    }
-
-    getNextPage() {
-        this.http.get<Listing>(this.env.API_URL +
-            'listings/search?category=&country=&city=&askingPrice&revenue' +
-            '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
-            .toPromise()
-            .then((data: any) => {
-                console.log(data);
-                this.currentPage = data.currentPage;
-                this.lastPage = data.lastPage;
-                this.perPage = data.perPage;
-                this.totalCount = data.totalCount;
-                (data.listings).forEach(item => {
-                    console.log(item);
-                    this.allListing.push(item);
-                });
-            })
-            .catch(err => {
-                console.log('Error', err);
-                // return err;
             });
     }
 
@@ -123,7 +103,13 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
-                return data.listings;
+                this.allListing = [];
+
+                console.log(data.listings);
+                (data.listings).forEach(item => {
+                    console.log(item);
+                    this.allListing.push(item);
+                });
             })
             .catch(err => {
                 console.log('Error', err);
@@ -131,28 +117,24 @@ export class HomePage implements OnInit {
             });
     }
 
-    refreshListings(event) {
+    async searchListing(){
+        console.log('here')
+    }
+
+    async refreshListings(event) {
         this.currentPage = 1;
-        this.getAllListing();
-
-        setTimeout(() => {
-            console.log('Async operation has ended');
-            event.target.complete();
-        }, 2000);
+        await this.getListing();
+        event.target.complete();
     }
 
-    loadNextPage(event) {
-        setTimeout(() => {
-            if (this.lastPage - this.currentPage > 0) {
-                this.currentPage = this.currentPage + 1;
-                console.log('fetching more');
-                this.getNextPage();
-                // this.mergeList();
-            }
-            event.target.complete();
-        }, 500);
-    }
+    async loadNextPage(event) {
+        if (this.lastPage - this.currentPage > 0) {
+            this.currentPage = this.currentPage + 1;
+            await this.getListing();
+        }
+        event.target.complete();
 
+    }
 
     async searchFilter() {
         const modal = await this.modalCtrl.create({
@@ -178,10 +160,12 @@ export class HomePage implements OnInit {
         console.log(item);
         const modal = await this.modalCtrl.create({
             component: ListingDetailPage,
-            componentProps: { id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
+            componentProps: {
+                id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
                 age: item.age, created: item.created, country: item.country, city: item.city,
                 revenue: item.revenue, description: item.description, cashFlow: item.cashFlow,
-                askingPrice: item.askingPrice, user: item.user}
+                askingPrice: item.askingPrice, user: item.user, photo: item.photo
+            }
         });
         return await modal.present();
     }
