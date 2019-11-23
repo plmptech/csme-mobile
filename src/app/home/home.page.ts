@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
     perPage: number;
     totalCount: number;
     countNewListing: number;
+    searchKey: String;
 
     industry: string;
     category: string;
@@ -77,8 +78,8 @@ export class HomePage implements OnInit {
                     if (item.photo.data.length != 0) {
                         let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
                         item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
-                      }
-                      else
+                    }
+                    else
                         item.photo = '/assets/shapes.svg'
                     this.allListing.push(item);
                 });
@@ -91,6 +92,7 @@ export class HomePage implements OnInit {
 
     getFilteredListings(result) {
         this.currentPage = 1;
+        this.allListing = [];
         const askingPrice = result.lowerPrice + ',' + result.upperPrice;
 
         this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
@@ -103,11 +105,16 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
-                this.allListing = [];
 
                 console.log(data.listings);
                 (data.listings).forEach(item => {
                     console.log(item);
+                    if (item.photo.data.length != 0) {
+                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
+                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
+                    }
+                    else
+                        item.photo = '/assets/shapes.svg'
                     this.allListing.push(item);
                 });
             })
@@ -117,8 +124,33 @@ export class HomePage implements OnInit {
             });
     }
 
-    async searchListing(){
-        console.log('here')
+    async searchListing() {
+        this.allListing = [];
+        this.http.get<Listing>(this.env.API_URL + 'listings/search?name=' + this.searchKey + 'category=&country=&city=&askingPrice&revenue' +
+            '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
+            .toPromise()
+            .then((data: any) => {
+                console.log(data);
+                this.currentPage = data.currentPage;
+                this.lastPage = data.lastPage;
+                this.perPage = data.perPage;
+                this.totalCount = data.totalCount;
+                (data.listings).forEach(item => {
+                    console.log(item);
+                    if (item.photo.data.length != 0) {
+                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
+                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
+                    }
+                    else
+                        item.photo = '/assets/shapes.svg'
+                    this.allListing.push(item);
+                });
+            })
+            .catch(err => {
+                console.log('Error', err);
+                return err;
+            });
+        console.log(this.searchKey)
     }
 
     async refreshListings(event) {

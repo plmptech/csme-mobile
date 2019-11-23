@@ -1,7 +1,7 @@
 <ion-header>
   <div class="ion-padding-header">
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="searchKey" (keyup.enter)="searchListing()"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchKey" (search)="searchListing()"></ion-searchbar>
       <ion-buttons slot="end">
         <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
           <ion-icon name="options"></ion-icon>
