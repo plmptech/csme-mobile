@@ -126,7 +126,7 @@ export class HomePage implements OnInit {
 
     async searchListing() {
         this.allListing = [];
-        this.http.get<Listing>(this.env.API_URL + 'listings/search?name=' + this.searchKey + 'category=&country=&city=&askingPrice&revenue' +
+        this.http.get<Listing>(this.env.API_URL + 'listings/search?name=' + this.searchKey + '&category=&country=&city=&askingPrice&revenue' +
             '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
             .toPromise()
             .then((data: any) => {
