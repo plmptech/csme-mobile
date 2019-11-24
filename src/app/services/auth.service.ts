@@ -94,7 +94,7 @@ export class AuthService {
         return this.http.get(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'));
     }
 
-    getUserInfo() {
+    async getUserInfo() {
         this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
             .subscribe(user => {
                 if (user.status !== 'error') {

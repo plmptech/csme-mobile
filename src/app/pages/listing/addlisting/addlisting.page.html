@@ -71,6 +71,11 @@
         <ion-textarea name="cashFlow" ngModel></ion-textarea>
       </ion-item>
 
+      <ion-item no-padding>
+        <ion-label>Image</ion-label>
+        <ion-input type="file" accept="image/*" id="upload" name="imageFilePath" ngModel (ionChange)="imageFilePath_change($event)"></ion-input>
+      </ion-item>
+
     </ion-item-group>
     <ion-toolbar>
       <ion-button type="submit" expand="full" color="primary">Submit</ion-button>

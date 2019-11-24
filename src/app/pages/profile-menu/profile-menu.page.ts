@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
-import {HttpClient} from '@angular/common/http';
-import {EnvService} from '../../services/env.service';
-import {AlertService} from '../../services/alert.service';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { EnvService } from '../../services/env.service';
+import { AlertService } from '../../services/alert.service';
+import { Observable } from 'rxjs';
 
 function ionViewDidLoad() {
 
@@ -37,26 +37,21 @@ export class ProfileMenuPage implements OnInit {
     ];
 
 
-   }
+  }
 
   ionViewWillEnter() {
     if (!this.authService.isLoggedIn) {
       this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
       localStorage.clear();
-    } else {
-      this.authService.getUserInfo();
-      this.storage.get('currentUser').then(res => {
-          console.log(res);
-          this.user = res.user;
-        });
-
-      // localStorage.setItem('usertype',  this.res.user.type);
-    }
+    } 
   }
 
   async ngOnInit() {
-
+    await this.authService.getUserInfo();
+    this.storage.get('currentUser').then(res => {
+      this.user = res.user;
+    });
   }
 
   goToEditProfile() {
@@ -84,18 +79,18 @@ export class ProfileMenuPage implements OnInit {
     //       console.log(error.text());
     //     });
 
-    const body = {token: localStorage.getItem('token')};
+    const body = { token: localStorage.getItem('token') };
 
     this.http.put<ReturnMessage>(this.env.API_URL + 'user/upgrade', body).subscribe(
-            response => {
-              console.log(response);
-              this.alertService.presentToast(response.message);
-            },
-            error => {
-              alert(error.text());
-              console.log(error.text());
-              this.alertService.presentToast(error.text);
-            });
+      response => {
+        console.log(response);
+        this.alertService.presentToast(response.message);
+      },
+      error => {
+        alert(error.text());
+        console.log(error.text());
+        this.alertService.presentToast(error.text);
+      });
 
   }
 

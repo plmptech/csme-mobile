@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" (click)="openListingDetail(item)">
-      <img src="/assets/shapes.svg" alt="" />
+      <img [src]="item.photo" alt="" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
