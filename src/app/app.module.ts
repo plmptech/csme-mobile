@@ -16,13 +16,13 @@ import {AuthService} from './services/auth.service';
 import {HomePageModule} from './home/home.module';
 import {LandingPageModule} from './pages/landing/landing.module';
 import {SearchFilterPageModule} from './pages/modal/search-filter/search-filter.module';
-import {NativeStorage} from '@ionic-native/native-storage';
 import {IonicStorageModule} from '@ionic/storage';
 import {MylistingsPageModule} from './pages/listing/mylistings/mylistings.module';
-import {AddlistingPage} from './pages/listing/addlisting/addlisting.page';
 import {AddlistingPageModule} from './pages/listing/addlisting/addlisting.module';
 import {ListingDetailPageModule} from './pages/modal/listing-detail/listing-detail.module';
 import {EditlistingPageModule} from './pages/listing/editlisting/editlisting.module';
+import { Camera } from '@ionic-native/Camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
     declarations: [AppComponent],
@@ -48,6 +48,8 @@ import {EditlistingPageModule} from './pages/listing/editlisting/editlisting.mod
         SplashScreen,
         AuthGuard,
         AuthService,
+        Camera,
+        File,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
 
     ],
