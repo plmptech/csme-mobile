@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title text-uppercase>New Listing</ion-title>
+    <ion-title class="ion-text-uppercase">New Listing</ion-title>
     <ion-buttons slot="end">
       <ion-button icon-only (click)="goBack()">
         <ion-icon ios="ios-close" md="md-close"></ion-icon>
@@ -73,7 +73,7 @@
 
       <ion-item no-padding>
         <ion-label>Image</ion-label>
-        <ion-input type="file" accept="image/*" id="upload" name="imageFilePath" ngModel (ionChange)="imageFilePath_change($event)"></ion-input>
+        <ion-input type="file" accept="image/*" id="upload" name="imageFilePath" ngModel (ionChange)="upload($event)"></ion-input>
       </ion-item>
 
     </ion-item-group>

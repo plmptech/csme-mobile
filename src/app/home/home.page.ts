@@ -192,12 +192,7 @@ export class HomePage implements OnInit {
         console.log(item);
         const modal = await this.modalCtrl.create({
             component: ListingDetailPage,
-            componentProps: {
-                id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
-                age: item.age, created: item.created, country: item.country, city: item.city,
-                revenue: item.revenue, description: item.description, cashFlow: item.cashFlow,
-                askingPrice: item.askingPrice, user: item.user, photo: item.photo
-            }
+            componentProps: item
         });
         return await modal.present();
     }
