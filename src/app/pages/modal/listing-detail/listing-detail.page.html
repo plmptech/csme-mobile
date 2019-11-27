@@ -1,48 +1,49 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{name}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button icon-only (click)="closeModal()">
-        <ion-icon ios="ios-close" md="md-close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title slot="start">
+            Business Detail
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="closeModal()">
+                <ion-icon ios="ios-close" md="md-close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
 </ion-header>
 
-  <ion-content fullscreen>
-    <ion-grid>
-      <ion-row>
-        <img [src]="photo" alt="" />
-        <ion-card-header>
+<ion-content color="dark">
+    <ion-card-header fullscreen color="dark" no-padding> <img [src]="photo" alt=""></ion-card-header>
 
-          <ion-card-subtitle hidden>{{id}}</ion-card-subtitle>
-          <ion-card-subtitle>Business For Sale</ion-card-subtitle>
-          <ion-card-title>{{name}}</ion-card-title>
-        </ion-card-header>
-      </ion-row>
-      <ion-row>
-        <ion-card-content>
-          <ion-label><ion-icon ios="ios-pin" md="md-pin"> &nbsp;</ion-icon>{{country | uppercase}}, {{city | uppercase}}<br></ion-label>
-          <br><ion-label>Years in Business: &nbsp;&nbsp;{{age}} </ion-label><br>
-          <ion-label>Industry:&nbsp; &nbsp;{{industry}}</ion-label><br>
-          <br><ion-label>{{description}}</ion-label><br>
-        </ion-card-content>
+    <ion-card-header color="dark">
+        <ion-card-subtitle hidden>{{id}}</ion-card-subtitle>
+        <ion-card-subtitle>Business For Sale</ion-card-subtitle>
+        <ion-card-title>{{name}}</ion-card-title>
 
-      </ion-row>
-      <ion-row>
-        <ion-card-content>
-          <ion-label>Revenue: USD ${{revenue}}</ion-label><br>
-          <ion-label>Cash Flow: USD ${{cashflow}}</ion-label><br>
-          <ion-label>Asking Price: USD ${{[price]}}</ion-label>
-        </ion-card-content>
+        <ion-card-subtitle>
+            <ion-icon ios="ios-pin" md="md-pin"></ion-icon> &nbsp;{{country | uppercase}}, {{city | uppercase}}
+        </ion-card-subtitle>
+    </ion-card-header>
 
+    <ion-card-content>
+        <ion-text>{{description}}</ion-text>
+        <br> <br>
+        <ion-text>Years in Business: &nbsp;&nbsp;{{age}} </ion-text>
+        <br>
+        <ion-text>Industry:&nbsp; &nbsp;{{industry}}</ion-text>
+        <br>
 
-      </ion-row>
-    </ion-grid>
+    </ion-card-content>
+    <ion-card-content>
+        <ion-text>Revenue: USD ${{revenue}}</ion-text>
+        <br>
+        <ion-text>Cash Flow: USD ${{cashflow}}</ion-text>
+        <br>
+        <ion-text>Asking Price: USD ${{[price]}}</ion-text>
+    </ion-card-content>
+
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button type="submit" expand="full" color="primary">Send Enquiry</ion-button>
-  </ion-toolbar>
+<ion-footer class="footer-color">
+    <ion-button type="submit" no-margin expand="full" color="primary">Send Enquiry</ion-button>
 </ion-footer>

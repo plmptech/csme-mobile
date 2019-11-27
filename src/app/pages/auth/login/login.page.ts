@@ -37,11 +37,6 @@ export class LoginPage implements OnInit {
     // On Register button tap, dismiss login modal and open register modal
     async registerModal() {
         this.navCtrl.navigateForward('/register');
-
-        // const registerModal = await this.modalCtrl.create({
-        //     component: RegisterPage
-        // });
-        // return await registerModal.present();
     }
     login(form: NgForm) {
         if (form.value.email !== '' && form.value.password !== '') {

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-button icon-only (click)="goHome()">
         <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
@@ -22,6 +22,11 @@
     </ion-item>
 
     <ion-item>
+      <ion-label position="floating">Mobile Number</ion-label>
+      <ion-input type="text" ngModel name="mobile"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password" ngModel name="password"></ion-input>
     </ion-item>
@@ -33,8 +38,6 @@
 
 <br>
 
-    <ion-button type="submit" expand="full" color="danger">Register</ion-button>
+    <ion-button type="submit" expand="block" color="primary">Register</ion-button>
   </form>
-  <p text-center>Already have an account?</p>
-  <ion-button expand="full" color="primary" (click)="loginModal()">Login</ion-button>
 </ion-content>

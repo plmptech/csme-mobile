@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title text-uppercase>Edit Listing</ion-title>
     <ion-buttons slot="end">
       <ion-button icon-only (click)="closeModal()">
@@ -11,7 +11,7 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content [color]="dark">
   <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
     <ion-item-group padding>
       <div class="group-header">Basic Information</div>

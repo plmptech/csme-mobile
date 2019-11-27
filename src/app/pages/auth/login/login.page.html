@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-button icon-only (click)="goHome()">
         <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">Login</ion-title>
+    <ion-title [size]="small">LOGIN</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
@@ -21,8 +21,8 @@
     </ion-item>
 
     <br>
-    <ion-button type="submit" expand="full" color="primary">Login</ion-button>
+    <ion-button type="submit" expand="block" color="primary">Login</ion-button>
   </form>
   <p text-center>New User?</p>
-  <ion-button expand="full" color="danger" (click)="registerModal()">Register</ion-button>
+  <ion-button expand="block" color="danger" (click)="registerModal()">Register</ion-button>
 </ion-content>

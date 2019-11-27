@@ -25,3 +25,53 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@font-face {
+  font-family: 'Arvo';
+  src: url("../src/assets/fonts/arvo.woff2");
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url("../src/assets/fonts/rubik.woff2");
+}
+
+@font-face {
+  font-family: 'Bree';
+  src: url("../src/assets/fonts/bree.woff2");
+}
+
+@font-face {
+  font-family: 'Comforta';
+  src: url("../src/assets/fonts/comforta.woff2");
+}
+
+
+
+
+* {
+  font-family: 'Comforta';
+  font-style: normal;
+  font-weight: 500;
+}
+
+p {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+}
+
+ion-label {
+  font-family: 'Arvo', serif;
+  font-size:12pt;
+}
+
+ion-card-title{
+  font-size: 18pt;
+}
+
+img{
+  height: auto;
+  width: auto;
+  margin: auto;
+  display: block;
+}

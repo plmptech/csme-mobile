@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-button icon-only (click)="goHome()">
-        <ion-icon name="md-arrow-back" size="large"></ion-icon>
+        <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-uppercase">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content text-center>
-  <div *ngIf="user "  class="success-background">
+<ion-content text-center color="dark">
+  <div *ngIf="user ">
     <ion-grid>
       <ion-row align-items-center text-center class="row-header">
         <ion-col>
@@ -35,14 +35,14 @@
                 <strong>edit profile</strong>
               </ion-text>
             </a> -->
-            <a *ngIf="user.type == 'basic'" class="text08" tappable (click)="upgradeUser()">
-              <ion-text color="medium">
+            <a *ngIf="user.type == 'basic'" tappable (click)="upgradeUser()">
+              <ion-text>
                 <strong>Upgrade Premium</strong>
               </ion-text>
             </a>
-            <ion-text *ngIf="user.type == 'basic'" color="secondary"> | </ion-text>
-            <a class="text08" tappable (click)="logout()">
-              <ion-text color="medium">
+            <ion-label *ngIf="user.type == 'basic'" > | </ion-label>
+            <a tappable (click)="logout()">
+              <ion-text>
                 <strong>Logout</strong>
               </ion-text>
             </a>
@@ -53,11 +53,11 @@
   </div>
 <br>
   <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-    <ion-item [routerLink]="[p.url]">
-      <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
-      <ion-label>
+    <ion-item [routerLink]="[p.url]" color="primary">
+      <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
+      <ion-text>
         {{p.title}}
-      </ion-label>
+      </ion-text>
     </ion-item>
   </ion-menu-toggle>
 

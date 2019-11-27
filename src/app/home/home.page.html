@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header class="toolbar-color">
   <div class="ion-padding-header">
-    <ion-toolbar>
+    <ion-toolbar color="primary">
       <ion-searchbar [(ngModel)]="searchKey" (search)="searchListing()"></ion-searchbar>
       <ion-buttons slot="end">
         <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
@@ -18,30 +18,25 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content color="dark">
   <ion-refresher slot="fixed" (ionRefresh)="refreshListings($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
 
   <div class="ion-padding">
-    <div class="card-title">
-      <ion-text color="dark">
-        <ion-text color="dark ion-text-uppercase" class="fw700">Business Listing</ion-text>
-      </ion-text>
+    <div class="card">
+        <ion-text color="light">Business Listing</ion-text>
     </div>
 
-    <ion-card *ngFor="let item of (allListing )" class="welcome-card" (click)="openListingDetail(item)">
+    <ion-card *ngFor="let item of (allListing )" class="welcome-card" color="secondary" (click)="openListingDetail(item)">
       <img [src]="item.photo" alt="" />
-      <ion-card-header>
-        <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.name | uppercase}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.category | uppercase}}</ion-card-subtitle>
-        <ion-card-subtitle>{{item.type | uppercase}}</ion-card-subtitle>
-        <!--Business For Sale-->
-        <p>{{item.country | uppercase}} {{item.city | uppercase}}</p>
-        <p>{{item.industry | uppercase }}</p>
-      </ion-card-header>
+      <div class="card card-padding">
+        <p>
+          <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
+          <ion-card-title class="company_title">{{item.name | uppercase}}</ion-card-title>
+        </p>
+      </div>
     </ion-card>
 
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">

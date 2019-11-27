@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title text-uppercase>New Listing</ion-title>
     <ion-buttons slot="end">
       <ion-button icon-only (click)="goBack()">
@@ -23,32 +23,32 @@
 
       <ion-item no-padding>
         <ion-label position="floating">Name of Business</ion-label>
-        <ion-textarea name="name" ngModel></ion-textarea>
+        <ion-textarea type="text" name="name" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Industry</ion-label>
-        <ion-textarea name="category" ngModel placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
+        <ion-textarea type="text" name="category" ngModel placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Country</ion-label>
-        <ion-textarea name="country" ngModel></ion-textarea>
+        <ion-textarea type="text" name="country" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">City</ion-label>
-        <ion-textarea name="city" ngModel></ion-textarea>
+        <ion-textarea type="text" name="city" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Years In Business</ion-label>
-        <ion-textarea name="age" ngModel></ion-textarea>
+        <ion-textarea type="number" name="age" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Description of Business</ion-label>
-        <ion-textarea name="description" ngModel rows="5" maxlength="500"></ion-textarea>
+        <ion-textarea type="text" name="description" ngModel rows="5" maxlength="500"></ion-textarea>
       </ion-item>
 
 
@@ -58,35 +58,34 @@
       <div class="group-header">Sale Information</div>
       <ion-item no-padding>
         <ion-label position="floating">Asking Price</ion-label>
-        <ion-textarea name="askingPrice" ngModel></ion-textarea>
+        <ion-textarea type="number" name="askingPrice" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Revenue</ion-label>
-        <ion-textarea name="revenue" ngModel></ion-textarea>
+        <ion-textarea type="number" name="revenue" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label position="floating">Cash Flow</ion-label>
-        <ion-textarea name="cashFlow" ngModel></ion-textarea>
+        <ion-textarea type="number" name="cashFlow" ngModel></ion-textarea>
       </ion-item>
 
       <ion-item no-padding>
         <ion-label>Image</ion-label>
-        <ion-input type="file" accept="image/*" id="upload" name="imageFilePath" ngModel (ionChange)="imageFilePath_change($event)"></ion-input>
+        <ion-input expand="block" type="file" accept="image/*" id="upload" name="imageFilePath" ngModel (ionChange)="imageFilePath_change($event)"></ion-input>
       </ion-item>
 
     </ion-item-group>
     <ion-toolbar>
-      <ion-button type="submit" expand="full" color="primary">Submit</ion-button>
+      <ion-button type="submit" expand="block" color="primary">Submit</ion-button>
     </ion-toolbar>
 
 
 
   </form>
 
-  <ion-toolbar>
-    <ion-button type="submit" expand="full" color="primary" (click)="selectImage()">Choose Image</ion-button>
-  </ion-toolbar>
+    <!--<ion-button type="submit" expand="block" color="primary" (click)="selectImage()">Choose Image</ion-button>-->
+
 </ion-content>
 

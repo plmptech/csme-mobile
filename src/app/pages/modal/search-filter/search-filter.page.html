@@ -1,82 +1,88 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button color="primary" (click)="closeModal()">
-        <ion-icon name="close" color="light"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Search Filter
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title slot="start">
+            Search Filter
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="primary" (click)="closeModal()">
+                <ion-icon name="close" color="light"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 
-<ion-content >
-  <form #form="ngForm" (ngSubmit)="applyChanges(form)" method="post">
-    <!--<ion-item margin-bottom>-->
-    <!--<ion-label color="primary" stacked>-->
-    <!--<ion-text color="dark" class="fw500">Country </ion-text>-->
-    <!--</ion-label>-->
-    <!--<ion-input type="type" placeholder="Enter  country"></ion-input>-->
-    <!--</ion-item>-->
+<ion-content>
+    <form #form="ngForm" (ngSubmit)="applyChanges(form)" method="post">
+        <!--<ion-item margin-bottom>-->
+        <!--<ion-label color="primary" stacked>-->
+        <!--<ion-text color="dark" class="fw500">Country </ion-text>-->
+        <!--</ion-label>-->
+        <!--<ion-input type="type" placeholder="Enter  country"></ion-input>-->
+        <!--</ion-item>-->
 
-    <ion-item>
-      <ion-label class="fw500" color="dark">Country</ion-label>
-      <ion-select ngModel name="selectCountry">
-        <ion-select-option>Singapore</ion-select-option>
-        <ion-select-option>Malaysia</ion-select-option>
-        <ion-select-option>Thailand</ion-select-option>
-        <ion-select-option>Vietnam</ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-select>
+            <ion-text>Country</ion-text>
+                <ion-select-option>Singapore</ion-select-option>
+                <ion-select-option>Malaysia</ion-select-option>
+                <ion-select-option>Thailand</ion-select-option>
+                <ion-select-option>Vietnam</ion-select-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item>
-      <ion-label class="fw500" color="dark">City</ion-label>
-      <ion-select ngModel name="selectCity">
-        <ion-select-option>Ho Chi Minh City</ion-select-option>
-        <ion-select-option>Hanoi</ion-select-option>
-        <ion-select-option>Da Nang</ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-text>City</ion-text>
+            <ion-select ngModel name="selectCity">
+                <ion-select-option>Ho Chi Minh City</ion-select-option>
+                <ion-select-option>Hanoi</ion-select-option>
+                <ion-select-option>Da Nang</ion-select-option>
+            </ion-select>
+        </ion-item>
 
-    <!--<ion-item>-->
-    <!--<ion-label class="no-margin-bottom" stacked>-->
-    <!--<ion-text color="dark" class="fw500">Radius:</ion-text>-->
-    <!--</ion-label>-->
-    <!--<ion-range min="1" max="50" step="1" value="1" class="no-padding-top" [(ngModel)]="radiusmiles">-->
-    <!--<ion-label slot="start"><ion-text color="primary"> {{radiusmiles}} Mile(s)</ion-text></ion-label>-->
-    <!--</ion-range>-->
-    <!--</ion-item>-->
+        <!--<ion-item>-->
+        <!--<ion-label class="no-margin-bottom" stacked>-->
+        <!--<ion-text color="dark" class="fw500">Radius:</ion-text>-->
+        <!--</ion-label>-->
+        <!--<ion-range min="1" max="50" step="1" value="1" class="no-padding-top" [(ngModel)]="radiusmiles">-->
+        <!--<ion-label slot="start"><ion-text color="primary"> {{radiusmiles}} Mile(s)</ion-text></ion-label>-->
+        <!--</ion-range>-->
+        <!--</ion-item>-->
 
-    <ion-item>
-      <ion-label class="fw500" color="dark">Sort by</ion-label>
-      <ion-select ngModel name="sortBy">
-        <ion-select-option>Recently Listed</ion-select-option>
-        <ion-select-option>Selling Price(Low to High)</ion-select-option>
-        <ion-select-option>Selling Price(High to Low)</ion-select-option>
-        <ion-select-option>Revenue(Low to High)</ion-select-option>
-        <ion-select-option>Revenue(High to Low)</ion-select-option>
-        <ion-select-option>Profit(Low to High)</ion-select-option>
-        <ion-select-option>Profit(High to Low)</ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-item>
+            <ion-text>Sort by</ion-text>
+            <ion-select ngModel name="sortBy">
+                <ion-select-option>Recently Listed</ion-select-option>
+                <ion-select-option>Selling Price(Low to High)</ion-select-option>
+                <ion-select-option>Selling Price(High to Low)</ion-select-option>
+                <ion-select-option>Revenue(Low to High)</ion-select-option>
+                <ion-select-option>Revenue(High to Low)</ion-select-option>
+                <ion-select-option>Profit(Low to High)</ion-select-option>
+                <ion-select-option>Profit(High to Low)</ion-select-option>
+            </ion-select>
+        </ion-item>
 
-    <ion-item>
-      <ion-label>
-      <ion-text color="dark" class="fw500">Selling Price:</ion-text>
-      <ion-range id="dual-range" dual-knobs pin color="dark" snaps ngModel name="minmaxprice" step="100000" min="0" max="1000000">
-        <ion-icon slot="start" size="small" ios="logo-usd" md="logo-usd"></ion-icon>
-        <ion-icon slot="end"  size="medium" ios="logo-usd" md="logo-usd"></ion-icon>
-      </ion-range>
-      </ion-label>
-    </ion-item>
-    <ion-button type="submit" expand="full" color="primary">Filter Results</ion-button>
-  </form>
+        <ion-item>
+            <ion-label>
+                <ion-text>Selling Price:</ion-text>
+                <ion-range id="dual-range" dual-knobs pin color="dark" snaps ngModel name="minmaxprice" step="100000"
+                           min="0" max="1000000">
+                    <ion-icon slot="start" size="small" ios="logo-usd" md="logo-usd"></ion-icon>
+                    <ion-icon slot="end" size="medium" ios="logo-usd" md="logo-usd"></ion-icon>
+                </ion-range>
+            </ion-label>
+        </ion-item>
+
+        <ion-footer>
+            <ion-button type="submit" expand="block" color="primary">Filter Results</ion-button>
+        </ion-footer>
+
+
+    </form>
 </ion-content>
 
 
 <script>
-  const dualRange = document.querySelector('#dual-range');
-  dualRange.value = { lower: 33, upper: 60 };
+    const dualRange = document.querySelector('#dual-range');
+    dualRange.value = {lower: 33, upper: 60};
 </script>
