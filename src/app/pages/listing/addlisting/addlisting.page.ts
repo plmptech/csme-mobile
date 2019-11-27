@@ -33,14 +33,14 @@ export class AddlistingPage implements OnInit {
   validateFields(form: NgForm) {
   }
 
+  upload(event) {
+    console.log(event.detail.value);
+  }
 
   createListing(form: NgForm) {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
     this.industry = form.value.category;
-    console.log(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-        form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
-        localStorage.getItem('token'));
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');
@@ -77,7 +77,7 @@ export class AddlistingPage implements OnInit {
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    }
+    };
 
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI

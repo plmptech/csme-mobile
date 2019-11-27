@@ -40,7 +40,7 @@ export class ProfileMenuPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    if (!this.authService.isLoggedIn) {
+    if (!localStorage.getItem('token')) {
       this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
       localStorage.clear();

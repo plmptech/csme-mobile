@@ -28,6 +28,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private authService: AuthService,
     private statusBar: StatusBar,
     private navCtrl: NavController,
     private menuCtrl: MenuController
@@ -44,10 +45,12 @@ export class AppComponent {
   }
 
   loginOrRegister() {
+    console.log(localStorage)
     if (localStorage.getItem('token') !== null) {
       this.navCtrl.navigateRoot('landing');
+      this.authService.isLoggedIn = true
       console.log('clearing token');
-      localStorage.clear();
+      //localStorage.clear();
       console.log('stored token: ' + localStorage.getItem('token'));
 
     } else {

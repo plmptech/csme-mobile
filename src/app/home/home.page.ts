@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
     searchKey: String;
 
     industry: string;
-    category: string;
     country: string;
     city: string;
     askingPrice: string;
@@ -45,7 +44,10 @@ export class HomePage implements OnInit {
         this.currentPage = 1;
         this.lastPage = 1;
         this.perPage = 3;
-        this.countNewListing = 0;
+        this.country = '';
+        this.city = '';
+        this.askingPrice = '';
+        this.industry = '';
     }
 
     async ngOnInit() {
@@ -62,13 +64,15 @@ export class HomePage implements OnInit {
 
     // fresh listing
     async getListing() {
-        console.log('current page: ' + this.currentPage);
-        console.log('last page: ' + this.lastPage);
-        this.http.get<Listing>(this.env.API_URL + 'listings/search?category=&country=&city=&askingPrice&revenue' +
-            '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
+        let url = this.env.API_URL + 'listings/search?page=' + this.currentPage + '&perPage=' + this.perPage
+        if (this.searchKey) url += '&name=' + this.searchKey
+        if (this.industry) url += '&industry=' + this.industry
+        if (this.country) url += '&country=' + this.country
+        if (this.city) url += '&city=' + this.city
+        if (this.askingPrice) url += '&askingPrice=' + this.askingPrice
+        this.http.get<Listing>(url)
             .toPromise()
             .then((data: any) => {
-                console.log(data);
                 this.currentPage = data.currentPage;
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
@@ -90,71 +94,21 @@ export class HomePage implements OnInit {
             });
     }
 
-    getFilteredListings(result) {
+    getFilteredListings() {
         this.currentPage = 1;
         this.allListing = [];
-        const askingPrice = result.lowerPrice + ',' + result.upperPrice;
-
-        this.http.get(this.env.API_URL + 'listings/search?category=' + result.category + '&country=' + result.country +
-            '&city=' + result.city + '&askingPrice=' + askingPrice + '&revenue&cashflow&direction=&sort=' +
-            '&page=' + this.currentPage + '&perPage=' + this.perPage)
-            .toPromise()
-            .then((data: any) => {
-                console.log(data);
-                this.currentPage = data.currentPage;
-                this.lastPage = data.lastPage;
-                this.perPage = data.perPage;
-                this.totalCount = data.totalCount;
-
-                console.log(data.listings);
-                (data.listings).forEach(item => {
-                    console.log(item);
-                    if (item.photo.data.length != 0) {
-                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
-                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
-                    }
-                    else
-                        item.photo = '/assets/shapes.svg'
-                    this.allListing.push(item);
-                });
-            })
-            .catch(err => {
-                console.log('Error', err);
-                return err;
-            });
+        this.getListing();
     }
 
     async searchListing() {
+        this.currentPage = 1;
         this.allListing = [];
-        this.http.get<Listing>(this.env.API_URL + 'listings/search?name=' + this.searchKey + '&category=&country=&city=&askingPrice&revenue' +
-            '&cashflow&direction=&sort=&page=' + this.currentPage + '&perPage=' + this.perPage)
-            .toPromise()
-            .then((data: any) => {
-                console.log(data);
-                this.currentPage = data.currentPage;
-                this.lastPage = data.lastPage;
-                this.perPage = data.perPage;
-                this.totalCount = data.totalCount;
-                (data.listings).forEach(item => {
-                    console.log(item);
-                    if (item.photo.data.length != 0) {
-                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
-                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
-                    }
-                    else
-                        item.photo = '/assets/shapes.svg'
-                    this.allListing.push(item);
-                });
-            })
-            .catch(err => {
-                console.log('Error', err);
-                return err;
-            });
-        console.log(this.searchKey)
+        await this.getListing();
     }
 
     async refreshListings(event) {
         this.currentPage = 1;
+        this.allListing = [];
         await this.getListing();
         event.target.complete();
     }
@@ -175,8 +129,11 @@ export class HomePage implements OnInit {
         modal.present();
 
         await modal.onDidDismiss().then((res) => {
-            console.log(res.data);
-            this.getFilteredListings(res.data);
+            this.country = res.data.country
+            this.city = res.data.city
+            this.industry = res.data.industry
+            this.askingPrice = res.data.lowerPrice + ',' + res.data.upperPrice
+            this.getFilteredListings();
         });
     }
 
@@ -192,12 +149,7 @@ export class HomePage implements OnInit {
         console.log(item);
         const modal = await this.modalCtrl.create({
             component: ListingDetailPage,
-            componentProps: {
-                id: item.id, name: item.name, purpose: item.purpose, industry: item.industry,
-                age: item.age, created: item.created, country: item.country, city: item.city,
-                revenue: item.revenue, description: item.description, cashFlow: item.cashFlow,
-                askingPrice: item.askingPrice, user: item.user, photo: item.photo
-            }
+            componentProps: item
         });
         return await modal.present();
     }
