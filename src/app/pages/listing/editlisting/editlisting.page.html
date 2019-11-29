@@ -1,85 +1,85 @@
 <ion-header>
-<<<<<<< HEAD
-  <ion-toolbar color="primary">
-    <ion-title text-uppercase>Edit Listing</ion-title>
-    <ion-buttons slot="end">
-      <ion-button icon-only (click)="closeModal()">
-        <ion-icon ios="ios-close" md="md-close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-title text-uppercase>Edit Listing</ion-title>
+        <ion-buttons slot="end">
+            <ion-button icon-only (click)="closeModal()">
+                <ion-icon ios="ios-close" md="md-close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 
 
 </ion-header>
 
-<ion-content [color]="dark">
-  <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
-    <ion-item-group padding>
-      <div class="group-header">Basic Information</div>
-      <br>
-      <ion-item no-padding>
-        <ion-label>Type:  </ion-label>
-        <ion-input readonly float-right>&nbsp;Business For Sale</ion-input>
-      </ion-item>
+<ion-content color="secondary">
+    <ion-grid style="height:100%;">
+        <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
+            <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
+                <ion-item-group padding margin-top>
+                    <br><br>
+                    <div text-uppercase padding-bottom>Basic Information</div>
+                    <ion-item class="item-design">
+                        <ion-label>Type:</ion-label>
+                        <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Name of Business</ion-label>
-        <ion-textarea hidden [ngModel]="id" name="id"></ion-textarea>
-        <ion-textarea [ngModel]="name" name="name"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Name of Business</ion-label>-->
+                        <ion-textarea hidden [ngModel]="id" name="id"></ion-textarea>
+                        <ion-input readonly [ngModel]="name" name="name" placeholder="Name of Business"></ion-input>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Industry</ion-label>
-        <ion-textarea name="industry" [ngModel]="industry" placeholder="F&B, Sales, Information Technology, Service"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Industry</ion-label>-->
+                        <ion-textarea name="industry" [ngModel]="industry" type="text"
+                                      placeholder="Industry"></ion-textarea>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Country</ion-label>
-        <ion-textarea name="country" [ngModel]="country"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Country</ion-label>-->
+                        <ion-textarea name="country" [ngModel]="country" placeholder="Country"></ion-textarea>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">City</ion-label>
-        <ion-textarea name="city" [ngModel]="city"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">City</ion-label>-->
+                        <ion-textarea name="city" [ngModel]="city" placeholder="City"></ion-textarea>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Years In Business</ion-label>
-        <ion-textarea name="age" [ngModel]="age"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <ion-label position="floating">Years In Business</ion-label>
+                        <ion-input type="tel" name="age" [ngModel]="age" placeholder="Description"></ion-input>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Description of Business</ion-label>
-        <ion-textarea name="description" [ngModel]="description" rows="5" maxlength="500"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design-big">
+                        <!--<ion-label position="floating">Description of Business</ion-label>-->
+                        <ion-textarea name="description" [ngModel]="description" rows="5"
+                                      maxlength="500" placeholder="Description"></ion-textarea>
+                    </ion-item>
 
 
-    </ion-item-group>
-    <br>
-    <ion-item-group padding>
-      <div class="group-header">Sale Information</div>
-      <ion-item no-padding>
-        <ion-label position="floating">Asking Price</ion-label>
-        <ion-textarea name="askingPrice" [ngModel]="askingPrice"></ion-textarea>
-      </ion-item>
+                </ion-item-group>
+                <ion-item-group padding>
+                    <div text-uppercase padding-bottom>Sale Information</div>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Asking Price</ion-label>-->
+                        <ion-input type="tel" name="askingPrice" [ngModel]="askingPrice" placeholder="Asking Price"></ion-input>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Revenue</ion-label>
-        <ion-textarea name="revenue" [ngModel]="revenue"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Revenue</ion-label>-->
+                        <ion-input type="tel" name="revenue" [ngModel]="revenue" placeholder="Revenue"></ion-input>
+                    </ion-item>
 
-      <ion-item no-padding>
-        <ion-label position="floating">Cash Flow</ion-label>
-        <ion-textarea name="cashFlow" [ngModel]="cashFlow"></ion-textarea>
-      </ion-item>
+                    <ion-item class="item-design">
+                        <!--<ion-label position="floating">Cash Flow</ion-label>-->
+                        <ion-input type="tel" name="cashFlow" [ngModel]="cashFlow" placeholder="Cash Flow"></ion-input>
+                    </ion-item>
 
-    </ion-item-group>
-    <ion-footer>
-        <ion-toolbar>
-        <ion-button type="submit" expand="full" color="primary" >Save Changes</ion-button>
-      </ion-toolbar>
-    </ion-footer>
-  </form>
+                </ion-item-group>
+                        <ion-button type="submit" expand="full" color="primary">Save Changes</ion-button>
+            </form>
+        </ion-row>
+    </ion-grid>
 </ion-content>
 
 

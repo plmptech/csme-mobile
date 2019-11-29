@@ -5,7 +5,7 @@
         <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-uppercase">Profile</ion-title>
+    <ion-title text-uppercase>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -52,10 +52,10 @@
     </ion-grid>
   </div>
 <br>
-  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-    <ion-item [routerLink]="[p.url]" color="primary">
+  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" >
+    <ion-item [routerLink]="[p.url]" color="secondary" lines="none">
       <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
-      <ion-text>
+      <ion-text color="light">
         {{p.title}}
       </ion-text>
     </ion-item>

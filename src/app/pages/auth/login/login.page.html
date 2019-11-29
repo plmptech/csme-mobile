@@ -1,28 +1,37 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button icon-only (click)="goHome()">
-        <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title [size]="small">LOGIN</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button icon-only (click)="goHome()">
+                <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title text-uppercase>Login</ion-title>
+    </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  <form #form="ngForm" (ngSubmit)="login(form)" method="post">
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input ngModel type="email" name="email"></ion-input>
-    </ion-item>
+<ion-content color="secondary">
+    <ion-grid style="height:100%;">
+        <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
+               <form #form="ngForm" (ngSubmit)="login(form)" method="post">
+                    <ion-item class="item-design">
+                        <ion-label>
+                            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp;
+                        </ion-label>
+                        <ion-input ngModel type="email" name="email" placeholder="Email" color="secondary"></ion-input>
+                    </ion-item>
+                    <br>
+                    <ion-item class="item-design">
+                        <ion-label >
+                            <ion-icon ios="ios-lock" md="md-lock"></ion-icon> &nbsp;
+                        </ion-label>
+                        <ion-input ngModel type="password" name="password" placeholder="Password" color="secondary"></ion-input>
+                    </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input ngModel type="password" name="password"></ion-input>
-    </ion-item>
+                    <br>
+                    <ion-button type="submit" expand="block" color="primary">Login</ion-button>
 
-    <br>
-    <ion-button type="submit" expand="block" color="primary">Login</ion-button>
-  </form>
-  <p text-center>New User?</p>
-  <ion-button expand="block" color="danger" (click)="registerModal()">Register</ion-button>
+                <p text-center>New User?</p>
+                <ion-button expand="block" color="danger" (click)="registerModal()">Register</ion-button>
+               </form>
+        </ion-row>
+    </ion-grid>
 </ion-content>

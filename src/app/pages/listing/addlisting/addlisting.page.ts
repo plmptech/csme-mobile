@@ -41,6 +41,7 @@ export class AddlistingPage implements OnInit {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
     this.industry = form.value.category;
+    console.log(form.value.imageFilePath);
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');

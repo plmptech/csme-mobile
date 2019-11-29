@@ -1,43 +1,52 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button icon-only (click)="goHome()">
-        <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title class="ion-text-uppercase">Register</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button icon-only (click)="goHome()">
+                <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title text-uppercase>Register</ion-title>
+    </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  <form #form="ngForm" (ngSubmit)="register(form)" method="post">
+<ion-content color="secondary">
+    <ion-grid style="height:100%;">
+        <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
+            <form #form="ngForm" (ngSubmit)="register(form)" method="post">
+                <div text-uppercase padding-bottom>User Information</div>
+                <ion-item class="item-design">
+                    <ion-icon ios="ios-person" md="md-person"></ion-icon>&nbsp;
+                    <ion-input type="text" ngModel name="name" placeholder="Name"></ion-input>
+                </ion-item>
+                <br>
+                <ion-item class="item-design">
+                    <ion-icon ios="ios-call" md="md-call"></ion-icon>&nbsp;
+                    <ion-input type="tel" ngModel name="mobile" placeholder="Mobile Number"></ion-input>
+                </ion-item>
+                <br>
+                <div text-uppercase padding-bottom>Account Information</div>
+                <ion-item class="item-design">
+                    <ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp;
+                    <ion-input type="email" ngModel name="email" placeholder="Email"></ion-input>
+                </ion-item>
+                <br>
+                <ion-item class="item-design">
+                    <ion-label>
+                        <ion-icon ios="ios-lock" md="md-lock"></ion-icon> &nbsp;
+                    </ion-label>
+                    <ion-input type="password" ngModel name="password" placeholder="Password"></ion-input>
+                </ion-item>
+                <br>
+                <ion-item class="item-design">
+                    <ion-label>
+                        <ion-icon ios="ios-lock" md="md-lock"></ion-icon> &nbsp;
+                    </ion-label>
+                    <ion-input type="password" ngModel name="confirmPw" placeholder="Confirm password"></ion-input>
+                </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input type="text" ngModel name="name"></ion-input>
-    </ion-item>
+                <br>
 
-    <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" ngModel name="email"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Mobile Number</ion-label>
-      <ion-input type="text" ngModel name="mobile"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" ngModel name="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Confirm Password</ion-label>
-      <ion-input type="password" ngModel name="confirmPw"></ion-input>
-    </ion-item>
-
-<br>
-
-    <ion-button type="submit" expand="block" color="primary">Register</ion-button>
-  </form>
+                <ion-button type="submit" expand="block" color="primary">Register</ion-button>
+            </form>
+        </ion-row>
+    </ion-grid>
 </ion-content>

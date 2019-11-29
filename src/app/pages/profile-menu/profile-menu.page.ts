@@ -44,7 +44,7 @@ export class ProfileMenuPage implements OnInit {
       this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
       localStorage.clear();
-    } 
+    }
   }
 
   async ngOnInit() {

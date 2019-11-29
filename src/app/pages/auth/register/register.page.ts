@@ -33,16 +33,31 @@ export class RegisterPage implements OnInit {
   }
   validateFields(form: NgForm) {
     if (form.value.name !== '' && form.value.email !== '' && form.value.password !== '' && form.value.confirmPw !== '') {
-      if (form.value.password === form.value.confirmPw) {
-        return true;
+      if (this.validateEmail(form.value.email)) {
+        if (form.value.password === form.value.confirmPw) {
+          return true;
+        } else {
+          this.alertService.presentToast('Password does not match');
+        }
+      } else {
+        this.alertService.presentToast('Invalid email address');
       }
     }
     return false;
   }
 
+  validateEmail(mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    }
+    return false;
+  }
 
   register(form: NgForm) {
     const validatedField = this.validateFields(form);
+    // console.log(form.value.email, form.value.name, form.value.mobile,
+    //     form.value.password, form.value.confirmPw);
+    // console.log(this.validateEmail(form.value.email));
     if (validatedField) {
       this.authService.register(form.value.email, form.value.name,
           form.value.password, form.value.confirmPw).subscribe((res: any) => {

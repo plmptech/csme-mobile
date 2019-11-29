@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import {MenuController, NavController, Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { StatusBar } from '../../node_modules/@ionic-native/status-bar';
 import {AuthService} from './services/auth.service';
 import {AlertService} from './services/alert.service';
 
@@ -29,28 +29,30 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private authService: AuthService,
-    private statusBar: StatusBar,
+    // private statusBar: StatusBar,
     private navCtrl: NavController,
     private menuCtrl: MenuController
   ) {
+
     this.initializeApp();
+    // statusBar.styleDefault();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
       this.menuCtrl.enable(true);
       this.splashScreen.hide();
     });
   }
 
   loginOrRegister() {
-    console.log(localStorage)
+    console.log(localStorage);
     if (localStorage.getItem('token') !== null) {
       this.navCtrl.navigateRoot('landing');
-      this.authService.isLoggedIn = true
+      this.authService.isLoggedIn = true;
       console.log('clearing token');
-      //localStorage.clear();
+      // localStorage.clear();
       console.log('stored token: ' + localStorage.getItem('token'));
 
     } else {
