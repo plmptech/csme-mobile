@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, NavController, NavParams} from '@ionic/angular';
+import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { EnvService } from '../../../services/env.service';
 
 @Component({
   selector: 'app-listing-detail',
@@ -21,12 +23,15 @@ export class ListingDetailPage implements OnInit {
   age: number;
   photo: any;
   industry: string;
+  email: string;
 
   constructor(private modalCtrl: ModalController,
-              private navParams: NavParams,
-              private navCtrl: NavController) { }
+    private navParams: NavParams,
+    private http: HttpClient,
+    private env: EnvService,
+    private navCtrl: NavController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.id = this.navParams.data.id;
     this.name = this.navParams.data.name;
     this.purpose = this.navParams.data.purpose;
@@ -40,6 +45,19 @@ export class ListingDetailPage implements OnInit {
     this.age = this.navParams.data.age;
     this.photo = this.navParams.data.photo;
     this.created = this.navParams.data.created;
+
+    this.http.get<User>(this.env.API_URL + 'user/info?id=' + this.navParams.data.user)
+      .toPromise()
+      .then((data: any) => {
+        this.email = data.user.email
+      })
+  }
+
+  enquiry(mail, email) {
+    console.log(email)
+    mail = document.createElement("a");
+    mail.href = "mailto:" + email;
+    mail.click();
 
   }
 
