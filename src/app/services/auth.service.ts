@@ -48,9 +48,9 @@ export class AuthService {
         localStorage.getItem('token'))
      */
     createListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-        askingPrice: number, revenue: number, cashFlow: number, description: string, token: string) {
+        askingPrice: number, revenue: number, cashFlow: number, description: string, photo: string, token: string) {
         return this.http.post(this.env.API_URL + 'listing',
-            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token },
+            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, photo, token },
         );
     }
 

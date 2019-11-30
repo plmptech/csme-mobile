@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActionSheetController, NavController} from '@ionic/angular';
-import {AuthService} from '../../../services/auth.service';
-import {NgForm} from '@angular/forms';
-import {AlertService} from '../../../services/alert.service';
+import { ActionSheetController, NavController } from '@ionic/angular';
+import { AuthService } from '../../../services/auth.service';
+import { NgForm } from '@angular/forms';
+import { AlertService } from '../../../services/alert.service';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 
 @Component({
@@ -15,13 +15,14 @@ export class AddlistingPage implements OnInit {
   private industry: string;
   private userTypeResult: boolean;
   private userType: string;
+  private photo: any;
 
   constructor(
-      private navCtrl: NavController,
-      private authService: AuthService,
-      private camera: Camera,
-      public actionSheetController: ActionSheetController,
-      private alertService: AlertService) { }
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private camera: Camera,
+    public actionSheetController: ActionSheetController,
+    private alertService: AlertService) { }
 
   ngOnInit() {
   }
@@ -33,39 +34,54 @@ export class AddlistingPage implements OnInit {
   validateFields(form: NgForm) {
   }
 
-  upload(event) {
-    console.log(event.detail.value);
+  async upload($event) {
+    return new Promise((resolve, reject) => {
+      var input = $event.target;
+      if (input.files && input.files[0]) {
+        // create a new FileReader to read this image and convert to base64 format
+        var reader = new FileReader();
+        reader.readAsDataURL(input.files[0]);
+        // Define a callback function to run, when FileReader finishes its job
+        reader.onload = e => {
+          console.log(e.target)
+          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+          // Read image as base64 and set to imageData
+          this.photo = e.target.result;
+          resolve(this.photo);
+        };
+      }
+    });
   }
 
   createListing(form: NgForm) {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
     this.industry = form.value.category;
-    console.log(form.value.imageFilePath);
+    console.log(this.photo);
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');
     } else {
       this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
-          localStorage.getItem('token')).subscribe((res: any) => {
-        if (res.status !== 'error') {
-          console.log(res);
-          this.navCtrl.pop();
-          this.alertService.presentToast(res.message);
-        } else {
-          this.navCtrl.pop();
-          this.alertService.presentToast(res.message);
-        }
-      });
+        form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
+        localStorage.getItem('token')).subscribe((res: any) => {
+          if (res.status !== 'error') {
+            console.log(res);
+            this.navCtrl.pop();
+            this.alertService.presentToast(res.message);
+          } else {
+            this.navCtrl.pop();
+            this.alertService.presentToast(res.message);
+          }
+        });
     }
   }
 
   validateForm(form: NgForm) {
     if (form.value.name !== '' && form.value.industry !== '' &&
-        form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
-        && form.value.askingPrice !== '' && form.value.age !== '' && form.value.cashFlow !== '' && form.value.revenue !== '') {
-        return true;
+      form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
+      && form.value.askingPrice !== '' && form.value.age !== '' && form.value.cashFlow !== '' && form.value.revenue !== '') {
+      return true;
     }
     return false;
   }
@@ -83,7 +99,8 @@ export class AddlistingPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-       const base64Image = 'data:image/jpeg;base64,' + imageData;
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.photo = base64Image;
     }, (err) => {
       // Handle error
     });
@@ -98,16 +115,16 @@ export class AddlistingPage implements OnInit {
           this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
       },
-        {
-          text: 'Use Camera',
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.CAMERA);
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel'
+      {
+        text: 'Use Camera',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.CAMERA);
         }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
       ]
     });
     await actionSheet.present();
