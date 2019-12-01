@@ -59,7 +59,7 @@ export class RegisterPage implements OnInit {
     //     form.value.password, form.value.confirmPw);
     // console.log(this.validateEmail(form.value.email));
     if (validatedField) {
-      this.authService.register(form.value.email, form.value.name,
+      this.authService.register(form.value.email, form.value.name, form.value.mobile,
           form.value.password, form.value.confirmPw).subscribe((res: any) => {
         if (res.status !== 'error') {
           this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {

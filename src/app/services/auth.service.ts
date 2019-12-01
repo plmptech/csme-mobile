@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {EnvService} from './env.service';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Observable, Subscription} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { EnvService } from './env.service';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, Subscription } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
-import {NavController} from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -32,9 +32,9 @@ export class AuthService {
             + email + '&password=' + password);
     }
 
-    register(email: string, name: string, password: string, confirm: string) {
+    register(email: string, name: string, phone: number, password: string, confirm: string) {
         return this.http.post(this.env.API_URL + 'user/register',
-            {email, name, password, confirm},
+            { email, name, phone, password, confirm },
         );
     }
 
@@ -48,16 +48,16 @@ export class AuthService {
         localStorage.getItem('token'))
      */
     createListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string ) {
+        askingPrice: number, revenue: number, cashFlow: number, description: string, photo: string, token: string) {
         return this.http.post(this.env.API_URL + 'listing',
-            {name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token},
+            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, photo, token },
         );
     }
 
     updateListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-                     askingPrice: number, revenue: number, cashFlow: number,  description: string, token: string, id: string ) {
+        askingPrice: number, revenue: number, cashFlow: number, description: string, token: string, id: string) {
         return this.http.put(this.env.API_URL + 'listing/' + id,
-            {name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token},
+            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token },
         );
     }
 
