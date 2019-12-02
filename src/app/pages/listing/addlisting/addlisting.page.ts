@@ -34,19 +34,20 @@ export class AddlistingPage implements OnInit {
   validateFields(form: NgForm) {
   }
 
-  async upload($event) {
+  async upload(e) {
     return new Promise((resolve, reject) => {
-      var input = $event.target;
+      const input = e.target;
       if (input.files && input.files[0]) {
         // create a new FileReader to read this image and convert to base64 format
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsDataURL(input.files[0]);
         // Define a callback function to run, when FileReader finishes its job
-        reader.onload = e => {
-          console.log(e.target)
+        reader.onload = f => {
+          console.log(f.target);
           // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
           // Read image as base64 and set to imageData
-          this.photo = e.target.result;
+          this.photo = f.target;
+          // this.photo = f.target.result;
           resolve(this.photo);
         };
       }

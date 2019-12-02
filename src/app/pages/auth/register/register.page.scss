@@ -1,3 +1,7 @@
+ion-content.background{
+  --background: url("~src/assets/img/background.png") no-repeat center center / cover;
+}
+
 .item-design{
   font-family: 'monospace';
   font-size: 16px;
@@ -8,7 +12,8 @@
   border-radius: 10px;
 }
 
-.ion-button {
-  border-radius: 10px;
-  height: 70px;
+
+.header-title{
+  color: #0E927D;
+  --font-weight-bold: bold;
 }

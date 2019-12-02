@@ -1,15 +1,19 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-button icon-only (click)="goHome()">
-                <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-        <ion-title text-uppercase>Register</ion-title>
-    </ion-toolbar>
-</ion-header>
-<ion-content color="secondary">
-    <ion-grid style="height:100%;">
+<!--<ion-header>-->
+    <!--<ion-toolbar color="primary">-->
+        <!--<ion-buttons slot="start">-->
+            <!--<ion-button icon-only (click)="goHome()">-->
+                <!--<ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>-->
+            <!--</ion-button>-->
+        <!--</ion-buttons>-->
+        <!--<ion-title text-uppercase>Register</ion-title>-->
+    <!--</ion-toolbar>-->
+<!--</ion-header>-->
+<ion-content class="background">
+    <ion-button icon-only (click)="goHome()" fill="clear">
+        <ion-icon name="arrow-dropleft"></ion-icon>
+    </ion-button>
+
+    <ion-grid style="height:90%;">
         <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="register(form)" method="post">
                 <div text-uppercase padding-bottom>User Information</div>
@@ -23,10 +27,10 @@
                     <ion-input type="tel" ngModel name="mobile" placeholder="Mobile Number"></ion-input>
                 </ion-item>
                 <br>
-                <div text-uppercase padding-bottom>Account Information</div>
+                <div text-uppercase padding-bottom >Account Information</div>
                 <ion-item class="item-design">
                     <ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp;
-                    <ion-input type="email" ngModel name="email" placeholder="Email"></ion-input>
+                    <ion-input type="email" ngModel name="email" placeholder="&nbsp;Email"></ion-input>
                 </ion-item>
                 <br>
                 <ion-item class="item-design">

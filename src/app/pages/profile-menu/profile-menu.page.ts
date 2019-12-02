@@ -50,7 +50,7 @@ export class ProfileMenuPage implements OnInit {
   async ngOnInit() {
     await this.authService.getUserInfo();
     this.storage.get('currentUser').then(res => {
-      this.user = res.user;
+        this.user = res.user;
     });
   }
 

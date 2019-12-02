@@ -1,5 +1,5 @@
-.ion-content {
-  background: url("~src/assets/img/background.png");
+ion-content.background{
+  --background: url("~src/assets/img/background.png") no-repeat center center / cover;
 }
 
 .item-design{
@@ -12,8 +12,16 @@
   border-radius: 10px;
 }
 
-.ion-button {
-  border-radius: 10px;
-  height: 70px;
+.empty-bg {
+  --background: none;
 }
 
+p {
+  font-size: 13pt;
+  color: #fff;
+}
+
+//.header-title{
+//  color: #0E927D;
+//  --font-weight-bold: bold;
+//}

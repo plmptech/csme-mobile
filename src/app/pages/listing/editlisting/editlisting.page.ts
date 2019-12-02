@@ -56,7 +56,7 @@ export class EditlistingPage implements OnInit {
     const validatedField = this.validateForm(form);
 
     if (!validatedField) {
-      this.alertService.presentToast('Please fill in the all fields');
+      this.alertService.presentToast('Please fill in all fields');
     } else {
       this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
           form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
@@ -79,7 +79,13 @@ export class EditlistingPage implements OnInit {
         form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
         && form.value.askingPrice !== undefined && form.value.age !== '' && form.value.cashFlow !== undefined
         && form.value.revenue !== undefined) {
-      return true;
+       if ((Number.isInteger(form.value.askingPrice)) && (Number.isInteger(form.value.age)) && (Number.isInteger(form.value.cashFlow))
+            && (Number.isInteger(form.value.cashFlow)) && (Number.isInteger(form.value.revenue))) {
+            return true;
+       } else {
+         this.alertService.presentToast('Please enter the fields correctly');
+         return false;
+       }
     }
     return false;
   }
