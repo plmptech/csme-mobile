@@ -22,6 +22,7 @@ export class EditlistingPage implements OnInit {
   askingPrice: number;
   created: string;
   private age: any;
+  photo: any;
 
   constructor(private modalCtrl: ModalController,
               private navParams: NavParams,
@@ -43,6 +44,7 @@ export class EditlistingPage implements OnInit {
     this.askingPrice = this.navParams.data.askingPrice;
     this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
+    this.photo = this.navParams.data.photo;
   }
 
   closeModal() {
@@ -54,12 +56,13 @@ export class EditlistingPage implements OnInit {
   saveListing(form: NgForm) {
     this.purpose = 'Business For Sale';
     const validatedField = this.validateForm(form);
-
+    console.log('photo : ' +  this.photo);
     if (!validatedField) {
+
       this.alertService.presentToast('Please fill in all fields');
     } else {
       this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
-          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description,
+          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
           localStorage.getItem('token'), form.value.id).subscribe((res: any) => {
         if (res.status !== 'error') {
           console.log(res);
@@ -74,18 +77,40 @@ export class EditlistingPage implements OnInit {
     }
   }
 
+  async upload(e) {
+    return new Promise((resolve, reject) => {
+      const input = e.target;
+      if (input.files && input.files[0]) {
+        // create a new FileReader to read this image and convert to base64 format
+        // const reader = new FileReader();
+        // reader.readAsDataURL(input.files[0]);
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(input.files[0]);
+        // Define a callback function to run, when FileReader finishes its job
+        // reader.onload = f => {
+        //   console.log(f.target);
+        //   // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+        //   // Read image as base64 and set to imageData
+        //   this.photo = f.target;
+        //   // this.photo = f.target.result;
+        //   resolve(this.photo);
+        // };
+        fileReader.onload = (event: Event) => {
+          this.photo = fileReader.result;
+          resolve(this.photo);
+        };
+      }
+    });
+  }
+
   validateForm(form: NgForm) {
+    console.log(form.value.name, form.value.industry, form.value.city, form.value.description, form.value.country,
+    form.value.askingPrice, form.value.age, form.value.cashFlow, form.value.revenue);
     if (form.value.name !== '' && form.value.industry !== '' &&
         form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
-        && form.value.askingPrice !== undefined && form.value.age !== '' && form.value.cashFlow !== undefined
+        && form.value.askingPrice !== undefined && form.value.age !== undefined && form.value.cashFlow !== undefined
         && form.value.revenue !== undefined) {
-       if ((Number.isInteger(form.value.askingPrice)) && (Number.isInteger(form.value.age)) && (Number.isInteger(form.value.cashFlow))
-            && (Number.isInteger(form.value.cashFlow)) && (Number.isInteger(form.value.revenue))) {
-            return true;
-       } else {
-         this.alertService.presentToast('Please enter the fields correctly');
-         return false;
-       }
+      return true;
     }
     return false;
   }

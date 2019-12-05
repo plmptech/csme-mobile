@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
-import { NgForm } from '@angular/forms';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 
@@ -16,6 +16,7 @@ export class AddlistingPage implements OnInit {
   private userTypeResult: boolean;
   private userType: string;
   private photo: any;
+  group: FormGroup;
 
   constructor(
     private navCtrl: NavController,
@@ -25,6 +26,18 @@ export class AddlistingPage implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
+    // this.group = new FormGroup({
+    //   businessName : new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    //   industry : new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    //   country : new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    //   city : new FormControl('', [Validators.required, Validators.maxLength(25)]),
+    //   yearsInBiz : new FormControl('', [Validators.required, Validators.min(1), Validators.max(30) ]),
+    //   description : new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(500) ]),
+    //   askingPrice : new FormControl('', [Validators.required, Validators.min(100), Validators.max(99999999) ]),
+    //   revenue : new FormControl('', [Validators.required, Validators.min(100), Validators.max(99999999) ]),
+    //   cashFlow : new FormControl('', [Validators.required, Validators.min(100), Validators.max(99999999) ]),
+    //
+    // });
   }
 
   goBack() {
@@ -39,16 +52,21 @@ export class AddlistingPage implements OnInit {
       const input = e.target;
       if (input.files && input.files[0]) {
         // create a new FileReader to read this image and convert to base64 format
-        const reader = new FileReader();
-        reader.readAsDataURL(input.files[0]);
+        // const reader = new FileReader();
+        const fileReader: FileReader = new FileReader();
+        fileReader.readAsDataURL(input.files[0]);
         // Define a callback function to run, when FileReader finishes its job
-        reader.onload = f => {
-          console.log(f.target);
-          // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-          // Read image as base64 and set to imageData
-          this.photo = f.target;
-          // this.photo = f.target.result;
-          resolve(this.photo);
+        // reader.onload = f => {
+        //   console.log(f.target);
+        //   // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+        //   // Read image as base64 and set to imageData
+        //   // this.photo = f.target;
+        //   this.photo = f.target.result;
+        //   resolve(this.photo);
+        // };
+        fileReader.onload = (event: Event) => {
+            this.photo = fileReader.result;
+            resolve(this.photo);
         };
       }
     });
@@ -58,7 +76,6 @@ export class AddlistingPage implements OnInit {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
     this.industry = form.value.category;
-    console.log(this.photo);
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');
@@ -102,6 +119,7 @@ export class AddlistingPage implements OnInit {
       // If it's base64 (DATA_URL):
       const base64Image = 'data:image/jpeg;base64,' + imageData;
       this.photo = base64Image;
+      this.alertService.presentToast(this.photo);
     }, (err) => {
       // Handle error
     });

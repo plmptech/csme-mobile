@@ -29,3 +29,19 @@
 .label-bold{
   font-weight: bold;
 }
+
+ion-item.item-photo-box{
+  height: auto;
+  width: 100%;
+  background-color: #666;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.item-photo-chooser{
+  font-family: 'monospace';
+  font-size: 13px;
+  width: 100%;
+  background: #e6e6e6;
+  border-radius: 5px;
+}

@@ -12,18 +12,18 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content color="secondary" padding>
   <form #form="ngForm" (ngSubmit)="applyChanges()" method="post">
-    <ion-item>
-      <ion-text color="dark">Industry</ion-text>
+    <ion-item class="item-design">
+      <ion-text >Industry</ion-text>
       <ion-select [(ngModel)]="selectIndustry" name="selectIndustry">
         <ion-select-option>F&B</ion-select-option>
         <ion-select-option>Sales</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-text color="dark">Country</ion-text>
+    <ion-item class="item-design">
+      <ion-text >Country</ion-text>
       <ion-select [(ngModel)]="selectCountry" name="selectCountry">
         <ion-select-option>Singapore</ion-select-option>
         <ion-select-option>Malaysia</ion-select-option>
@@ -32,8 +32,8 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-text class="fw500" color="dark">City</ion-text>
+    <ion-item class="item-design">
+      <ion-text>City</ion-text>
       <ion-select [(ngModel)]="selectCity" name="selectCity">
         <ion-select-option>Ho Chi Minh City</ion-select-option>
         <ion-select-option>Hanoi</ion-select-option>
@@ -50,8 +50,8 @@
         <!--</ion-range>-->
         <!--</ion-item>-->
 
-    <ion-item>
-      <ion-text color="dark">Sort by</ion-text>
+    <ion-item class="item-design">
+      <ion-text >Sort by</ion-text>
       <ion-select [(ngModel)]="sortBy" name="sortBy">
         <ion-select-option>Recently Listed</ion-select-option>
         <ion-select-option>Selling Price(Low to High)</ion-select-option>
@@ -63,9 +63,9 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="item-design">
       <ion-label>
-      <ion-text color="dark">Selling Price:</ion-text>
+      <ion-text>Selling Price:</ion-text>
       <ion-range id="dual-range" dual-knobs pin color="dark" snaps [(ngModel)]="minmaxprice" name="minmaxprice" step="100000" min="0" max="1000000">
         <ion-icon slot="start" size="small" ios="logo-usd" md="logo-usd"></ion-icon>
         <ion-icon slot="end"  size="medium" ios="logo-usd" md="logo-usd"></ion-icon>

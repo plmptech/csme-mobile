@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, NavController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
-import { SearchFilterPage } from '../pages/modal/search-filter/search-filter.page';
-import { HttpClient } from '@angular/common/http';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { EnvService } from '../services/env.service';
-import { ListingDetailPage } from '../pages/modal/listing-detail/listing-detail.page';
+import {Component, OnInit} from '@angular/core';
+import {MenuController, ModalController, NavController} from '@ionic/angular';
+import {AuthService} from '../services/auth.service';
+import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
+import {HttpClient} from '@angular/common/http';
+import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import {EnvService} from '../services/env.service';
+import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
 
 @Component({
     selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomePage implements OnInit {
     perPage: number;
     totalCount: number;
     countNewListing: number;
-    searchKey: String;
+    searchKey: string;
 
     industry: string;
     country: string;
@@ -34,12 +34,12 @@ export class HomePage implements OnInit {
     user: any;
 
     constructor(public navCtrl: NavController,
-        public modalCtrl: ModalController,
-        private authService: AuthService,
-        private http: HttpClient,
-        private sanitizer: DomSanitizer,
-        private menuCtrl: MenuController,
-        private env: EnvService,
+                public modalCtrl: ModalController,
+                private authService: AuthService,
+                private http: HttpClient,
+                private sanitizer: DomSanitizer,
+                private menuCtrl: MenuController,
+                private env: EnvService,
     ) {
         this.currentPage = 1;
         this.lastPage = 1;
@@ -64,12 +64,22 @@ export class HomePage implements OnInit {
 
     // fresh listing
     async getListing() {
-        let url = this.env.API_URL + 'listings/search?page=' + this.currentPage + '&perPage=' + this.perPage
-        if (this.searchKey) url += '&name=' + this.searchKey
-        if (this.industry) url += '&industry=' + this.industry
-        if (this.country) url += '&country=' + this.country
-        if (this.city) url += '&city=' + this.city
-        if (this.askingPrice) url += '&askingPrice=' + this.askingPrice
+        let url = this.env.API_URL + 'listings/search?page=' + this.currentPage + '&perPage=' + this.perPage;
+        if (this.searchKey) {
+            url += '&name=' + this.searchKey;
+        }
+        if (this.industry) {
+            url += '&industry=' + this.industry;
+        }
+        if (this.country) {
+            url += '&country=' + this.country;
+        }
+        if (this.city) {
+            url += '&city=' + this.city;
+        }
+        if (this.askingPrice) {
+            url += '&askingPrice=' + this.askingPrice;
+        }
         this.http.get<Listing>(url)
             .toPromise()
             .then((data: any) => {
@@ -79,12 +89,12 @@ export class HomePage implements OnInit {
                 this.totalCount = data.totalCount;
                 (data.listings).forEach(item => {
                     console.log(item);
-                    if (item.photo.data.length != 0) {
-                        let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)))
-                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
+                    if (item.photo.data.length !== 0) {
+                        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)));
+                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+                    } else {
+                        item.photo = '/assets/shapes.svg';
                     }
-                    else
-                        item.photo = '/assets/shapes.svg'
                     this.allListing.push(item);
                 });
             })
@@ -129,10 +139,10 @@ export class HomePage implements OnInit {
         modal.present();
 
         await modal.onDidDismiss().then((res) => {
-            this.country = res.data.country
-            this.city = res.data.city
-            this.industry = res.data.industry
-            this.askingPrice = res.data.lowerPrice + ',' + res.data.upperPrice
+            this.country = res.data.country;
+            this.city = res.data.city;
+            this.industry = res.data.industry;
+            this.askingPrice = res.data.lowerPrice + ',' + res.data.upperPrice;
             this.getFilteredListings();
         });
     }

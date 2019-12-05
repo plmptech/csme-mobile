@@ -67,11 +67,12 @@ export class MylistingsPage implements OnInit {
     console.log(item);
     const modal = await this.modalCtrl.create({
       component: EditlistingPage,
-      componentProps: {
-        id: item._id, name: item.name, purpose: item.purpose, age: item.age,
-        industry: item.industry, created: item.created, country: item.country, city: item.city,
-        revenue: item.revenue, askingPrice: item.askingPrice, cashFlow: item.cashFlow, description: item.description, user: item.user
-      }
+      componentProps: item
+      // componentProps: {
+      //   id: item._id, name: item.name, purpose: item.purpose, age: item.age,
+      //   industry: item.industry, created: item.created, country: item.country, city: item.city,
+      //   revenue: item.revenue, askingPrice: item.askingPrice, cashFlow: item.cashFlow, description: item.description, user: item.user
+      // }
     });
     return await modal.present();
   }

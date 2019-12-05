@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content color="secondary">
-    <ion-grid style="height:90%;">
+    <ion-grid style="height:90%;" no-margin no-padding>
         <ion-row align-items-center style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
                 <ion-item-group padding>
@@ -24,32 +24,32 @@
 
                     <ion-item class="item-design-big">
                         <ion-label class="label-bold">Name of Business</ion-label>
-                        <ion-textarea type="text" name="name" ngModel name="name" maxlength="50" rows="5"></ion-textarea>
+                        <ion-textarea type="text" name="name" ngModel  name="name" maxlength="50" rows="5"></ion-textarea>
                     </ion-item>
 
                     <ion-item class="item-design">
                         <ion-label class="label-bold">Industry</ion-label>
-                        <ion-input type="text" name="category" ngModel  maxlength="25"></ion-input>
+                        <ion-input type="text" name="category" ngModel maxlength="25"></ion-input>
                     </ion-item>
 
                     <ion-item class="item-design">
                         <ion-label class="label-bold">Country</ion-label>
-                        <ion-input type="text" name="country" ngModel  maxlength="25"></ion-input>
+                        <ion-input type="text" name="country" ngModel maxlength="25"></ion-input>
                     </ion-item>
 
                     <ion-item class="item-design">
                         <ion-label class="label-bold">City</ion-label>
-                        <ion-input type="text" name="city" ngMode maxlength="25"></ion-input>
+                        <ion-input type="text" name="city" ngMode  maxlength="25"></ion-input>
                     </ion-item>
 
                     <ion-item class="item-design">
                         <ion-label class="label-bold">Years In Business</ion-label>
-                        <ion-input type="tel" name="age" ngModel  min="1" max="30"></ion-input>
+                        <ion-input type="tel" name="age" ngModel  min="1" max="30" ></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design-big" text-wrap>
-                        <ion-label class="label-bold">Description of Business</ion-label>
-                        <ion-textarea type="text" name="description" ngModel rows="5"
+                    <ion-item class="item-design-big">
+                        <ion-label class="label-bold" position="stacked">Description of Business</ion-label>
+                        <ion-textarea type="text" name="description" ngModel rows="6"
                                       maxlength="500"></ion-textarea>
                     </ion-item>
                 </ion-item-group>
@@ -70,16 +70,18 @@
                         <ion-input type="tel" name="cashFlow" ngModel  min="100" max="99999999"></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold" id="profile_image" stacked>Photo</ion-label>
-                        <ion-input type="file" accept="image/*" (change)="upload($event)"></ion-input>
-                      </ion-item>
-                    <!--<ion-button type="file" expand="block" accept="image/*" color="primary" (click)="upload($event)">Choose Image</ion-button>-->
+                    <ion-item class="item-photo-box" *ngIf="photo">
+                        <img *ngIf="photo" [src]="photo"/><br>
+                    </ion-item>
+                    <ion-item class="item-photo-chooser">
+                        <ion-label class="label-bold" id="profile_image">Photo</ion-label>
+                        <ion-input input-style="box" type="file" accept="image/*" (change)="upload($event)"></ion-input>
+                    </ion-item>
+
+                    <!--<ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>-->
 
                 </ion-item-group>
-                <ion-footer>
                     <ion-button type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button>
-                </ion-footer>
             </form>
         </ion-row>
     </ion-grid>
