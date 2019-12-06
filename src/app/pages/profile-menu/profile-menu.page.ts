@@ -39,7 +39,7 @@ export class ProfileMenuPage implements OnInit {
 
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     if (!localStorage.getItem('token')) {
       this.navCtrl.navigateRoot('/login');
       this.authService.clearStoredInfo();
@@ -47,13 +47,17 @@ export class ProfileMenuPage implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    await this.authService.getUserInfo();
-    this.storage.get('currentUser').then(res => {
-        this.user = res.user;
-    });
+   async ngOnInit() {
+     this.authService.getUserInfo();
+     await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+     this.user = await this.getUser();
   }
 
+  async getUser(): Promise<any> {
+    this.storage.get('currentUser').then(res => {
+      this.user = res.user;
+    });
+  }
   goToEditProfile() {
     this.navCtrl.navigateRoot('profile-edit');
   }

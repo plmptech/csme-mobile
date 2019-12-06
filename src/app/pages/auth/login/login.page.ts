@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('token')) this.navCtrl.navigateBack('/profile-menu');
+        if (localStorage.getItem('token')) { this.navCtrl.navigateBack('/profile-menu'); }
     }
 
     goHome() {

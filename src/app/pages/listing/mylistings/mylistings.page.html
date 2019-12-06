@@ -1,16 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <ion-title text-uppercase>My Listing</ion-title>
+    <ion-buttons slot="end">
       <ion-button icon-only (click)="goHome()">
-        <ion-icon ios="ios-arrow-dropleft" md="md-arrow-dropleft"></ion-icon>
+        <ion-icon ios="ios-close" md="md-close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title text-uppercase>My Listing</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-  <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="secondary" (click)="openListingDetail(item)">
+<ion-content color="medium" padding margin>
+  <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="tertiary" (click)="openListingDetail(item)">
       <img [src]="item.photo" alt="" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
@@ -18,9 +18,6 @@
         <ion-card-subtitle>{{item.category}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.country }} | {{item.city}}</ion-card-subtitle>
       </ion-card-header>
-      <!--<ion-card-content>-->
-        <!--<p>{{item.description}}</p>-->
-      <!--</ion-card-content>-->
   </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

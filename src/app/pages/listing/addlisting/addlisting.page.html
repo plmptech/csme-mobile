@@ -11,81 +11,75 @@
 
 </ion-header>
 
-<ion-content color="secondary">
-    <ion-grid style="height:90%;" no-margin no-padding>
-        <ion-row align-items-center style="height: 100%; width: 100%">
+<ion-content color="medium">
+    <ion-grid style="height:100%;">
+        <ion-row style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
                 <ion-item-group padding>
-                    <div text-uppercase padding-top padding-bottom>Basic Information</div>
-                    <ion-item class="item-design">
-                    <ion-label class="label-bold">Type:</ion-label>
-                    <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
+                    <div text-uppercase padding-bottom>Basic Information</div>
+                    <ion-item>
+                        <ion-text class="label-bold">Type:</ion-text>
+                        <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design-big">
-                        <ion-label class="label-bold">Name of Business</ion-label>
-                        <ion-textarea type="text" name="name" ngModel  name="name" maxlength="50" rows="5"></ion-textarea>
+                    <ion-item>
+                        <ion-textarea type="text" name="name" ngModel name="name" maxlength="50" row="2"><ion-text>Name of Business</ion-text></ion-textarea>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Industry</ion-label>
-                        <ion-input type="text" name="category" ngModel maxlength="25"></ion-input>
+                    <ion-item>
+                        <ion-input type="text" name="category" ngModel maxlength="25"> <ion-text>Industry &nbsp; &nbsp;</ion-text></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Country</ion-label>
-                        <ion-input type="text" name="country" ngModel maxlength="25"></ion-input>
+                    <ion-item>
+                        <ion-input type="text" name="country" ngModel maxlength="25"> <ion-text>Country&nbsp; &nbsp;</ion-text></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">City</ion-label>
-                        <ion-input type="text" name="city" ngMode  maxlength="25"></ion-input>
+                    <ion-item>
+                        <ion-input type="text" name="city" ngModel maxlength="25"><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Years In Business</ion-label>
-                        <ion-input type="tel" name="age" ngModel  min="1" max="30" ></ion-input>
+                    <ion-item>
+                        <ion-input type="tel" name="age" ngModel min="1" max="30"><ion-text>Years In Business&nbsp; &nbsp;</ion-text></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design-big">
-                        <ion-label class="label-bold" position="stacked">Description of Business</ion-label>
+                    <ion-item>
                         <ion-textarea type="text" name="description" ngModel rows="6"
-                                      maxlength="500"></ion-textarea>
+                                      maxlength="500"><ion-text>Description of Business</ion-text></ion-textarea>
                     </ion-item>
                 </ion-item-group>
                 <ion-item-group padding>
                     <div text-uppercase padding-bottom>Sale Information</div>
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Asking Price</ion-label>
+                    <ion-item>
+                        <ion-text>Asking Price &nbsp; &nbsp;</ion-text>
                         <ion-input type="tel" name="askingPrice" ngModel min="100" max="99999999"></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Revenue</ion-label>
-                        <ion-input type="tel" name="revenue" ngModel  min="100" max="99999999"></ion-input>
+                    <ion-item>
+                        <ion-text>Revenue &nbsp; &nbsp;</ion-text>
+                        <ion-input type="tel" name="revenue" ngModel min="100" max="99999999"></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-design">
-                        <ion-label class="label-bold">Cash Flow</ion-label>
-                        <ion-input type="tel" name="cashFlow" ngModel  min="100" max="99999999"></ion-input>
+                    <ion-item>
+                        <ion-text>Cash Flow &nbsp; &nbsp;</ion-text>
+                        <ion-input type="tel" name="cashFlow" ngModel min="100" max="99999999"></ion-input>
                     </ion-item>
 
-                    <ion-item class="item-photo-box" *ngIf="photo">
+                    <ion-item *ngIf="photo">
                         <img *ngIf="photo" [src]="photo"/><br>
                     </ion-item>
+
                     <ion-item class="item-photo-chooser">
-                        <ion-label class="label-bold" id="profile_image">Photo</ion-label>
+                        <ion-text class="label-bold" id="profile_image">Photo&nbsp; &nbsp;</ion-text>
                         <ion-input input-style="box" type="file" accept="image/*" (change)="upload($event)"></ion-input>
                     </ion-item>
 
                     <!--<ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>-->
 
                 </ion-item-group>
-                    <ion-button type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button>
+                <ion-button type="submit" no-margin expand="full" color="primary">Submit</ion-button>
             </form>
         </ion-row>
     </ion-grid>
-
 
 
 </ion-content>

@@ -1,9 +1,16 @@
-ion-content.background{
-  --background: url("~src/assets/img/background.png") no-repeat center center / cover;
+//ion-content.background{
+//  --background: url("~src/assets/img/background.png") no-repeat center center / cover;
+//
+//}
+
+ion-content.background {
+  --color: #fff;
+  --background:none;
+  background: url("~src/assets/img/background.png") no-repeat center  0;
+  background-size: cover;
 }
 
 .item-design{
-  font-family: 'monospace';
   font-size: 16px;
   color: #666;
   width: 100%;
@@ -18,10 +25,14 @@ ion-content.background{
 
 p {
   font-size: 13pt;
-  color: #fff;
 }
 
-//.header-title{
-//  color: #0E927D;
-//  --font-weight-bold: bold;
-//}
+ion-icon {
+  height: 20px;
+  margin-right: 8px;
+}
+
+ion-input{
+  font-family: 'Nanumgothic';
+}
+

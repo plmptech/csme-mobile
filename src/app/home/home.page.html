@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content color="dark">
+<ion-content color="medium">
   <ion-refresher slot="fixed" (ionRefresh)="refreshListings($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
     </ion-refresher-content>
@@ -26,11 +26,11 @@
 
   <div class="ion-padding">
     <div class="card">
-        <ion-text color="light">Business Listing</ion-text>
+        <ion-text color="secondary">Business Listing</ion-text>
     </div>
 
-    <ion-card *ngFor="let item of (allListing )" class="welcome-card" color="secondary" (click)="openListingDetail(item)">
-      <img [src]="item.photo" alt="" />
+    <ion-card *ngFor="let item of (allListing )" color="tertiary" (click)="openListingDetail(item)">
+      <img [src]="item.photo" alt=""/>
       <div class="card card-padding">
         <p>
           <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
@@ -39,10 +39,11 @@
       </div>
     </ion-card>
 
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadNextPage($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+      <ion-infinite-scroll threshold="100px" color="dark"  (ionInfinite)="loadNextPage($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" color="dark" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
 
   </div>
 </ion-content>

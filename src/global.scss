@@ -45,23 +45,27 @@
   src: url("../src/assets/fonts/comforta.woff2");
 }
 
+@font-face {
+  font-family: 'Nanumgothic';
+  src: url("../src/assets/fonts/nanumgothic.woff2");
+}
+
+
 
 
 
 * {
-  font-family: 'Comforta';
-  font-style: normal;
-  font-weight: 500;
+  font-family: 'Nanumgothic';
+  font-weight: bold;
 }
 
 p {
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 500;
+  font-family: 'Nanumgothic';
+  font-style: bold;
 }
 
 ion-label {
-  font-family: 'Arvo', serif;
+  font-family: 'Nanumgothic', serif;
   font-size:12pt;
 }
 

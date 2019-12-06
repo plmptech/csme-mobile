@@ -12,11 +12,11 @@
 </ion-header>
 
 
-<ion-content color="secondary" padding>
+<ion-content color="medium" padding>
   <form #form="ngForm" (ngSubmit)="applyChanges()" method="post">
     <ion-item class="item-design">
       <ion-text >Industry</ion-text>
-      <ion-select [(ngModel)]="selectIndustry" name="selectIndustry">
+      <ion-select slot="end" [(ngModel)]="selectIndustry" name="selectIndustry">
         <ion-select-option>F&B</ion-select-option>
         <ion-select-option>Sales</ion-select-option>
       </ion-select>
@@ -24,7 +24,7 @@
 
     <ion-item class="item-design">
       <ion-text >Country</ion-text>
-      <ion-select [(ngModel)]="selectCountry" name="selectCountry">
+      <ion-select slot="end" [(ngModel)]="selectCountry" name="selectCountry">
         <ion-select-option>Singapore</ion-select-option>
         <ion-select-option>Malaysia</ion-select-option>
         <ion-select-option>Thailand</ion-select-option>
@@ -34,7 +34,7 @@
 
     <ion-item class="item-design">
       <ion-text>City</ion-text>
-      <ion-select [(ngModel)]="selectCity" name="selectCity">
+      <ion-select slot="end" [(ngModel)]="selectCity" name="selectCity">
         <ion-select-option>Ho Chi Minh City</ion-select-option>
         <ion-select-option>Hanoi</ion-select-option>
         <ion-select-option>Da Nang</ion-select-option>
@@ -52,7 +52,7 @@
 
     <ion-item class="item-design">
       <ion-text >Sort by</ion-text>
-      <ion-select [(ngModel)]="sortBy" name="sortBy">
+      <ion-select slot="end" [(ngModel)]="sortBy" name="sortBy">
         <ion-select-option>Recently Listed</ion-select-option>
         <ion-select-option>Selling Price(Low to High)</ion-select-option>
         <ion-select-option>Selling Price(High to Low)</ion-select-option>
@@ -63,16 +63,17 @@
       </ion-select>
     </ion-item>
 
-    <ion-item class="item-design">
+    <ion-item color-="secondary">
       <ion-label>
-      <ion-text>Selling Price:</ion-text>
-      <ion-range id="dual-range" dual-knobs pin color="dark" snaps [(ngModel)]="minmaxprice" name="minmaxprice" step="100000" min="0" max="1000000">
-        <ion-icon slot="start" size="small" ios="logo-usd" md="logo-usd"></ion-icon>
-        <ion-icon slot="end"  size="medium" ios="logo-usd" md="logo-usd"></ion-icon>
+      <ion-text color="secondary">Selling Price:</ion-text>
+      <ion-range id="dual-range" dual-knobs pin color="secondary" snaps [(ngModel)]="minmaxprice" name="minmaxprice" step="100000" min="0" max="1000000">
+        <ion-icon slot="start" size="small" color="secondary" ios="logo-usd" md="logo-usd"></ion-icon>
+        <ion-icon slot="end"  size="medium" color="secondary" ios="logo-usd" md="logo-usd"></ion-icon>
       </ion-range>
       </ion-label>
     </ion-item>
-    <ion-button type="submit" expand="full" color="primary">Filter Results</ion-button>
+    <br>
+    <ion-button type="submit" expand="block" color="primary">Filter Results</ion-button>
   </form>
 
 </ion-content>

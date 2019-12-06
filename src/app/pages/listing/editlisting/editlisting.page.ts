@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, SecurityContext} from '@angular/core';
 import {ModalController, NavController, NavParams} from '@ionic/angular';
 import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
 import {AuthService} from '../../../services/auth.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editlisting',
@@ -27,12 +28,12 @@ export class EditlistingPage implements OnInit {
   constructor(private modalCtrl: ModalController,
               private navParams: NavParams,
               private navCtrl: NavController,
+              private sanitizer: DomSanitizer,
               private authService: AuthService,
               private alertService: AlertService) { }
 
   ngOnInit() {
     this.id = this.navParams.data.id;
-    console.log(this.id);
     this.name = this.navParams.data.name;
     this.purpose = this.navParams.data.purpose;
     this.industry = this.navParams.data.industry;
@@ -44,14 +45,39 @@ export class EditlistingPage implements OnInit {
     this.askingPrice = this.navParams.data.askingPrice;
     this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
-    this.photo = this.navParams.data.photo;
+
+
+    this.photo = this.convertImage(this.navParams.data.photo);
+
+    // if (this.navParams.data.photo.data !== 0) {
+    //   const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.navParams.data.photo.data)));
+    //   this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+    // } else {
+    //   this.photo = '/assets/shapes.svg';
+    // }
+
+
+    console.log(this.photo);
   }
 
   closeModal() {
     this.modalCtrl.dismiss();
   }
 
+  convertImage(item) {
 
+    if (item.data) {
+      const bytes = new Uint8Array(item.data);
+      const binary = bytes.reduce(
+          (data, b) => (data += String.fromCharCode(b)),
+          ''
+      );
+      this.photo = 'data:image/*;base64,' + btoa(binary);
+      return this.photo;
+    } else {
+      return item;
+    }
+  }
 
   saveListing(form: NgForm) {
     this.purpose = 'Business For Sale';
@@ -61,6 +87,14 @@ export class EditlistingPage implements OnInit {
 
       this.alertService.presentToast('Please fill in all fields');
     } else {
+
+      if (this.photo !== undefined) {
+        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.photo.data)));
+        this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+      } else {
+        this.photo = '/assets/shapes.svg';
+      }
+
       this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
           form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
           localStorage.getItem('token'), form.value.id).subscribe((res: any) => {

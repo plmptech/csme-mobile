@@ -12,10 +12,10 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-    <ion-card-header fullscreen color="dark" no-padding> <img [src]="photo" alt=""></ion-card-header>
+<ion-content color="medium">
+    <ion-card-header fullscreen no-padding> <img [src]="photo" alt="" ></ion-card-header>
 
-    <ion-card-header color="dark">
+    <ion-card-header>
         <ion-card-subtitle hidden>{{id}}</ion-card-subtitle>
         <ion-card-subtitle>Business For Sale</ion-card-subtitle>
         <ion-card-title>{{name}}</ion-card-title>
@@ -26,12 +26,15 @@
     </ion-card-header>
 
     <ion-card-content>
-        <ion-text>{{description}}</ion-text>
-        <br> <br>
-        <ion-text>Years in Business: &nbsp;&nbsp;{{age}} </ion-text>
-        <br>
-        <ion-text>Industry:&nbsp; &nbsp;{{industry}}</ion-text>
-        <br>
+        <ion-item-group>
+            <ion-text>{{description}}</ion-text>
+            <br> <br>
+            <ion-text>Years in Business: &nbsp;&nbsp;{{age}} </ion-text>
+            <br>
+            <ion-text>Industry:&nbsp; &nbsp;{{industry}}</ion-text>
+            <br>
+        </ion-item-group>
+
 
     </ion-card-content>
     <ion-card-content>
