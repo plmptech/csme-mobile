@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {EnvService} from '../../../services/env.service';
 
 @Component({
   selector: 'app-search-filter',
@@ -16,33 +18,65 @@ export class SearchFilterPage implements OnInit {
 
   dualRange: number;
 
-  private selectCountry: string;
-  private selectCity: string;
-  private selectIndustry: string;
+  private countries: any;
+  private industries: any;
   private sortBy: string;
   private lowerPrice: number;
   private upperPrice: number;
+  selectedIndustry: string;
+  selectedCountry: string;
+  selectedCity: string;
+  cities: any;
+  private listOfCountryAndCity: any;
 
   constructor(private modalCtrl: ModalController,
+              private http: HttpClient,
+              private env: EnvService,
   ) { }
 
   ngOnInit() {
-    this.selectCountry = '';
-    this.selectCity = '';
-    this.selectIndustry = '';
     this.sortBy = '';
     this.minmaxprice.lower = 1;
     this.minmaxprice.upper = 10000000;
+
+    this.getIndustries();
+    this.getCountries();
+
+  }
+
+  getCountries() {
+    this.http.get(this.env.API_URL + 'list/countries')
+        .subscribe((res: any) => {
+          console.log(res);
+          this.listOfCountryAndCity = res.countries;
+          this.countries = Object.keys(res.countries);
+        });
+  }
+
+  getIndustries() {
+    this.http.get(this.env.API_URL + 'list/industries')
+        .subscribe((res: any) => {
+          this.industries = res.industries;
+        });
+  }
+
+  getCities() {
+    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
   }
 
   async applyChanges() {
+    console.log(this.selectedIndustry);
+    console.log(this.selectedCountry);
+    console.log(this.selectedCity);
+
+
     const onCloseData = {
-      country: this.selectCountry,
-      city: this.selectCity,
-      industry: this.selectIndustry,
+      country: this.selectedCountry,
+      city: this.selectedCity,
+      industry: this.selectedIndustry,
       sortBy: this.sortBy,
       lowerPrice: this.minmaxprice.lower,
-      upperPrice: this.minmaxprice.upper
+      upperPrice: this.minmaxprice.upper,
     };
     await this.modalCtrl.dismiss(onCloseData);
 

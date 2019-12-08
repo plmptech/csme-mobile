@@ -4,6 +4,8 @@ import { AuthService } from '../../../services/auth.service';
 import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import {HttpClient} from '@angular/common/http';
+import {EnvService} from '../../../services/env.service';
 
 @Component({
   selector: 'app-addlisting',
@@ -12,20 +14,28 @@ import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 })
 export class AddlistingPage implements OnInit {
   private purpose: string;
-  private industry: string;
-  private userTypeResult: boolean;
-  private userType: string;
+  // private userTypeResult: boolean;
+  // private userType: string;
   private photo: any;
   group: FormGroup;
+  industries: any;
+  countries: any;
+  cities: any;
+  selectedIndustry: string;
+  selectedCountry: string;
+  selectedCity: string;
+  private listOfCountryAndCity: any;
 
   constructor(
     private navCtrl: NavController,
     private authService: AuthService,
     private camera: Camera,
     public actionSheetController: ActionSheetController,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private http: HttpClient,
+    private env: EnvService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     // this.group = new FormGroup({
     //   businessName : new FormControl('', [Validators.required, Validators.maxLength(50)]),
     //   industry : new FormControl('', [Validators.required, Validators.maxLength(25)]),
@@ -38,13 +48,32 @@ export class AddlistingPage implements OnInit {
     //   cashFlow : new FormControl('', [Validators.required, Validators.min(100), Validators.max(99999999) ]),
     //
     // });
+    this.getIndustries();
+    this.getCountries();
+  }
+
+  getCountries() {
+    this.http.get(this.env.API_URL + 'list/countries')
+        .subscribe((res: any) => {
+          console.log(res);
+          this.listOfCountryAndCity = res.countries;
+          this.countries = Object.keys(res.countries);
+        });
+  }
+
+  getIndustries() {
+    this.http.get(this.env.API_URL + 'list/industries')
+        .subscribe((res: any) => {
+          this.industries = res.industries;
+        });
+  }
+
+  getCities() {
+    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
   }
 
   goBack() {
     this.navCtrl.navigateBack('/mylistings');
-  }
-
-  validateFields(form: NgForm) {
   }
 
   async upload(e) {
@@ -75,12 +104,12 @@ export class AddlistingPage implements OnInit {
   createListing(form: NgForm) {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
-    this.industry = form.value.category;
+    console.log(this.selectedCountry, this.selectedCity, this.selectedIndustry);
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');
     } else {
-      this.authService.createListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+      this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
         form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
         localStorage.getItem('token')).subscribe((res: any) => {
           if (res.status !== 'error') {
@@ -96,8 +125,8 @@ export class AddlistingPage implements OnInit {
   }
 
   validateForm(form: NgForm) {
-    if (form.value.name !== '' && form.value.industry !== '' &&
-      form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
+    if (form.value.name !== '' && this.selectedIndustry !== '' &&
+      this.selectedCity !== '' && form.value.description !== '' && this.selectedCountry !== ''
       && form.value.askingPrice !== '' && form.value.age !== '' && form.value.cashFlow !== '' && form.value.revenue !== '') {
       return true;
     }

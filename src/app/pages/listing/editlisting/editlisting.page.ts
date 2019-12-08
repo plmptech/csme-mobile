@@ -4,6 +4,8 @@ import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
 import {AuthService} from '../../../services/auth.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {HttpClient} from '@angular/common/http';
+import {EnvService} from '../../../services/env.service';
 
 @Component({
   selector: 'app-editlisting',
@@ -14,8 +16,8 @@ export class EditlistingPage implements OnInit {
   id: number;
   name: string;
   purpose: string;
-  industry: string;
-  country: string;
+  industries: any;
+  countries: any;
   city: string;
   description: string;
   revenue: number;
@@ -24,27 +26,38 @@ export class EditlistingPage implements OnInit {
   created: string;
   private age: any;
   photo: any;
+  selectedIndustry: string;
+  selectedCountry: string;
+  selectedCity: string;
+  cities: any;
+  private listOfCountryAndCity: any;
 
   constructor(private modalCtrl: ModalController,
               private navParams: NavParams,
               private navCtrl: NavController,
               private sanitizer: DomSanitizer,
               private authService: AuthService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private http: HttpClient,
+              private env: EnvService) { }
 
   ngOnInit() {
+    this.getIndustries();
+    this.getCountries();
     this.id = this.navParams.data.id;
     this.name = this.navParams.data.name;
     this.purpose = this.navParams.data.purpose;
-    this.industry = this.navParams.data.industry;
-    this.country = this.navParams.data.country;
-    this.city = this.navParams.data.city;
+    this.selectedIndustry = this.navParams.data.industry;
+    this.selectedCountry = this.navParams.data.country;
+    this.selectedCity = this.navParams.data.city;
+    console.log(this.selectedCountry, this.selectedCountry, this.selectedCity);
     this.description = this.navParams.data.description;
     this.revenue = this.navParams.data.revenue;
     this.cashFlow = this.navParams.data.cashFlow;
     this.askingPrice = this.navParams.data.askingPrice;
     this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
+
 
 
     this.photo = this.convertImage(this.navParams.data.photo);
@@ -58,6 +71,27 @@ export class EditlistingPage implements OnInit {
 
 
     console.log(this.photo);
+  }
+
+  getCountries() {
+    this.http.get(this.env.API_URL + 'list/countries')
+        .subscribe((res: any) => {
+          console.log(res);
+          this.listOfCountryAndCity = res.countries;
+          this.countries = Object.keys(res.countries);
+        });
+
+  }
+
+  getIndustries() {
+    this.http.get(this.env.API_URL + 'list/industries')
+        .subscribe((res: any) => {
+          this.industries = res.industries;
+        });
+  }
+
+  getCities() {
+    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
   }
 
   closeModal() {
@@ -95,7 +129,7 @@ export class EditlistingPage implements OnInit {
         this.photo = '/assets/shapes.svg';
       }
 
-      this.authService.updateListingNow(form.value.name, this.purpose, this.industry, form.value.country, form.value.city,
+      this.authService.updateListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
           form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
           localStorage.getItem('token'), form.value.id).subscribe((res: any) => {
         if (res.status !== 'error') {
@@ -138,10 +172,10 @@ export class EditlistingPage implements OnInit {
   }
 
   validateForm(form: NgForm) {
-    console.log(form.value.name, form.value.industry, form.value.city, form.value.description, form.value.country,
+    console.log(form.value.name, this.selectedIndustry, this.selectedCity, form.value.description, this.selectedCountry,
     form.value.askingPrice, form.value.age, form.value.cashFlow, form.value.revenue);
-    if (form.value.name !== '' && form.value.industry !== '' &&
-        form.value.city !== '' && form.value.description !== '' && form.value.country !== ''
+    if (form.value.name !== '' && this.selectedIndustry !== '' &&
+        this.selectedCity !== '' && form.value.description !== '' && this.selectedCountry !== ''
         && form.value.askingPrice !== undefined && form.value.age !== undefined && form.value.cashFlow !== undefined
         && form.value.revenue !== undefined) {
       return true;

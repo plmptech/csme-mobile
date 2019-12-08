@@ -14,30 +14,25 @@
 
 <ion-content color="medium" padding>
   <form #form="ngForm" (ngSubmit)="applyChanges()" method="post">
-    <ion-item class="item-design">
+    <ion-item>
       <ion-text >Industry</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectIndustry" name="selectIndustry">
-        <ion-select-option>F&B</ion-select-option>
-        <ion-select-option>Sales</ion-select-option>
+      <ion-select slot="end" [(ngModel)]="selectedIndustry" name="selectIndustry">
+        <ion-select-option *ngFor="let item of industries">{{item}}</ion-select-option>
       </ion-select>
+
     </ion-item>
 
-    <ion-item class="item-design">
+    <ion-item>
       <ion-text >Country</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectCountry" name="selectCountry">
-        <ion-select-option>Singapore</ion-select-option>
-        <ion-select-option>Malaysia</ion-select-option>
-        <ion-select-option>Thailand</ion-select-option>
-        <ion-select-option>Vietnam</ion-select-option>
+      <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()">
+        <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-item class="item-design">
+    <ion-item>
       <ion-text>City</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectCity" name="selectCity">
-        <ion-select-option>Ho Chi Minh City</ion-select-option>
-        <ion-select-option>Hanoi</ion-select-option>
-        <ion-select-option>Da Nang</ion-select-option>
+      <ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity">
+        <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -50,7 +45,7 @@
         <!--</ion-range>-->
         <!--</ion-item>-->
 
-    <ion-item class="item-design">
+    <ion-item>
       <ion-text >Sort by</ion-text>
       <ion-select slot="end" [(ngModel)]="sortBy" name="sortBy">
         <ion-select-option>Recently Listed</ion-select-option>

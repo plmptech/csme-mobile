@@ -16,26 +16,40 @@
         <ion-row style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
                 <ion-item-group padding>
-                    <div text-uppercase padding-bottom>Basic Information</div>
+                   <ion-item>
+                       <div text-uppercase padding-bottom>Basic Information</div>
+                   </ion-item>
                     <ion-item>
-                        <ion-text class="label-bold">Type:</ion-text>
+                        <ion-text >Type:</ion-text>
                         <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
                     </ion-item>
 
                     <ion-item>
-                        <ion-textarea type="text" name="name" ngModel name="name" maxlength="50" row="2"><ion-text>Name of Business</ion-text></ion-textarea>
+                        <ion-textarea readonly [ngModel]="name" name="name" maxlength="50" rows="2">
+                            <ion-text>Name of Business</ion-text>
+                        </ion-textarea>
                     </ion-item>
 
                     <ion-item>
-                        <ion-input type="text" name="category" ngModel maxlength="25"> <ion-text>Industry &nbsp; &nbsp;</ion-text></ion-input>
+                        <ion-text>Industry</ion-text>
+                        <ion-select slot="end"[(ngModel)]="selectedIndustry" name="selectIndustry" placeholder="Select Industry">
+                            <ion-select-option *ngFor="let item of industries">{{item}}</ion-select-option>
+                        </ion-select>
                     </ion-item>
 
                     <ion-item>
-                        <ion-input type="text" name="country" ngModel maxlength="25"> <ion-text>Country&nbsp; &nbsp;</ion-text></ion-input>
+                        <ion-text>Country</ion-text>
+                        <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()" placeholder="Select country">
+                            <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
+                        </ion-select>
                     </ion-item>
 
                     <ion-item>
-                        <ion-input type="text" name="city" ngModel maxlength="25"><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>
+                        <!--<ion-input type="text" name="city" ngModel maxlength="25"><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>-->
+                        <ion-text>City</ion-text>
+                        <ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity" placeholder="Select city">
+                            <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
+                        </ion-select>
                     </ion-item>
 
                     <ion-item>
@@ -48,7 +62,10 @@
                     </ion-item>
                 </ion-item-group>
                 <ion-item-group padding>
-                    <div text-uppercase padding-bottom>Sale Information</div>
+                    <ion-item>
+                        <div text-uppercase padding-bottom>Sale Information</div>
+                    </ion-item>
+
                     <ion-item>
                         <ion-text>Asking Price &nbsp; &nbsp;</ion-text>
                         <ion-input type="tel" name="askingPrice" ngModel min="100" max="99999999"></ion-input>
@@ -76,7 +93,7 @@
                     <!--<ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>-->
 
                 </ion-item-group>
-                <ion-button type="submit" no-margin expand="full" color="primary">Submit</ion-button>
+                <ion-button type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button>
             </form>
         </ion-row>
     </ion-grid>
