@@ -61,7 +61,7 @@ export class EditlistingPage implements OnInit {
     this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
 
-    console.log("My ID: " + this.id);
+    console.log('My ID: ' + this.id);
 
     this.photo = this.convertImage(this.navParams.data.photo);
 
@@ -132,8 +132,8 @@ export class EditlistingPage implements OnInit {
 
       this.alertService.presentToast('Please fill in all fields');
     } else {
-      
-      //REMOVE THIS
+
+      // REMOVE THIS
       // if (this.photo !== undefined) {
       //   const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.photo.data)));
       //   this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
