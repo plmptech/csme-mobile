@@ -13,7 +13,7 @@ import {EnvService} from '../../../services/env.service';
   styleUrls: ['./editlisting.page.scss'],
 })
 export class EditlistingPage implements OnInit {
-  id: number;
+  id: string;
   name: string;
   purpose: string;
   industries: any;
@@ -44,7 +44,7 @@ export class EditlistingPage implements OnInit {
   ngOnInit() {
     this.getIndustries();
     this.getCountries();
-    this.id = this.navParams.data.id;
+    this.id = this.navParams.data._id;
     this.name = this.navParams.data.name;
     this.purpose = this.navParams.data.purpose;
     this.selectedIndustry = this.navParams.data.industry;
@@ -58,7 +58,7 @@ export class EditlistingPage implements OnInit {
     this.age = this.navParams.data.age;
     this.created = this.navParams.data.created;
 
-
+    console.log("My ID: " + this.id);
 
     this.photo = this.convertImage(this.navParams.data.photo);
 
@@ -121,17 +121,18 @@ export class EditlistingPage implements OnInit {
 
       this.alertService.presentToast('Please fill in all fields');
     } else {
-
-      if (this.photo !== undefined) {
-        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.photo.data)));
-        this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-      } else {
-        this.photo = '/assets/shapes.svg';
-      }
+      
+      //REMOVE THIS
+      // if (this.photo !== undefined) {
+      //   const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.photo.data)));
+      //   this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+      // } else {
+      //   this.photo = '/assets/shapes.svg';
+      // }
 
       this.authService.updateListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
           form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
-          localStorage.getItem('token'), form.value.id).subscribe((res: any) => {
+          localStorage.getItem('token'), this.id).subscribe((res: any) => {
         if (res.status !== 'error') {
           console.log(res);
           this.modalCtrl.dismiss();

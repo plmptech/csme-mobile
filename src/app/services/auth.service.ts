@@ -55,10 +55,10 @@ export class AuthService {
     }
 
     updateListingNow(name: string, purpose: string, industry: string, country: string, city: string, age: number,
-                     askingPrice: number, revenue: number, cashFlow: number, description: string, token: string, photo: string,
+                     askingPrice: number, revenue: number, cashFlow: number, description: string, photo: string, token: string,
                      id: string) {
         return this.http.put(this.env.API_URL + 'listing/' + id,
-            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, token },
+            { name, purpose, industry, country, city, age, askingPrice, revenue, cashFlow, description, photo, token },
         );
     }
 
