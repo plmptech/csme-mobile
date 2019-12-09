@@ -39,7 +39,10 @@ export class EditlistingPage implements OnInit {
               private authService: AuthService,
               private alertService: AlertService,
               private http: HttpClient,
-              private env: EnvService) { }
+              private env: EnvService) {
+
+
+  }
 
   ngOnInit() {
     this.getIndustries();
@@ -71,6 +74,14 @@ export class EditlistingPage implements OnInit {
 
 
     console.log(this.photo);
+
+  }
+
+  compareWith(o1, o2) {
+    if (o1 === o2) {
+       return true;
+    }
+    return false;
   }
 
   getCountries() {

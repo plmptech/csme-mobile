@@ -47,8 +47,8 @@
                             <!--<ion-text>Country&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
                         <ion-text >Country</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
-                            <ion-select-option *ngFor="let item of countries" >{{item}}</ion-select-option>
+                        <ion-select slot="end" [(ngModel)]="selectedCountry" [compareWith]="compareWith" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
+                            <ion-select-option *ngFor="let item of countries" [value]="selectedCountry">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import {ModalController, NavController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { EnvService } from '../../services/env.service';
 import { AlertService } from '../../services/alert.service';
 import { Observable } from 'rxjs';
+import {EditlistingPage} from '../listing/editlisting/editlisting.page';
+import {DomSanitizer} from '@angular/platform-browser';
 
 function ionViewDidLoad() {
 
@@ -19,6 +21,7 @@ function ionViewDidLoad() {
 export class ProfileMenuPage implements OnInit {
   user: any;
   res: any;
+  private ownListings: any;
   public appPages: Array<Pages>;
   constructor(
     private navCtrl: NavController,
@@ -26,7 +29,9 @@ export class ProfileMenuPage implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     private env: EnvService,
-    private alertService: AlertService, ) {
+    private alertService: AlertService,
+    private modalCtrl: ModalController,
+    private sanitizer: DomSanitizer) {
     this.appPages = [
       {
         title: 'MY LISTING',
@@ -37,6 +42,9 @@ export class ProfileMenuPage implements OnInit {
     ];
 
 
+  }
+  ionViewDidEnter() {
+    this.getOwnListing();
   }
 
   async ionViewWillEnter() {
@@ -98,4 +106,43 @@ export class ProfileMenuPage implements OnInit {
 
   }
 
+  getOwnListing() {
+    this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
+        .toPromise()
+        .then((data: any) => {
+          for (const l of data.user.listings) {
+            if (l.photo.data.length !== 0) {
+              const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(l.photo.data)));
+              l.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
+            } else {
+              l.photo = '/assets/shapes.svg';
+            }
+          }
+          console.log(data.user.listings);
+          return data.user.listings;
+        })
+        .catch(err => {
+          console.log('Error', err);
+          return err;
+        });
+  }
+
+
+  openAddListing() {
+    this.navCtrl.navigateForward('/addlisting');
+  }
+
+  async openListingDetail(item: any) {
+    console.log(item);
+    const modal = await this.modalCtrl.create({
+      component: EditlistingPage,
+      componentProps: item
+      // componentProps: {
+      //   id: item._id, name: item.name, purpose: item.purpose, age: item.age,
+      //   industry: item.industry, created: item.created, country: item.country, city: item.city,
+      //   revenue: item.revenue, askingPrice: item.askingPrice, cashFlow: item.cashFlow, description: item.description, user: item.user
+      // }
+    });
+    return await modal.present();
+  }
 }

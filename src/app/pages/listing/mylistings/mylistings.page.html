@@ -11,7 +11,7 @@
 
 <ion-content color="medium" padding margin>
   <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="tertiary" (click)="openListingDetail(item)">
-      <img [src]="item.photo" alt="" />
+      <img [src]="item.photo" alt="" style="height:50px;"/>
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.name}}</ion-card-subtitle>

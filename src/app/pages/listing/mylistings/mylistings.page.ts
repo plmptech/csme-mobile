@@ -14,10 +14,10 @@ import { EditlistingPage } from '../editlisting/editlisting.page';
 })
 export class MylistingsPage implements OnInit {
 
-  resultList: any;
-  businessListing;
+  //resultList: any;
+  //businessListing;
   private ownListings: any;
-  private ownListingCount: any;
+  // private ownListingCount: any;
 
   constructor(
     private navCtrl: NavController,

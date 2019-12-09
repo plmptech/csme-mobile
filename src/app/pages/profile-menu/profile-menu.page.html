@@ -8,58 +8,88 @@
     <ion-title text-uppercase>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content text-center >
+<ion-content padding>
   <div *ngIf="user">
+    <!--<div class="item-design">-->
+      <!--<div class="ion-text-uppercase">{{ user.name }}</div>-->
+      <!--<div class="ion-text-uppercase">{{ user.type }}</div>-->
+      <!--<div class="ion-text-uppercase">{{ user.email }}</div>-->
+      <!--<div class="ion-text-uppercase">{{ user.phone }}</div>-->
+
+      <!--<ion-menu-toggle class="mto" auto-hide="false">-->
+        <!--<a *ngIf="user.type == 'basic'" tappable (click)="upgradeUser()">-->
+          <!--<ion-text>-->
+            <!--<strong>Upgrade Premium</strong>-->
+          <!--</ion-text>-->
+        <!--</a>-->
+        <!--<ion-label *ngIf="user.type == 'basic'" > | </ion-label>-->
+        <!--<a tappable (click)="logout()">-->
+          <!--<ion-text>-->
+            <!--<strong>Logout</strong>-->
+          <!--</ion-text>-->
+        <!--</a>-->
+      <!--</ion-menu-toggle>-->
+    <!--</div>-->
     <ion-grid>
-      <ion-row align-items-center text-center class="row-header" color="dark">
-        <ion-col padding>
-          <ion-avatar >
+      <ion-row align-items-center class="row-header" color="dark">
+        <ion-col size="3" padding>
+          <ion-avatar no-padding no-margin>
           <img src="assets/img/ic_nonprofile.png">
           </ion-avatar>
         </ion-col>
-      </ion-row>
-      <ion-row align-items-center text-center>
-        <ion-col>
+        <ion-col size="9" ext-left>
           <div class="ion-text-uppercase">{{ user.name }}</div>
           <div class="ion-text-uppercase">{{ user.type }}</div>
           <div class="ion-text-uppercase">{{ user.email }}</div>
           <div class="ion-text-uppercase">{{ user.phone }}</div>
         </ion-col>
       </ion-row>
-      <ion-row align-items-center text-center>
-        <ion-col>
-          <ion-menu-toggle class="mto" auto-hide="false">
-            <!--<a class="text08" tappable (click)="goToEditProfile()">
-              <ion-text color="medium">
-                <strong>edit profile</strong>
-              </ion-text>
-            </a> -->
-            <a *ngIf="user.type == 'basic'" tappable (click)="upgradeUser()">
-              <ion-text>
-                <strong>Upgrade Premium</strong>
-              </ion-text>
-            </a>
-            <ion-label *ngIf="user.type == 'basic'" > | </ion-label>
-            <a tappable (click)="logout()">
-              <ion-text>
-                <strong>Logout</strong>
-              </ion-text>
-            </a>
-          </ion-menu-toggle>
-        </ion-col>
+      <ion-row  align-items-center padding text-right>
+        <ion-menu-toggle class="mto" auto-hide="false">
+          <a *ngIf="user.type == 'basic'" tappable (click)="upgradeUser()">
+            <ion-text>
+              <strong>Upgrade Premium</strong>
+            </ion-text>
+          </a>
+          <ion-label *ngIf="user.type == 'basic'" > | </ion-label>
+          <a tappable (click)="logout()">
+            <ion-text>
+              <strong>Logout</strong>
+            </ion-text>
+          </a>
+        </ion-menu-toggle>
       </ion-row>
     </ion-grid>
   </div>
 <br>
   <div *ngIf="user">
-  <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" >
-    <ion-item [routerLink]="[p.url]" color="tertiary" lines="none">
-      <ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>
-      <ion-text color="dark">
-        {{p.title}}
-      </ion-text>
-    </ion-item>
-  </ion-menu-toggle>
+    <div class="container-title" padding-start padding-end>
+      <ion-text color="secondary" ion-text-uppercase>Your Listing</ion-text>
+    </div>
+
+    <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="tertiary" (click)="openListingDetail(item)">
+      <img [src]="item.photo" alt="" class="img-style" />
+      <ion-card-header>
+        <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.category}}</ion-card-subtitle>
+        <ion-card-subtitle>{{item.country }} | {{item.city}}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+
+  <!--<ion-menu-toggle auto-hide="false" *ngFor="let p of appPages" >-->
+    <!--<ion-item [routerLink]="[p.url]" color="tertiary" lines="none">-->
+      <!--<ion-icon slot="start" [name]="p.icon" color="dark"></ion-icon>-->
+      <!--<ion-text color="dark">-->
+        <!--{{p.title}}-->
+      <!--</ion-text>-->
+    <!--</ion-item>-->
+  <!--</ion-menu-toggle>-->
   </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openAddListing()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
