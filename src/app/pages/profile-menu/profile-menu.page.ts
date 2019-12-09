@@ -22,6 +22,7 @@ export class ProfileMenuPage implements OnInit {
   user: any;
   res: any;
   private ownListings: any;
+  emptyListing: boolean;
   public appPages: Array<Pages>;
   constructor(
     private navCtrl: NavController,
@@ -45,6 +46,7 @@ export class ProfileMenuPage implements OnInit {
   }
   ionViewDidEnter() {
     this.getOwnListing();
+    this.emptyListing = false;
   }
 
   async ionViewWillEnter() {
@@ -110,6 +112,9 @@ export class ProfileMenuPage implements OnInit {
     this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
         .toPromise()
         .then((data: any) => {
+          if (data.user.listings.length === 0) {
+            this.emptyListing = true;
+          }
           for (const l of data.user.listings) {
             if (l.photo.data.length !== 0) {
               const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(l.photo.data)));

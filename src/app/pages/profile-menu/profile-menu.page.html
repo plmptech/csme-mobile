@@ -64,9 +64,13 @@
 <br>
   <div *ngIf="user">
     <div class="container-title" padding-start padding-end>
-      <ion-text color="secondary" ion-text-uppercase>Your Listing</ion-text>
+      <ion-text color="secondary" text-uppercase style="font-weight: bolder">Your Listing</ion-text>
     </div>
 
+    <div class="container--subtitle">
+      <ion-text align-items-center padding *ngIf="emptyListing">No listing available</ion-text>
+
+    </div>
     <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="tertiary" (click)="openListingDetail(item)">
       <img [src]="item.photo" alt="" class="img-style" />
       <ion-card-header>

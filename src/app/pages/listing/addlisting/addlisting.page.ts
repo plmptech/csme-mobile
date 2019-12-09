@@ -73,7 +73,7 @@ export class AddlistingPage implements OnInit {
   }
 
   goBack() {
-    this.navCtrl.navigateBack('/mylistings');
+    this.navCtrl.navigateBack('/profile-menu');
   }
 
   async upload(e) {

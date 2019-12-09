@@ -4,11 +4,9 @@
   font-size: 13px;
   width: 100%;
   height: 140px;
-  //border-radius: 15px;
   background: #e6e6e6;
   margin-bottom: 10px;
   text-align: left;
-  // margin-left: 20%;
   line-height: 2.1em;
   text-align: center;
 }
@@ -24,4 +22,10 @@
 .img-style{
   height:85px;
   width: 100%;
+  object-fit: cover;
+}
+
+.container--subtitle{
+  margin-top: 20px;
+
 }

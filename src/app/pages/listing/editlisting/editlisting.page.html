@@ -37,7 +37,7 @@
                             <!---->
                         <!--</ion-textarea>-->
                         <ion-text>Industry&nbsp; &nbsp;</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedIndustry" name="selectedIndustry" value="selectedIndustry">
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedIndustry" name="selectedIndustry" value="selectedIndustry">
                             <ion-select-option *ngFor="let item of industries" >{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -47,7 +47,7 @@
                             <!--<ion-text>Country&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
                         <ion-text >Country</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedCountry" [compareWith]="compareWith" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
+                        <ion-select class="ion-select-style"  slot="end" [(ngModel)]="selectedCountry" [compareWith]="compareWith" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
                             <ion-select-option *ngFor="let item of countries" [value]="selectedCountry">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -57,7 +57,7 @@
                             <!--<ion-text>City&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
                         <ion-text>City</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity" value="selectedCity">
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCity" name="selectedCity" value="selectedCity">
                             <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>

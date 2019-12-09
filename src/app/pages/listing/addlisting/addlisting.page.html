@@ -17,7 +17,7 @@
             <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
                 <ion-item-group padding>
                    <ion-item>
-                       <div text-uppercase padding-bottom>Basic Information</div>
+                       <div text-uppercase padding-bottom style="font-weight: bolder">Basic Information</div>
                    </ion-item>
                     <ion-item>
                         <ion-text >Type:</ion-text>
@@ -32,14 +32,14 @@
 
                     <ion-item>
                         <ion-text>Industry</ion-text>
-                        <ion-select slot="end"[(ngModel)]="selectedIndustry" name="selectIndustry" placeholder="Select Industry">
+                        <ion-select class="ion-select-style" slot="end"[(ngModel)]="selectedIndustry" name="selectIndustry" placeholder="Select">
                             <ion-select-option *ngFor="let item of industries">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item>
                         <ion-text>Country</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()" placeholder="Select country">
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()" placeholder="Select">
                             <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -47,7 +47,7 @@
                     <ion-item>
                         <!--<ion-input type="text" name="city" ngModel maxlength="25"><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>-->
                         <ion-text>City</ion-text>
-                        <ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity" placeholder="Select city">
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCity" name="selectedCity" placeholder="Select">
                             <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
@@ -63,7 +63,7 @@
                 </ion-item-group>
                 <ion-item-group padding>
                     <ion-item>
-                        <div text-uppercase padding-bottom>Sale Information</div>
+                        <div text-uppercase padding-bottom style="font-weight: bolder">Sale Information</div>
                     </ion-item>
 
                     <ion-item>
