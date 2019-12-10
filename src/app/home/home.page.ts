@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuController, ModalController, NavController} from '@ionic/angular';
-import {AuthService} from '../services/auth.service';
-import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
-import {HttpClient} from '@angular/common/http';
-import {DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
-import {EnvService} from '../services/env.service';
-import {ListingDetailPage} from '../pages/modal/listing-detail/listing-detail.page';
+import { Component, OnInit } from '@angular/core';
+import { MenuController, ModalController, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { SearchFilterPage } from '../pages/modal/search-filter/search-filter.page';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { EnvService } from '../services/env.service';
+import { ListingDetailPage } from '../pages/modal/listing-detail/listing-detail.page';
 
 @Component({
     selector: 'app-home',
@@ -34,12 +34,12 @@ export class HomePage implements OnInit {
     user: any;
 
     constructor(public navCtrl: NavController,
-                public modalCtrl: ModalController,
-                private authService: AuthService,
-                private http: HttpClient,
-                private sanitizer: DomSanitizer,
-                private menuCtrl: MenuController,
-                private env: EnvService,
+        public modalCtrl: ModalController,
+        private authService: AuthService,
+        private http: HttpClient,
+        private sanitizer: DomSanitizer,
+        private menuCtrl: MenuController,
+        private env: EnvService,
     ) {
         this.currentPage = 1;
         this.lastPage = 1;
@@ -61,6 +61,19 @@ export class HomePage implements OnInit {
         // }
     }
 
+    convertImage(item) {
+        let photo;
+        if (item.data) {
+            const bytes = new Uint8Array(item.data);
+            const binary = bytes.reduce(
+                (data, b) => (data += String.fromCharCode(b)), ''
+            );
+            photo = this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + btoa(binary));
+        } else {
+            photo = '/assets/shapes.svg';
+        }
+        return photo;
+    }
 
     // fresh listing
     async getListing() {
@@ -88,13 +101,7 @@ export class HomePage implements OnInit {
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
                 (data.listings).forEach(item => {
-                    console.log(item);
-                    if (item.photo.data.length !== 0) {
-                        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(item.photo.data)));
-                        item.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-                    } else {
-                        item.photo = '/assets/shapes.svg';
-                    }
+                    item.photo = this.convertImage(item.photo)
                     this.allListing.push(item);
                 });
             })

@@ -1,11 +1,11 @@
-import {Component, OnInit, SecurityContext} from '@angular/core';
-import {ModalController, NavController, NavParams} from '@ionic/angular';
-import {NgForm} from '@angular/forms';
-import {AlertService} from '../../../services/alert.service';
-import {AuthService} from '../../../services/auth.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {HttpClient} from '@angular/common/http';
-import {EnvService} from '../../../services/env.service';
+import { Component, OnInit, SecurityContext } from '@angular/core';
+import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
+import { AlertService } from '../../../services/alert.service';
+import { AuthService } from '../../../services/auth.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { EnvService } from '../../../services/env.service';
 
 @Component({
   selector: 'app-editlisting',
@@ -33,13 +33,13 @@ export class EditlistingPage implements OnInit {
   private listOfCountryAndCity: any;
 
   constructor(private modalCtrl: ModalController,
-              private navParams: NavParams,
-              private navCtrl: NavController,
-              private sanitizer: DomSanitizer,
-              private authService: AuthService,
-              private alertService: AlertService,
-              private http: HttpClient,
-              private env: EnvService) {
+    private navParams: NavParams,
+    private navCtrl: NavController,
+    private sanitizer: DomSanitizer,
+    private authService: AuthService,
+    private alertService: AlertService,
+    private http: HttpClient,
+    private env: EnvService) {
 
 
   }
@@ -64,41 +64,30 @@ export class EditlistingPage implements OnInit {
     console.log('My ID: ' + this.id);
 
     this.photo = this.convertImage(this.navParams.data.photo);
-
-    // if (this.navParams.data.photo.data !== 0) {
-    //   const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.navParams.data.photo.data)));
-    //   this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-    // } else {
-    //   this.photo = '/assets/shapes.svg';
-    // }
-
-
-    console.log(this.photo);
-
   }
 
   compareWith(o1, o2) {
     if (o1 === o2) {
-       return true;
+      return true;
     }
     return false;
   }
 
   getCountries() {
     this.http.get(this.env.API_URL + 'list/countries')
-        .subscribe((res: any) => {
-          console.log(res);
-          this.listOfCountryAndCity = res.countries;
-          this.countries = Object.keys(res.countries);
-        });
+      .subscribe((res: any) => {
+        console.log(res);
+        this.listOfCountryAndCity = res.countries;
+        this.countries = Object.keys(res.countries);
+      });
 
   }
 
   getIndustries() {
     this.http.get(this.env.API_URL + 'list/industries')
-        .subscribe((res: any) => {
-          this.industries = res.industries;
-        });
+      .subscribe((res: any) => {
+        this.industries = res.industries;
+      });
   }
 
   getCities() {
@@ -110,50 +99,39 @@ export class EditlistingPage implements OnInit {
   }
 
   convertImage(item) {
-
     if (item.data) {
       const bytes = new Uint8Array(item.data);
       const binary = bytes.reduce(
-          (data, b) => (data += String.fromCharCode(b)),
-          ''
+        (data, b) => (data += String.fromCharCode(b)), ''
       );
       this.photo = 'data:image/*;base64,' + btoa(binary);
-      return this.photo;
     } else {
-      return item;
+      this.photo = '/assets/shapes.svg';
     }
+    return this.photo;
   }
 
   saveListing(form: NgForm) {
     this.purpose = 'Business For Sale';
     const validatedField = this.validateForm(form);
-    console.log('photo : ' +  this.photo);
+    console.log('photo : ' + this.photo);
     if (!validatedField) {
 
       this.alertService.presentToast('Please fill in all fields');
     } else {
-
-      // REMOVE THIS
-      // if (this.photo !== undefined) {
-      //   const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(this.photo.data)));
-      //   this.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-      // } else {
-      //   this.photo = '/assets/shapes.svg';
-      // }
-
       this.authService.updateListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
-          form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
-          localStorage.getItem('token'), this.id).subscribe((res: any) => {
-        if (res.status !== 'error') {
-          console.log(res);
-          this.modalCtrl.dismiss();
-          this.alertService.presentToast(res.message);
-          window.location.reload();
-        } else {
-          this.modalCtrl.dismiss();
-          this.alertService.presentToast(res.message);
-        }
-      });
+        form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
+        localStorage.getItem('token'), this.id).subscribe((res: any) => {
+          if (res.status !== 'error') {
+            console.log(res);
+            this.modalCtrl.dismiss();
+            this.alertService.presentToast(res.message);
+            window.location.reload();
+          } else {
+            this.modalCtrl.dismiss();
+            this.alertService.presentToast(res.message);
+          }
+        });
     }
   }
 
@@ -185,11 +163,11 @@ export class EditlistingPage implements OnInit {
 
   validateForm(form: NgForm) {
     console.log(form.value.name, this.selectedIndustry, this.selectedCity, form.value.description, this.selectedCountry,
-    form.value.askingPrice, form.value.age, form.value.cashFlow, form.value.revenue);
+      form.value.askingPrice, form.value.age, form.value.cashFlow, form.value.revenue);
     if (form.value.name !== '' && this.selectedIndustry !== '' &&
-        this.selectedCity !== '' && form.value.description !== '' && this.selectedCountry !== ''
-        && form.value.askingPrice !== undefined && form.value.age !== undefined && form.value.cashFlow !== undefined
-        && form.value.revenue !== undefined) {
+      this.selectedCity !== '' && form.value.description !== '' && this.selectedCountry !== ''
+      && form.value.askingPrice !== undefined && form.value.age !== undefined && form.value.cashFlow !== undefined
+      && form.value.revenue !== undefined) {
       return true;
     }
     return false;

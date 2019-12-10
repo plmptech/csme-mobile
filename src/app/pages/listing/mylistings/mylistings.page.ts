@@ -34,17 +34,26 @@ export class MylistingsPage implements OnInit {
     this.getOwnListing();
   }
 
+  convertImage(item) {
+    let photo;
+    if (item.data) {
+      const bytes = new Uint8Array(item.data);
+      const binary = bytes.reduce(
+        (data, b) => (data += String.fromCharCode(b)), ''
+      );
+      photo = this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + btoa(binary));
+    } else {
+      photo = '/assets/shapes.svg';
+    }
+    return photo;
+  }
+
   getOwnListing() {
     this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
       .toPromise()
       .then((data: any) => {
         for (let l of data.user.listings) {
-          if (l.photo.data.length != 0) {
-            let base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(l.photo.data)))
-            l.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String)
-          }
-          else
-            l.photo = '/assets/shapes.svg'
+          l.photo = this.convertImage(l.photo)
         }
         console.log(data.user.listings)
         return data.user.listings;

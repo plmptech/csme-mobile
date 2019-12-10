@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, NavController} from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { EnvService } from '../../services/env.service';
 import { AlertService } from '../../services/alert.service';
 import { Observable } from 'rxjs';
-import {EditlistingPage} from '../listing/editlisting/editlisting.page';
-import {DomSanitizer} from '@angular/platform-browser';
+import { EditlistingPage } from '../listing/editlisting/editlisting.page';
+import { DomSanitizer } from '@angular/platform-browser';
 
 function ionViewDidLoad() {
 
@@ -57,10 +57,10 @@ export class ProfileMenuPage implements OnInit {
     }
   }
 
-   async ngOnInit() {
-     this.authService.getUserInfo();
-     await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-     this.user = await this.getUser();
+  async ngOnInit() {
+    this.authService.getUserInfo();
+    await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+    this.user = await this.getUser();
   }
 
   async getUser(): Promise<any> {
@@ -108,28 +108,37 @@ export class ProfileMenuPage implements OnInit {
 
   }
 
+  convertImage(item) {
+    let photo;
+    if (item.data) {
+      const bytes = new Uint8Array(item.data);
+      const binary = bytes.reduce(
+        (data, b) => (data += String.fromCharCode(b)), ''
+      );
+      photo = this.sanitizer.bypassSecurityTrustUrl('data:image/*;base64,' + btoa(binary));
+    } else {
+      photo = '/assets/shapes.svg';
+    }
+    return photo;
+  }
+
   getOwnListing() {
     this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
-        .toPromise()
-        .then((data: any) => {
-          if (data.user.listings.length === 0) {
-            this.emptyListing = true;
-          }
-          for (const l of data.user.listings) {
-            if (l.photo.data.length !== 0) {
-              const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(l.photo.data)));
-              l.photo = this.sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64, ' + base64String);
-            } else {
-              l.photo = '/assets/shapes.svg';
-            }
-          }
-          console.log(data.user.listings);
-          return data.user.listings;
-        })
-        .catch(err => {
-          console.log('Error', err);
-          return err;
-        });
+      .toPromise()
+      .then((data: any) => {
+        if (data.user.listings.length === 0) {
+          this.emptyListing = true;
+        }
+        for (const l of data.user.listings) {
+          l.photo = this.convertImage(l.photo)
+        }
+        console.log(data.user.listings);
+        return data.user.listings;
+      })
+      .catch(err => {
+        console.log('Error', err);
+        return err;
+      });
   }
 
 
