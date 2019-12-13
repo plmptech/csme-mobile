@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, NavController, NavParams} from '@ionic/angular';
+import {ModalController, NavController, NavParams } from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../../../services/env.service';
+import {SendEnquiryPage} from '../send-enquiry/send-enquiry.page';
+import {AlertService} from '../../../services/alert.service';
 
 @Component({
     selector: 'app-listing-detail',
@@ -29,11 +31,12 @@ export class ListingDetailPage implements OnInit {
                 private navParams: NavParams,
                 private http: HttpClient,
                 private env: EnvService,
-                private navCtrl: NavController) {
+                private navCtrl: NavController,
+                private alertService: AlertService) {
     }
 
     async ngOnInit() {
-        this.id = this.navParams.data.id;
+        this.id = this.navParams.data._id;
         this.name = this.navParams.data.name;
         this.purpose = this.navParams.data.purpose;
         this.industry = this.navParams.data.industry;
@@ -65,6 +68,26 @@ export class ListingDetailPage implements OnInit {
     closeModal() {
         this.modalCtrl.dismiss();
     }
+
+    // sendEnquiryModal() {
+    //     this.navCtrl.navigateRoot('/send-enquiry');
+    // }
+
+    async sendEnquiryModal() {
+        console.log(localStorage.getItem('token'));
+        if (localStorage.getItem('token') == null) {
+            this.alertService.presentToast('Please login before sending an enquiry.');
+        } else {
+            const modal = await this.modalCtrl.create({
+                component: SendEnquiryPage,
+                componentProps: {
+                    listingId: this.id
+                }
+            });
+            return await modal.present();
+        }
+    }
+
 
 
 }

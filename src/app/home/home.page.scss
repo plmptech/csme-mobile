@@ -21,12 +21,13 @@
 
 .ion-card-subtitle{
   line-height: 0.5em;
-  font-family: 'Nanumgothic';
+  font-family: 'Rubik';
 }
 
 .company_title{
   font-size: 11pt;
   font-style: normal;
+  text-overflow: ellipsis;
 }
 
 .card-padding{
@@ -34,10 +35,14 @@
 }
 
 img {
-  object-fit: fill;
+  object-fit: cover;
   height: 150px;
 }
 
 p{
   line-height: 2.0em;
+}
+
+.footer-text{
+  padding:8px;
 }

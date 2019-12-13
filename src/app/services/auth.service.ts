@@ -62,6 +62,12 @@ export class AuthService {
         );
     }
 
+    sendEmail(message: string, listingId: string, token: string) {
+        return this.http.post(this.env.API_URL + 'listing/' + listingId + '/enquiry',
+            { message, token },
+        );
+    }
+
 
 
     /*logout() {

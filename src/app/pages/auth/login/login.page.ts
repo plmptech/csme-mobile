@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController, ToastController } from '@ionic/angular';
+import {LoadingController, ModalController, NavController, ToastController} from '@ionic/angular';
 import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { AlertService } from '../../../services/alert.service';
@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
         private alertService: AlertService,
         private navCtrl: NavController,
         public toastCtrl: ToastController,
+        public loadingCtrl: LoadingController
     ) {
     }
 
@@ -38,8 +39,22 @@ export class LoginPage implements OnInit {
         this.navCtrl.navigateForward('/register');
     }
 
+    showAutoHideLoader() {
+        this.loadingCtrl.create({
+            message: 'Signing in',
+            duration: 3000,
+            spinner: 'circles'
+        }).then((res) => {
+            res.present();
+
+            res.onDidDismiss().then((dis) => {
+            });
+        });
+    }
+
     login(form: NgForm) {
         if (form.value.email !== '' && form.value.password !== '') {
+            this.showAutoHideLoader();
             this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                 if (res.status !== 'error') {
                     localStorage.setItem('token', res.token);

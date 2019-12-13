@@ -16,7 +16,7 @@
     <ion-grid style="height:90%;">
         <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="register(form)" method="post">
-                <div text-uppercase padding-bottom>User Information</div>
+                <div text-uppercase padding-bottom style="font-weight: bolder">User Information</div>
                 <ion-item class="item-design">
                     <ion-icon ios="ios-person" md="md-person"></ion-icon>&nbsp;
                     <ion-input type="text" ngModel name="name" placeholder="Name"></ion-input>
@@ -27,7 +27,7 @@
                     <ion-input type="tel" ngModel name="mobile" placeholder="Mobile Number"></ion-input>
                 </ion-item>
                 <br>
-                <div text-uppercase padding-bottom>Account Information</div>
+                <div text-uppercase padding-bottom style="font-weight: bolder">Account Information</div>
                 <ion-item class="item-design">
                     <ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp;
                     <ion-input type="email" ngModel name="email" placeholder="Email"></ion-input>
@@ -40,7 +40,7 @@
                 <br>
                 <ion-item class="item-design">
                     <ion-icon ios="ios-lock" md="md-lock"></ion-icon>
-                    <ion-input type="password" ngModel name="confirmPw" placeholder="Confirm password"></ion-input>
+                    <ion-input type="password" ngModel name="confirmPw" placeholder="&nbsp;Confirm password"></ion-input>
                 </ion-item>
 
                 <br>
@@ -50,3 +50,5 @@
         </ion-row>
     </ion-grid>
 </ion-content>
+<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>
+

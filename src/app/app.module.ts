@@ -23,6 +23,11 @@ import {ListingDetailPageModule} from './pages/modal/listing-detail/listing-deta
 import {EditlistingPageModule} from './pages/listing/editlisting/editlisting.module';
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import {ImageCompressService, ResizeOptions} from 'ng2-image-compress';
+import {SendEnquiryPage} from './pages/modal/send-enquiry/send-enquiry.page';
+import {SendEnquiryPageModule} from './pages/modal/send-enquiry/send-enquiry.module';
+import {FormBuilder} from '@angular/forms';
+
 
 @NgModule({
     declarations: [AppComponent],
@@ -41,6 +46,7 @@ import { File } from '@ionic-native/file/ngx';
         MylistingsPageModule,
         AddlistingPageModule,
         ListingDetailPageModule,
+        SendEnquiryPageModule,
         EditlistingPageModule,
     ],
     providers: [
@@ -49,6 +55,9 @@ import { File } from '@ionic-native/file/ngx';
         AuthGuard,
         AuthService,
         Camera,
+        ImageCompressService,
+        ResizeOptions,
+        FormBuilder,
         File,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
 

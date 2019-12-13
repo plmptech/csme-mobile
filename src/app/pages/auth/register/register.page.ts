@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, NavController} from '@ionic/angular';
+import {LoadingController, ModalController, NavController} from '@ionic/angular';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from '../../../services/alert.service';
 import {NgForm} from '@angular/forms';
@@ -15,7 +15,8 @@ export class RegisterPage implements OnInit {
   constructor(private modalCtrl: ModalController,
               private authService: AuthService,
               private navCtrl: NavController,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
   }
@@ -53,12 +54,26 @@ export class RegisterPage implements OnInit {
     return false;
   }
 
+  showAutoHideLoader() {
+    this.loadingCtrl.create({
+      message: 'Registering account',
+      duration: 3000,
+      spinner: 'circles'
+    }).then((res) => {
+      res.present();
+
+      res.onDidDismiss().then((dis) => {
+      });
+    });
+  }
+
   register(form: NgForm) {
     const validatedField = this.validateFields(form);
     // console.log(form.value.email, form.value.name, form.value.mobile,
     //     form.value.password, form.value.confirmPw);
     // console.log(this.validateEmail(form.value.email));
     if (validatedField) {
+      this.showAutoHideLoader();
       this.authService.register(form.value.email, form.value.name, form.value.mobile,
           form.value.password, form.value.confirmPw).subscribe((res: any) => {
         if (res.status !== 'error') {

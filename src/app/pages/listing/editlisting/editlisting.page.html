@@ -22,7 +22,7 @@
 
                     <ion-item>
                         <ion-text>Type:</ion-text>
-                        <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
+                        <ion-input readonly name="type" float-right style="font-weight: bolder"> &nbsp;&nbsp;Business For Sale</ion-input>
                     </ion-item>
 
                     <ion-textarea hidden [ngModel]="id" name="id"></ion-textarea>
@@ -34,7 +34,7 @@
 
                     <ion-item>
                         <!--<ion-textarea name="industry" [ngModel]="industry" type="text">-->
-                            <!---->
+                        <!---->
                         <!--</ion-textarea>-->
                         <ion-text>Industry&nbsp; &nbsp;</ion-text>
                         <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedIndustry" name="selectedIndustry" value="selectedIndustry">
@@ -44,17 +44,17 @@
 
                     <ion-item>
                         <!--<ion-textarea name="country" [ngModel]="country">-->
-                            <!--<ion-text>Country&nbsp; &nbsp;</ion-text>-->
+                        <!--<ion-text>Country&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
                         <ion-text >Country</ion-text>
-                        <ion-select class="ion-select-style"  slot="end" [(ngModel)]="selectedCountry" [compareWith]="compareWith" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
+                        <ion-select class="ion-select-style"  slot="end" [(ngModel)]="selectedCountry" name="selectedCountry" (ionChange)="getCities()" value="selectedCountry">
                             <ion-select-option *ngFor="let item of countries" [value]="selectedCountry">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item>
                         <!--<ion-textarea name="city" [ngModel]="city" maxlength="25">-->
-                            <!--<ion-text>City&nbsp; &nbsp;</ion-text>-->
+                        <!--<ion-text>City&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
                         <ion-text>City</ion-text>
                         <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCity" name="selectedCity" value="selectedCity">
@@ -78,7 +78,7 @@
 
                 </ion-item-group>
                 <ion-item-group padding>
-                    <div text-uppercase padding-bottom>Sale Information</div>
+                    <div text-uppercase padding-bottom style="font-weight: bolder">Sale Information</div>
                     <ion-item>
                         <ion-text>Asking Price &nbsp; &nbsp;</ion-text>
                         <ion-input type="tel" name="askingPrice" [ngModel]="askingPrice" min="100"
@@ -96,12 +96,14 @@
                     </ion-item>
 
                     <ion-item *ngIf="photo">
-                        <img *ngIf="photo" [src]="photo" name="photo"/>
+                        <img [src]="photo" height="70" width="70">
                     </ion-item>
+
                     <ion-item>
-                        <ion-text id="profile_image">Photo &nbsp; &nbsp;</ion-text>
-                        <ion-input type="file" accept="image/*" (change)="upload($event)" name="photo"
-                                   [ngModel]="photo"></ion-input>
+                        <!--<ion-text id="profile_image">Photo &nbsp; &nbsp;</ion-text>-->
+                        <!--<ion-input type="file" accept="image/*" (change)="upload($event)" name="photo"-->
+                        <!--[ngModel]="photo"></ion-input>-->
+                        <ion-input input-style="box" id="inputImage" type="file" accept="image/*" (change)="onUpload($event)"></ion-input>
                     </ion-item>
 
                 </ion-item-group>

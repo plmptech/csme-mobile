@@ -19,3 +19,51 @@ img {
   height: auto;
   background-position: center;
 }
+
+
+.ratePageModal {
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  .modal-wrapper {
+    border-radius: 7px;
+    //background: rgba(0, 0, 0, 0.5) !important;
+    height: 50% !important;
+    margin-top: 50%;
+    border-style: solid;
+    border-color:#BEBEBE;
+    border-width: 2px;
+  }
+  //height: 450px;
+  //background-color: blue;
+}
+
+div.justified {
+  display: flex;
+  justify-content: center;
+}
+div.titleText {
+  font-size: 20px;
+  justify-content: center;
+  text-align: center;
+  margin: 5px;
+  font-family: myFourthFont;
+}
+
+.submitButton {
+  //margin: 0;
+  border-radius: 0;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-width: 50%;
+  height: 44px;
+  border-top: 0.55px solid #dbdbdf;
+  font-size: 18px;
+  color: #FFF;
+  background-color: #005AAA;
+  font-family: myFourthFont;
+  padding: 0px;
+  margin-top: 15px;
+}

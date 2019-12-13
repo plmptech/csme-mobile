@@ -34,7 +34,7 @@
       <div class="card card-padding">
         <p>
           <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
-          <ion-card-title class="company_title">{{item.name | uppercase}}</ion-card-title>
+          <ion-card-title class="company_title">{{item.name | uppercase | slice:0:30}}</ion-card-title>
         </p>
       </div>
     </ion-card>
@@ -46,4 +46,9 @@
 
 
   </div>
+
+
 </ion-content>
+<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>
+
+
