@@ -95,9 +95,9 @@ export class EditlistingPage implements OnInit {
         });
   }
 
-  getCities() {
-    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
-  }
+  // getCities() {
+  //   this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
+  // }
 
   closeModal() {
     this.modalCtrl.dismiss();
@@ -122,13 +122,15 @@ export class EditlistingPage implements OnInit {
     this.purpose = 'Business For Sale';
     const validatedField = this.validateForm(form);
     // console.log('photo : ' +  this.photo);
-    console.log(this.selectedCountry, this.selectedCity, this.selectedIndustry, this.photo);
+    console.log(form.value.selectedCity);
 
+    //
     if (!validatedField) {
       this.alertService.presentToast('Please fill in all fields');
     } else {
       this.showAutoHideLoader();
-      this.authService.updateListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
+      this.authService.updateListingNow(form.value.name, this.purpose, form.value.selectedIndustry, form.value.selectedCountry,
+      form.value.selectedCity,
           form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
           localStorage.getItem('token'), this.id).subscribe((res: any) => {
         if (res.status !== 'error') {
@@ -203,10 +205,10 @@ export class EditlistingPage implements OnInit {
   }
 
   validateForm(form: NgForm) {
-    console.log(form.value.name, this.selectedIndustry, this.selectedCity, form.value.description, this.selectedCountry,
+    console.log(form.value.name, form.value.selectedIndustry, form.value.selectedCity, form.value.description, form.value.selectedCountry,
         form.value.askingPrice, form.value.age, form.value.cashFlow, form.value.revenue);
-    if (form.value.name !== '' && this.selectedIndustry !== '' &&
-        this.selectedCity !== '' && form.value.description !== '' && this.selectedCountry !== ''
+    if (form.value.name !== '' && form.value.selectedIndustry !== '' &&
+        form.value.selectedCity !== '' && form.value.description !== '' && form.value.selectedCountry !== ''
         && form.value.askingPrice !== undefined && form.value.age !== undefined && form.value.cashFlow !== undefined
         && form.value.revenue !== undefined) {
       return true;

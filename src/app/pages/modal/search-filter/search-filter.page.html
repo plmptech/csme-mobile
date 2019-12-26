@@ -24,17 +24,17 @@
 
     <ion-item>
       <ion-text >Country</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()">
+      <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" > <!--(ionChange)="getCities()">-->
         <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-text>City</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity">
-        <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <!--<ion-item>-->
+      <!--<ion-text>City</ion-text>-->
+      <!--<ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity">-->
+        <!--<ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>-->
+      <!--</ion-select>-->
+    <!--</ion-item>-->
 
         <!--<ion-item>-->
         <!--<ion-label class="no-margin-bottom" stacked>-->

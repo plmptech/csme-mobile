@@ -27,7 +27,8 @@ const routes: Routes = [
   { path: 'profile-edit', loadChildren: './pages/profile-edit/profile-edit.module#ProfileEditPageModule' },
   { path: 'listing-detail', loadChildren: './pages/modal/listing-detail/listing-detail.module#ListingDetailPageModule' },
   { path: 'editlisting', loadChildren: './pages/listing/editlisting/editlisting.module#EditlistingPageModule' },
-  { path: 'send-enquiry', loadChildren: './pages/modal/send-enquiry/send-enquiry.module#SendEnquiryPageModule' }
+  { path: 'send-enquiry', loadChildren: './pages/modal/send-enquiry/send-enquiry.module#SendEnquiryPageModule' },
+  { path: 'terms-conditions', loadChildren: './pages/modal/terms-conditions/terms-conditions.module#TermsConditionsPageModule' }
 ];
 
 @NgModule({

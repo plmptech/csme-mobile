@@ -25,7 +25,7 @@ export class SearchFilterPage implements OnInit {
   private upperPrice: number;
   selectedIndustry: string;
   selectedCountry: string;
-  selectedCity: string;
+  // selectedCity: string;
   cities: any;
   private listOfCountryAndCity: any;
 
@@ -60,19 +60,19 @@ export class SearchFilterPage implements OnInit {
         });
   }
 
-  getCities() {
-    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
-  }
+  // getCities() {
+  //   this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
+  // }
 
   async applyChanges() {
     console.log(this.selectedIndustry);
     console.log(this.selectedCountry);
-    console.log(this.selectedCity);
+    // console.log(this.selectedCity);
 
 
     const onCloseData = {
       country: this.selectedCountry,
-      city: this.selectedCity,
+      // city: this.selectedCity,
       industry: this.selectedIndustry,
       sortBy: this.sortBy,
       lowerPrice: this.minmaxprice.lower,

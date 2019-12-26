@@ -80,6 +80,7 @@ export class ListingDetailPage implements OnInit {
         } else {
             const modal = await this.modalCtrl.create({
                 component: SendEnquiryPage,
+                cssClass: 'my-custom-modal-css',
                 componentProps: {
                     listingId: this.id
                 }

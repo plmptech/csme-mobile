@@ -13,15 +13,20 @@
   text-transform: uppercase;
   font-size: 1.0em;
   margin-left: 15px;
+  margin-top: 10px;
 }
 
 .toolbar-color{
   background-color: #1e588e;
 }
 
-.ion-card-subtitle{
+ion-card-subtitle{
   line-height: 0.5em;
   font-family: 'Rubik';
+  font-weight: bold;
+  font-size: 8pt;
+  padding: 14px 10px 10px 10px;
+  color: #383a3e;
 }
 
 .company_title{
@@ -44,5 +49,22 @@ p{
 }
 
 .footer-text{
-  padding:8px;
+  font-size: 7pt;
+  vertical-align: middle;
+  height: 35px;
+  text-align: center;
+  padding-top: 12px;
+  color: #383a3e;
+  font-family: 'Rubik';
+}
+
+.fixline {
+  height: 95%;
+}
+
+.newtext {
+  font-size: 10pt;
+  padding: 0px 10px 10px;
+  color: #383a3e;
+  font-family: 'Rubik';
 }

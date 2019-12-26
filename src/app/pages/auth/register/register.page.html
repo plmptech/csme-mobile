@@ -16,7 +16,8 @@
     <ion-grid style="height:90%;">
         <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
             <form #form="ngForm" (ngSubmit)="register(form)" method="post">
-                <div text-uppercase padding-bottom style="font-weight: bolder">User Information</div>
+                <p text-uppercase style="font-weight: bolder;">User Information</p>
+                <!--<div text-uppercase padding-bottom style="font-weight: bolder">User Information</div>-->
                 <ion-item class="item-design">
                     <ion-icon ios="ios-person" md="md-person"></ion-icon>&nbsp;
                     <ion-input type="text" ngModel name="name" placeholder="Name"></ion-input>
@@ -27,7 +28,8 @@
                     <ion-input type="tel" ngModel name="mobile" placeholder="Mobile Number"></ion-input>
                 </ion-item>
                 <br>
-                <div text-uppercase padding-bottom style="font-weight: bolder">Account Information</div>
+                <!--<div text-uppercase padding-bottom style="font-weight: bolder;">Account Information</div>-->
+                <p text-uppercase style="font-weight: bolder;">Account Information</p>
                 <ion-item class="item-design">
                     <ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp;
                     <ion-input type="email" ngModel name="email" placeholder="Email"></ion-input>
@@ -50,5 +52,18 @@
         </ion-row>
     </ion-grid>
 </ion-content>
-<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>
+<!--<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>-->
 
+<ion-footer>
+    <a class="item" href="#" onclick="window.open('https://www.creataniumblockchain.com/', '_blank', 'location=yes'); return false;">
+        <ion-grid no-margin no-padding style="width: 100%;" align-items-center>
+            <ion-row>
+                <ion-col no-margin no-padding>
+                    <div class="footer-text" float-right text-uppercase align-self-center>Powered by &nbsp;</div>
+                </ion-col>
+                <ion-col no-margin no-padding>
+                    <img src="../../assets/creatanium-2.png" style="height:35px;" float-left/> </ion-col>
+            </ion-row>
+        </ion-grid>
+    </a>
+</ion-footer>

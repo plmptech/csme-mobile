@@ -39,17 +39,18 @@
 
                     <ion-item>
                         <ion-text>Country</ion-text>
-                        <ion-select class="ion-select-style" [(ngModel)]="selectedCountry" name="selectCountry" (ionChange)="getCities()" placeholder="Select">
+                        <ion-select class="ion-select-style" [(ngModel)]="selectedCountry" name="selectCountry" placeholder="Select"> <!--(ionChange)="getCities()"-->
                             <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
                     <ion-item>
                         <!--<ion-input type="text" name="city" ngModel maxlength="25"><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>-->
-                        <ion-text>City</ion-text>
-                        <ion-select class="ion-select-style" [(ngModel)]="selectedCity" name="selectedCity" placeholder="Select">
-                            <ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>
-                        </ion-select>
+                        <!--<ion-text>City</ion-text>-->
+                        <!--<ion-select class="ion-select-style" [(ngModel)]="selectedCity" name="selectedCity" placeholder="Select">-->
+                            <!--<ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>-->
+                        <!--</ion-select>-->
+                        <ion-input type="text" name="selectedCity" ngModel><ion-text>City&nbsp; &nbsp;</ion-text></ion-input>
                     </ion-item>
 
                     <ion-item>

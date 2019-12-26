@@ -39,26 +39,58 @@
         </ion-col>
         <ion-col size="9" ext-left>
           <div class="ion-text-uppercase">{{ user.name }}</div>
-          <div class="ion-text-uppercase">{{ user.type }}</div>
-          <div class="ion-text-uppercase">{{ user.email }}</div>
           <div class="ion-text-uppercase">{{ user.phone }}</div>
+          <div class="ion-text-uppercase">{{ user.email }}</div>
+          <div class="ion-text-uppercase">{{ user.type }} USER</div>
         </ion-col>
       </ion-row>
-      <ion-row  align-items-center padding text-right>
+      <ion-row  align-items-center padding>
         <ion-menu-toggle class="mto" auto-hide="false">
-          <a *ngIf="user.type == 'basic'" tappable (click)="upgradeUser()">
+          <a *ngIf="user.type == 'basic' && user.status !== 'pending'" tappable (click)="upgradeUser()">
             <ion-text>
-              <strong>Upgrade Premium</strong>
+              <!--<strong>Upgrade Premium</strong>-->
+              <ion-button size="small">Upgrade Premium</ion-button>
             </ion-text>
           </a>
-          <ion-label *ngIf="user.type == 'basic'" > | </ion-label>
+          <a *ngIf="user.type == 'basic' && user.status == 'pending'" style="padding-right:5px;">
+            <!--<ion-button size="small">Pending Premium</ion-button>-->
+            <ion-text>
+              <!--<i><strong>Pending approval for Premium</strong></i>-->
+              <ion-button size="small" color="tertiary">Pending Premium</ion-button>
+            </ion-text>
+
+          </a>
+
+          <!--<ion-label *ngIf="user.type == 'basic'" > | </ion-label>-->
+          <!--<a tappable (click)="viewTerms()">-->
+            <!--<ion-text>-->
+              <!--<strong>Terms & Conditions</strong>-->
+            <!--</ion-text>-->
+          <!--</a>-->
+
+          <!--<ion-label *ngIf="user.type == 'basic'" > | </ion-label>-->
+          <a tappable  style="padding-right:5px;">
+            <ion-text>
+              <!--<strong>Logout</strong>-->
+              <ion-button size="small" color="tertiary" (click)="viewTerms()">Legal</ion-button>
+            </ion-text>
+          </a>
+
           <a tappable (click)="logout()">
             <ion-text>
-              <strong>Logout</strong>
+              <!--<strong>Logout</strong>-->
+              <ion-button size="small" color="tertiary">Logout</ion-button>
             </ion-text>
           </a>
         </ion-menu-toggle>
       </ion-row>
+      <!--<ion-row align-items-center padding text-right>-->
+        <!--<a tappable (click)="viewTerms()">-->
+        <!--<ion-text>-->
+        <!--<strong>Terms & Conditions</strong>-->
+        <!--</ion-text>-->
+        <!--</a>-->
+      <!--</ion-row>-->
     </ion-grid>
   </div>
 <br>

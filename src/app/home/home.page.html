@@ -18,26 +18,41 @@
 </ion-header>
 
 
-<ion-content color="medium">
-  <ion-refresher slot="fixed" (ionRefresh)="refreshListings($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
-    </ion-refresher-content>
-  </ion-refresher>
 
-  <div class="ion-padding">
+<ion-content color="medium">
+  <img src='../../assets/banner.jpg' alt="" style="width: 100%;"/>
+
+  <div margin>
+  <!--<div class="ion-padding">-->
+    <ion-refresher slot="fixed" (ionRefresh)="refreshListings($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+      </ion-refresher-content>
+    </ion-refresher>
+
     <div class="card">
-        <ion-text color="secondary" style="font-weight: bolder">Business Listing</ion-text>
+        <ion-text color="secondary" style="font-weight: bolder;">Business Listing</ion-text>
     </div>
 
-    <ion-card *ngFor="let item of (allListing )" color="tertiary" (click)="openListingDetail(item)">
-      <img [src]="item.photo" alt=""/>
-      <div class="card card-padding">
-        <p>
-          <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
-          <ion-card-title class="company_title">{{item.name | uppercase | slice:0:30}}</ion-card-title>
-        </p>
-      </div>
-    </ion-card>
+    <!--<ion-card *ngFor="let item of (allListing )" color="tertiary" (click)="openListingDetail(item)">-->
+      <!--<img [src]="item.photo" alt=""/>-->
+      <!--<div class="card card-padding">-->
+        <!--<p>-->
+          <!--<ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>-->
+          <!--<ion-card-title class="company_title">{{item.name | uppercase | slice:0:30}}</ion-card-title>-->
+        <!--</p>-->
+      <!--</div>-->
+    <!--</ion-card>-->
+    <ion-grid no-margin no-padding>
+      <ion-row no-padding>
+        <ion-col *ngFor="let item of (allListing )" no-margin no-padding size="6">
+          <ion-card class="fixline" (click)="openListingDetail(item)">
+            <img [src]="item.photo" alt=""/>
+            <ion-card-subtitle>{{item.purpose | uppercase}}</ion-card-subtitle>
+            <ion-card-title class="newtext">{{item.name | uppercase | slice:0:30}}</ion-card-title>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
       <ion-infinite-scroll threshold="100px" color="dark"  (ionInfinite)="loadNextPage($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" color="dark" loadingText="Loading more data...">
@@ -47,8 +62,21 @@
 
   </div>
 
-
+<!--Creatanium blockchain-->
 </ion-content>
-<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>
+
+<ion-footer>
+  <a class="item" href="#" onclick="window.open('https://www.creataniumblockchain.com/', '_blank', 'location=yes'); return false;">
+    <ion-grid no-margin no-padding style="width: 100%;" align-items-center>
+      <ion-row>
+        <ion-col no-margin no-padding>
+          <div class="footer-text" float-right text-uppercase align-self-center>Powered by &nbsp;</div>
+        </ion-col>
+        <ion-col no-margin no-padding>
+          <img src="../../assets/creatanium-2.png" style="height:35px;" float-left/> </ion-col>
+      </ion-row>
+    </ion-grid>
+  </a>
+</ion-footer>
 
 

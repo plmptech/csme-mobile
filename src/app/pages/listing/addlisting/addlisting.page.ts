@@ -73,9 +73,9 @@ export class AddlistingPage implements OnInit {
         });
   }
 
-  getCities() {
-    this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
-  }
+  // getCities() {
+  //   this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
+  // }
 
   getIndustries() {
     this.http.get(this.env.API_URL + 'list/industries')
@@ -83,8 +83,6 @@ export class AddlistingPage implements OnInit {
           this.industries = res.industries;
         });
   }
-
-
 
   goBack() {
     this.navCtrl.navigateBack('/profile-menu');
@@ -98,7 +96,7 @@ export class AddlistingPage implements OnInit {
       observableImages.subscribe((image) => {
         images.push(image);
         // console.log(images);
-        console.log(images[0].compressedImage.imageDataUrl);
+        // console.log(images[0].compressedImage.imageDataUrl);
         this.photo = images[0].compressedImage.imageDataUrl;
 
       }, (error) => {
@@ -167,8 +165,9 @@ export class AddlistingPage implements OnInit {
       }).then((ress) => {
         ress.present();
 
-        this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, this.selectedCity,
-            form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow, form.value.description, this.photo,
+        this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, // this.selectedCity,
+            form.value.selectedCity, form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow,
+            form.value.description, this.photo,
             localStorage.getItem('token')).subscribe((res: any) => {
           if (res.status !== 'error') {
             console.log(res);

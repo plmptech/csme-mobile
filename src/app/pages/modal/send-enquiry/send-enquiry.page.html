@@ -10,26 +10,31 @@
 </ion-header>
 
 <ion-content color="medium">
-  <ion-grid >
-    <ion-row >
-        <ion-item-group padding>
-          <ion-item>
-            <ion-text >Subject:</ion-text>
-            <ion-input readonly name="subject" readonly ngModel>&nbsp;&nbsp;&nbsp;Interest in Business Listing</ion-input>
-          </ion-item>
+  <form #form="ngForm" (ngSubmit)="sendEnquiry(form)" method="post">
+  <ion-grid>
+    <ion-row padding no-margin>
+      <!--<ion-item no-padding >-->
 
-          <ion-item>
-            <ion-textarea [ngModel]="message" name="message" maxlength="500" rows="15">
-              <ion-text>Message</ion-text>
-            </ion-textarea>
-          </ion-item>
-        </ion-item-group>
+        <ion-textarea name="msg" ngModel maxlength="500" rows="10" style="width: 100%">
+          <ion-text><strong>Message</strong></ion-text>
+        </ion-textarea>
+
+      <!--</ion-item>-->
+        <!--<ion-item-group >-->
+          <!--&lt;!&ndash;<ion-item>&ndash;&gt;-->
+            <!--&lt;!&ndash;<ion-text >Subject:</ion-text>&ndash;&gt;-->
+            <!--&lt;!&ndash;<ion-input readonly name="subject" readonly ngModel>&nbsp;&nbsp;&nbsp;Interest in Business Listing</ion-input>&ndash;&gt;-->
+          <!--&lt;!&ndash;</ion-item>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<br>&ndash;&gt;-->
+           <!---->
+        <!--</ion-item-group>-->
 
 
     </ion-row>
   </ion-grid>
+  <ion-footer><ion-button type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button></ion-footer>
+  </form>
 </ion-content>
-
-<ion-footer><ion-button type="submit" no-margin no-padding expand="full" color="primary" (click)="sendEnquiry()">Submit</ion-button></ion-footer>
 
 

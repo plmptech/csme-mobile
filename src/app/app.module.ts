@@ -5,7 +5,6 @@ import {RouteReuseStrategy} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '../../node_modules/@ionic-native/status-bar';
-
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
@@ -24,9 +23,9 @@ import {EditlistingPageModule} from './pages/listing/editlisting/editlisting.mod
 import { Camera } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import {ImageCompressService, ResizeOptions} from 'ng2-image-compress';
-import {SendEnquiryPage} from './pages/modal/send-enquiry/send-enquiry.page';
 import {SendEnquiryPageModule} from './pages/modal/send-enquiry/send-enquiry.module';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TermsConditionsPageModule} from './pages/modal/terms-conditions/terms-conditions.module';
 
 
 @NgModule({
@@ -48,6 +47,9 @@ import {FormBuilder} from '@angular/forms';
         ListingDetailPageModule,
         SendEnquiryPageModule,
         EditlistingPageModule,
+        TermsConditionsPageModule,
+        // ReactiveFormsModule,
+        // FormsModule,
     ],
     providers: [
         // StatusBar,

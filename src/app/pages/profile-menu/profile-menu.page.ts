@@ -8,6 +8,8 @@ import { AlertService } from '../../services/alert.service';
 import { Observable } from 'rxjs';
 import {EditlistingPage} from '../listing/editlisting/editlisting.page';
 import {DomSanitizer} from '@angular/platform-browser';
+import {SendEnquiryPage} from '../modal/send-enquiry/send-enquiry.page';
+import {TermsConditionsPage} from '../modal/terms-conditions/terms-conditions.page';
 
 function ionViewDidLoad() {
 
@@ -106,6 +108,13 @@ export class ProfileMenuPage implements OnInit {
                 this.alertService.presentToast(error.text);
             });
 
+    }
+
+    async viewTerms() {
+        const modal = await this.modalCtrl.create({
+            component: TermsConditionsPage,
+        });
+        return await modal.present();
     }
 
     getOwnListing() {

@@ -3,6 +3,8 @@ import {LoadingController, ModalController, NavController, NavParams} from '@ion
 import {HttpClient} from '@angular/common/http';
 import {AlertService} from '../../../services/alert.service';
 import {AuthService} from '../../../services/auth.service';
+import {EnvService} from '../../../services/env.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-send-enquiry',
@@ -10,8 +12,9 @@ import {AuthService} from '../../../services/auth.service';
   styleUrls: ['./send-enquiry.page.scss'],
 })
 export class SendEnquiryPage implements OnInit {
-  message: string;
+  msg: string;
   listingId: any;
+  enquirymessage: any;
 
   constructor(
       private navCtrl: NavController,
@@ -20,11 +23,12 @@ export class SendEnquiryPage implements OnInit {
       private modalCtrl: ModalController,
       private alertService: AlertService,
       private authService: AuthService,
-      private navParams: NavParams
+      private navParams: NavParams,
+      private env: EnvService,
   ) { }
 
   ngOnInit() {
-    this.message = 'Hi there, I am interested in your business listing.';
+    // this.enquirymessage = this.getEnquiryMsg();
     // this message needs to retrieve from api
     this.listingId = this.navParams.data.listingId;
   }
@@ -33,7 +37,14 @@ export class SendEnquiryPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  sendEnquiry() {
+  // getEnquiryMsg() {
+  //   return this.http.get(this.env.API_URL + 'setting?token=' + localStorage.getItem('token'))
+  //       .subscribe((res: any) => {
+  //         console.log(res.s.enquiryMessage);
+  //         this.message = res.s.enquiryMessage;
+  //   });
+  // }
+  sendEnquiry(form: NgForm) {
       this.loadingCtrl.create({
         message: 'Submitting enquiry',
         duration: 3000,
@@ -41,16 +52,18 @@ export class SendEnquiryPage implements OnInit {
       }).then((res) => {
         res.present();
 
-        this.authService.sendEmail(this.message, this.listingId, localStorage.getItem('token')).subscribe((ress: any) => {
-          if (ress.status !== 'error') {
+        console.log(form.value.msg);
+        this.authService.sendEmail(form.value.msg, this.listingId, localStorage.getItem('token')).subscribe((ress: any) => {
+          if (ress.status === 'ok') {
             console.log(ress);
             this.loadingCtrl.dismiss();
-            // this.alertService.presentToast(ress.message);
+            this.modalCtrl.dismiss();
+            this.alertService.presentToast('Enquiry sent!');
 
           } else {
             this.loadingCtrl.dismiss();
             this.modalCtrl.dismiss();
-            // this.alertService.presentToast(ress.message);
+            this.alertService.presentToast('Unable to send enquiry, please contact admin.');
           }
         });
       });
