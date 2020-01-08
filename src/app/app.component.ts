@@ -12,6 +12,8 @@ import {AlertService} from './services/alert.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  public isLoggedIn = false;
+
   public appPages = [
     {
       title: 'Business Listing',

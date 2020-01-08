@@ -17,8 +17,8 @@ export class EditlistingPage implements OnInit {
   id: string;
   name: string;
   purpose: string;
-  industries: any;
-  countries: any;
+  industries: any = [];
+  countries: any = [];
   city: string;
   description: string;
   revenue: number;
@@ -79,19 +79,25 @@ export class EditlistingPage implements OnInit {
 
 
   getCountries() {
-    this.http.get(this.env.API_URL + 'list/countries')
+    this.http.get(this.env.API_URL + '/countries')
         .subscribe((res: any) => {
           console.log(res);
-          this.listOfCountryAndCity = res.countries;
-          this.countries = Object.keys(res.countries);
+          for (let i = 0; i < res.totalCount; i++) {
+            this.countries.push(res.countries[i].name);
+          }
+          console.log(this.countries);
         });
-
   }
 
   getIndustries() {
-    this.http.get(this.env.API_URL + 'list/industries')
+    this.http.get(this.env.API_URL + '/industries')
         .subscribe((res: any) => {
-          this.industries = res.industries;
+          console.log(res);
+          console.log(res.totalCount);
+          for (let x = 0; x < res.totalCount; x++) {
+            this.industries.push(res.industries[x].name);
+          }
+          console.log(this.industries);
         });
   }
 

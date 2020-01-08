@@ -12,10 +12,6 @@ import { NavController } from '@ionic/angular';
 export class AuthService {
     private allListings: Promise<any>;
     isLoggedIn = false;
-    listOfListing: any[] = [];
-    currentPageNo: number;
-    lastPageNo: number;
-    totalNoPages: number;
     id: string;
     // token: any;
     private userInfo: Subscription;
@@ -102,15 +98,15 @@ export class AuthService {
     }
 
     async getUserInfo() {
+        console.log('running get user info');
         this.http.get<User>(this.env.API_URL + 'user/info?token=' + localStorage.getItem('token'))
             .subscribe(user => {
                 if (user.status !== 'error') {
                     this.storage.set('currentUser', user);
-                    this.isLoggedIn = true;
+                    this.storage.set('isLoggedIn', true);
                     console.log(user);
                 } else {
                     this.clearStoredInfo();
-                    this.isLoggedIn = false;
                     console.log(user);
                 }
 

@@ -67,4 +67,21 @@ p{
   padding: 0px 10px 10px;
   color: #383a3e;
   font-family: 'Rubik';
+  line-height: 1.3em;
+}
+
+ion-card-subtitle{
+  line-height: 1.0em;
+}
+
+#header-content {
+  bottom: 0;
+  left: 15px;
+  right: 15px;
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+ion-button {
+  margin-top: 5%;
 }

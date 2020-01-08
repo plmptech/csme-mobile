@@ -12,7 +12,7 @@
 }
 
 .welcome-card{
-  height: 170px;
+  height: 165px;
 }
 
 .container-title {
@@ -20,12 +20,19 @@
 }
 
 .img-style{
-  height:85px;
+  height:90px;
   width: 100%;
   object-fit: cover;
 }
 
 .container--subtitle{
   margin-top: 20px;
+}
 
+.ion-card-text{
+  margin: 5%;
+}
+
+ion-button{
+  font-size: 10pt;
 }

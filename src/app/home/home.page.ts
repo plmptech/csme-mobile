@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadingController, MenuController, ModalController, NavController} from '@ionic/angular';
+import {IonSlides, LoadingController, MenuController, ModalController, NavController} from '@ionic/angular';
 import {AuthService} from '../services/auth.service';
 import {SearchFilterPage} from '../pages/modal/search-filter/search-filter.page';
 import {HttpClient} from '@angular/common/http';
@@ -33,6 +33,18 @@ export class HomePage implements OnInit {
     res: string;
     user: any;
     listings: any;
+    type: any;
+    showLoadMore = false;
+    showLoadMoreText = true;
+    showSpinner = false;
+    tempPrice: any;
+    lowerPricee: any;
+    upperPricee: any;
+
+    slideOptions = {
+        initialSlide: 0,
+        speed: 400,
+    };
 
     constructor(public navCtrl: NavController,
                 public modalCtrl: ModalController,
@@ -45,7 +57,7 @@ export class HomePage implements OnInit {
     ) {
         this.currentPage = 1;
         this.lastPage = 1;
-        this.perPage = 3;
+        this.perPage = 4;
         this.country = '';
         this.city = '';
         this.askingPrice = '';
@@ -65,7 +77,12 @@ export class HomePage implements OnInit {
 
         if (this.listings !== null) {
             this.loadingCtrl.dismiss();
+            this.showLoadMore = false;
         }
+    }
+
+    slidesDidLoad(slides: IonSlides) {
+        slides.startAutoplay();
     }
 
     ionViewWillEnter() {
@@ -78,6 +95,7 @@ export class HomePage implements OnInit {
 
     // fresh listing
     async getListing() {
+        console.log('getting listing');
         let url = this.env.API_URL + 'listings/search?page=' + this.currentPage + '&perPage=' + this.perPage;
         if (this.searchKey) {
             url += '&name=' + this.searchKey;
@@ -87,6 +105,10 @@ export class HomePage implements OnInit {
         }
         if (this.country) {
             url += '&country=' + this.country;
+        }
+        console.log(this.type);
+        if (this.type) {
+            url += '&type=' + this.type;
         }
         if (this.city) {
             url += '&city=' + this.city;
@@ -101,6 +123,7 @@ export class HomePage implements OnInit {
                 this.lastPage = data.lastPage;
                 this.perPage = data.perPage;
                 this.totalCount = data.totalCount;
+                console.log(this.totalCount);
                 (data.listings).forEach(item => {
                     console.log(item);
                     if (item.photo.data.length !== 0) {
@@ -110,6 +133,13 @@ export class HomePage implements OnInit {
                         item.photo = '/assets/shapes.svg';
                     }
                     this.allListing.push(item);
+                    this.showLoadMore = true;
+                    if (data.currentPage === data.lastPage) {
+                        this.showLoadMore = false;
+                    }
+
+                    this.showLoadMoreText = true;
+                    this.showSpinner = false;
                 });
             })
             .catch(err => {
@@ -133,11 +163,23 @@ export class HomePage implements OnInit {
     async refreshListings(event) {
         this.currentPage = 1;
         this.allListing = [];
-        await this.getListing();
+        const loading = this.loadingCtrl.create({
+            message: 'Refresh listings',
+            duration: 2000,
+            spinner: 'circles'
+        }).then(async (res) => {
+            res.present();
+
+            await this.getListing();
+        });
         event.target.complete();
     }
 
     async loadNextPage(event) {
+        this.showLoadMoreText = false;
+        this.showSpinner = true;
+        console.log('loading next page');
+        console.log(this.lastPage, this.currentPage);
         if (this.lastPage - this.currentPage > 0) {
             this.currentPage = this.currentPage + 1;
             await this.getListing();
@@ -147,16 +189,26 @@ export class HomePage implements OnInit {
     }
 
     async searchFilter() {
+        this.tempPrice = this.askingPrice.split(',');
         const modal = await this.modalCtrl.create({
-            component: SearchFilterPage
+            component: SearchFilterPage,
+            componentProps: {
+              country: this.country, industry: this.industry, type: this.type, priceLow: this.lowerPricee, priceHigh: this.upperPricee,
+                sortBy: this.sort
+            }
         });
         modal.present();
 
         await modal.onDidDismiss().then((res) => {
             this.country = res.data.country;
-            this.city = res.data.city;
+            this.sort = res.data.sortBy;
+            // this.city = res.data.city;
             this.industry = res.data.industry;
+            this.type = res.data.type;
             this.askingPrice = res.data.lowerPrice + ',' + res.data.upperPrice;
+            this.showLoadMore = false;
+            this.lowerPricee = res.data.lowerPrice;
+            this.upperPricee = res.data.upperPricee;
             this.getFilteredListings();
         });
     }
@@ -177,4 +229,7 @@ export class HomePage implements OnInit {
         });
         return await modal.present();
     }
+
+    
+
 }

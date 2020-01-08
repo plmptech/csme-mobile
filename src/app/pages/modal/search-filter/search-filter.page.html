@@ -16,47 +16,43 @@
   <form #form="ngForm" (ngSubmit)="applyChanges()" method="post">
     <ion-item>
       <ion-text >Industry</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectedIndustry" name="selectIndustry">
+      <ion-select slot="end" class="ion-select-style"[(ngModel)]="selectedIndustry" name="selectIndustry" [selectedText]="selectedIndustry">
+          <ion-select-option value="">All</ion-select-option>
         <ion-select-option *ngFor="let item of industries">{{item}}</ion-select-option>
       </ion-select>
 
     </ion-item>
 
     <ion-item>
-      <ion-text >Country</ion-text>
-      <ion-select slot="end" [(ngModel)]="selectedCountry" name="selectCountry" > <!--(ionChange)="getCities()">-->
-        <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
+      <ion-text>Country</ion-text>
+      <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCountry" name="selectCountry" [selectedText]="selectedCountry"> <!--(ionChange)="getCities()">-->
+          <ion-select-option value="">All</ion-select-option>
+          <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <!--<ion-item>-->
-      <!--<ion-text>City</ion-text>-->
-      <!--<ion-select slot="end" [(ngModel)]="selectedCity" name="selectedCity">-->
-        <!--<ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>-->
-      <!--</ion-select>-->
-    <!--</ion-item>-->
-
-        <!--<ion-item>-->
-        <!--<ion-label class="no-margin-bottom" stacked>-->
-        <!--<ion-text color="dark" class="fw500">Radius:</ion-text>-->
-        <!--</ion-label>-->
-        <!--<ion-range min="1" max="50" step="1" value="1" class="no-padding-top" [(ngModel)]="radiusmiles">-->
-        <!--<ion-label slot="start"><ion-text color="primary"> {{radiusmiles}} Mile(s)</ion-text></ion-label>-->
-        <!--</ion-range>-->
-        <!--</ion-item>-->
+      <ion-item>
+          <ion-text >Type of User</ion-text>
+          <ion-select slot="end" [(ngModel)]="type" name="type" >
+              <ion-select-option value="">All</ion-select-option>
+              <ion-select-option value="premium">Business User</ion-select-option>
+              <ion-select-option value="basic">Consumer</ion-select-option>
+          </ion-select>
+      </ion-item>
 
     <ion-item>
       <ion-text >Sort by</ion-text>
-      <ion-select slot="end" [(ngModel)]="sortBy" name="sortBy">
+      <ion-select slot="end" [(ngModel)]="sortBy" name="sortBy" [selectedText]="sortBy">
         <ion-select-option>Recently Listed</ion-select-option>
-        <ion-select-option>Selling Price(Low to High)</ion-select-option>
-        <ion-select-option>Selling Price(High to Low)</ion-select-option>
-        <ion-select-option>Revenue(Low to High)</ion-select-option>
-        <ion-select-option>Revenue(High to Low)</ion-select-option>
-        <ion-select-option>Profit(Low to High)</ion-select-option>
-        <ion-select-option>Profit(High to Low)</ion-select-option>
+        <ion-select-option>Selling Price (Low to High)</ion-select-option>
+        <ion-select-option>Selling Price (High to Low)</ion-select-option>
+        <ion-select-option>Revenue (Low to High)</ion-select-option>
+        <ion-select-option>Revenue (High to Low)</ion-select-option>
+        <ion-select-option>Profit (Low to High)</ion-select-option>
+        <ion-select-option>Profit (High to Low)</ion-select-option>
       </ion-select>
     </ion-item>
+
 
     <ion-item color-="secondary">
       <ion-label>

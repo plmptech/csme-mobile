@@ -1,3 +1,4 @@
+<script src="../../assets/js/swiper.min.js"></script>
 <ion-header class="toolbar-color" no-border>
   <div class="ion-padding-header">
     <ion-toolbar color="primary"  no-margin>
@@ -17,10 +18,14 @@
   </div>
 </ion-header>
 
-
-
 <ion-content color="medium">
-  <img src='../../assets/banner.jpg' alt="" style="width: 100%;"/>
+  <!--<img src='../../assets/banner-one.jpg' alt="" style="width: 100%; height: 20%;"/>-->
+
+  <ion-slides style="height: fit-content" pager [options]="slideOptions" #slider (ionSlidesDidLoad)="slidesDidLoad(slider)">
+    <ion-slide><img src='../../assets/banner-one.jpg' alt="" style="width: 100%; height: 20%;"/></ion-slide>
+    <ion-slide><img src='../../assets/banner-two.jpg' alt="" style="width: 100%; height: 20%;"/></ion-slide>
+    <ion-slide><img src='../../assets/banner-three.jpg' alt="" style="width: 100%; height: 20%;"/></ion-slide>
+  </ion-slides>
 
   <div margin>
   <!--<div class="ion-padding">-->
@@ -54,15 +59,19 @@
       </ion-row>
     </ion-grid>
 
-      <ion-infinite-scroll threshold="100px" color="dark"  (ionInfinite)="loadNextPage($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" color="dark" loadingText="Loading more data...">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+
+
+      <!--<ion-infinite-scroll threshold="100px" color="dark"  (ionInfinite)="loadNextPage($event)">-->
+        <!--<ion-infinite-scroll-content loadingSpinner="bubbles" color="dark" loadingText="Loading more data...">-->
+        <!--</ion-infinite-scroll-content>-->
+      <!--</ion-infinite-scroll>-->
 
 
   </div>
 
 <!--Creatanium blockchain-->
+  <div id="header-content"><ion-button type="submit" expand="block" color="tertiary" *ngIf="showLoadMore" (click)="loadNextPage()"> <ion-spinner name="crescent" *ngIf="showSpinner"></ion-spinner> <div id="loadMoreText" *ngIf="showLoadMoreText">Load more</div> </ion-button></div>
+
 </ion-content>
 
 <ion-footer>

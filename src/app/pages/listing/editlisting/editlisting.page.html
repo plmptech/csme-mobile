@@ -17,12 +17,12 @@
             <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
                 <ion-item-group padding>
                     <ion-item>
-                        <div text-uppercase padding-bottom>Basic Information</div>
+                        <div text-uppercase padding-bottom style="font-weight: bolder">Basic Information</div>
                     </ion-item>
 
                     <ion-item>
                         <ion-text>Type:</ion-text>
-                        <ion-input readonly name="type" float-right style="font-weight: bolder"> &nbsp;&nbsp;Business For Sale</ion-input>
+                        <ion-input readonly name="type" float-right> &nbsp;&nbsp;Business For Sale</ion-input>
                     </ion-item>
 
                     <ion-textarea hidden [ngModel]="id" name="id"></ion-textarea>
@@ -37,8 +37,10 @@
                         <!---->
                         <!--</ion-textarea>-->
                         <ion-text>Industry&nbsp; &nbsp;</ion-text>
-                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedIndustry" name="selectedIndustry" [selectedText]="selectedIndustry" [value]="selectedIndustry">
-                            <ion-select-option *ngFor="let item of industries" >{{item}}</ion-select-option>
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedIndustry"
+                                    name="selectedIndustry" [selectedText]="selectedIndustry"
+                                    [value]="selectedIndustry">
+                            <ion-select-option *ngFor="let item of industries">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
@@ -46,9 +48,11 @@
                         <!--<ion-textarea name="country" [ngModel]="country">-->
                         <!--<ion-text>Country&nbsp; &nbsp;</ion-text>-->
                         <!--</ion-textarea>-->
-                        <ion-text >Country</ion-text>
-                        <ion-select class="ion-select-style"  slot="end" [(ngModel)]="selectedCountry" name="selectedCountry" [selectedText]="selectedCountry" [value]="selectedCountry"> <!--(ionChange)="getCities()"-->
-                            <ion-select-option *ngFor="let item of countries" >{{item}}</ion-select-option>
+                        <ion-text>Country</ion-text>
+                        <ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCountry"
+                                    name="selectedCountry" [selectedText]="selectedCountry" [value]="selectedCountry">
+                            <!--(ionChange)="getCities()"-->
+                            <ion-select-option *ngFor="let item of countries">{{item}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 
@@ -58,7 +62,7 @@
                         <!--</ion-textarea>-->
                         <!--<ion-text>City</ion-text>-->
                         <!--<ion-select class="ion-select-style" slot="end" [(ngModel)]="selectedCity" name="selectedCity" value="selectedCity">-->
-                            <!--<ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>-->
+                        <!--<ion-select-option *ngFor="let item of cities">{{item}}</ion-select-option>-->
                         <!--</ion-select>-->
 
                         <ion-input type="text" name="selectedCity" [ngModel]="selectedCity">
@@ -82,7 +86,9 @@
 
                 </ion-item-group>
                 <ion-item-group padding>
-                    <div text-uppercase padding-bottom style="font-weight: bolder">Sale Information</div>
+                    <ion-item>
+                        <div text-uppercase padding-bottom style="font-weight: bolder">Sale Information</div>
+                    </ion-item>
                     <ion-item>
                         <ion-text>Asking Price &nbsp; &nbsp;</ion-text>
                         <ion-input type="tel" name="askingPrice" [ngModel]="askingPrice" min="100"
@@ -107,11 +113,12 @@
                         <!--<ion-text id="profile_image">Photo &nbsp; &nbsp;</ion-text>-->
                         <!--<ion-input type="file" accept="image/*" (change)="upload($event)" name="photo"-->
                         <!--[ngModel]="photo"></ion-input>-->
-                        <ion-input input-style="box" id="inputImage" type="file" accept="image/*" (change)="onUpload($event)"></ion-input>
+                        <ion-input input-style="box" id="inputImage" type="file" accept="image/*"
+                                   (change)="onUpload($event)"></ion-input>
                     </ion-item>
 
                 </ion-item-group>
-                <ion-button type="submit" no-margin no-padding expand="full" color="primary">Save Changes</ion-button>
+                <ion-button type="submit" no-margin no-padding position="bottom" expand="full" color="primary">Save Changes</ion-button>
             </form>
         </ion-row>
     </ion-grid>

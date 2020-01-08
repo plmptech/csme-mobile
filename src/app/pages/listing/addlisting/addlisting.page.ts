@@ -17,17 +17,13 @@ import {IImage, ImageCompressService} from 'ng2-image-compress';
 })
 export class AddlistingPage implements OnInit {
   private purpose: string;
-  // private userTypeResult: boolean;
-  // private userType: string;
   private photo: any;
   // group: FormGroup;
-  industries: any;
-  countries: any;
-  cities: any;
+  industries: any = [];
+  countries: any = [];
   selectedIndustry: string;
   selectedCountry: string;
   selectedCity: string;
-  private listOfCountryAndCity: any;
   processedImages: any = [];
   private ngForm: FormGroup;
 
@@ -65,22 +61,25 @@ export class AddlistingPage implements OnInit {
   }
 
   getCountries() {
-    this.http.get(this.env.API_URL + 'list/countries')
+    this.http.get(this.env.API_URL + '/countries')
         .subscribe((res: any) => {
           console.log(res);
-          this.listOfCountryAndCity = res.countries;
-          this.countries = Object.keys(res.countries);
+          for (let i = 0; i < res.totalCount; i++) {
+              this.countries.push(res.countries[i].name);
+          }
+          console.log(this.countries);
         });
   }
 
-  // getCities() {
-  //   this.cities = (this.listOfCountryAndCity)[this.selectedCountry];
-  // }
-
   getIndustries() {
-    this.http.get(this.env.API_URL + 'list/industries')
+    this.http.get(this.env.API_URL + '/industries')
         .subscribe((res: any) => {
-          this.industries = res.industries;
+          console.log(res);
+          console.log(res.totalCount);
+          for (let x = 0; x < res.totalCount; x++) {
+              this.industries.push(res.industries[x].name);
+          }
+          console.log(this.industries);
         });
   }
 
@@ -135,23 +134,11 @@ export class AddlistingPage implements OnInit {
   //     }
   //   });
   // }
-  showAutoHideLoader() {
-    this.loadingCtrl.create({
-      message: 'Submitting listing',
-      duration: 3000,
-      spinner: 'circles'
-    }).then((res) => {
-      res.present();
 
-      res.onDidDismiss().then((dis) => {
-      });
-    });
-  }
 
   createListing(form: NgForm) {
     const validatedField = this.validateForm(form);
     this.purpose = 'Business For Sale';
-
 
     if (!validatedField) {
       this.alertService.presentToast('Please fill in the all fields');
@@ -165,7 +152,7 @@ export class AddlistingPage implements OnInit {
       }).then((ress) => {
         ress.present();
 
-        this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry, // this.selectedCity,
+        this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry,
             form.value.selectedCity, form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow,
             form.value.description, this.photo,
             localStorage.getItem('token')).subscribe((res: any) => {

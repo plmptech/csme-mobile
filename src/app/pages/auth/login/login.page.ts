@@ -4,6 +4,7 @@ import { FormGroup, NgForm, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { AlertService } from '../../../services/alert.service';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -23,12 +24,21 @@ export class LoginPage implements OnInit {
         private alertService: AlertService,
         private navCtrl: NavController,
         public toastCtrl: ToastController,
-        public loadingCtrl: LoadingController
+        public loadingCtrl: LoadingController,
+        private storage: Storage
     ) {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('token')) { this.navCtrl.navigateBack('/profile-menu'); }
+        // if (localStorage.getItem('token')) { this.navCtrl.navigateBack('/profile-menu'); }
+        if (localStorage.getItem('token') !== null) {
+            console.log(localStorage.getItem('token'));
+            this.authService.getUserInfo();
+            this.storage.get('isLoggedIn').then(res => {
+                console.log(res);
+                this.navCtrl.navigateBack('/home');
+            });
+        }
     }
 
     goHome() {

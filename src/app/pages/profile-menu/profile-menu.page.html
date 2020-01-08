@@ -69,12 +69,12 @@
           <!--</a>-->
 
           <!--<ion-label *ngIf="user.type == 'basic'" > | </ion-label>-->
-          <a tappable  style="padding-right:5px;">
-            <ion-text>
-              <!--<strong>Logout</strong>-->
-              <ion-button size="small" color="tertiary" (click)="viewTerms()">Legal</ion-button>
-            </ion-text>
-          </a>
+          <!--<a tappable  style="padding-right:5px;">-->
+            <!--<ion-text>-->
+              <!--&lt;!&ndash;<strong>Logout</strong>&ndash;&gt;-->
+              <!--<ion-button size="small" color="tertiary" (click)="viewTerms()">Legal</ion-button>-->
+            <!--</ion-text>-->
+          <!--</a>-->
 
           <a tappable (click)="logout()">
             <ion-text>
@@ -101,16 +101,15 @@
 
     <div class="container--subtitle">
       <ion-text align-items-center padding *ngIf="emptyListing">No listing available</ion-text>
-
     </div>
     <ion-card *ngFor="let item of (ownListings | async)" class="welcome-card" color="tertiary" (click)="openListingDetail(item)">
       <img [src]="item.photo" alt="" class="img-style" />
-      <ion-card-header>
+      <div class="ion-card-text">
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.name}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.category}}</ion-card-subtitle>
         <ion-card-subtitle>{{item.country }} | {{item.city}}</ion-card-subtitle>
-      </ion-card-header>
+      </div>
     </ion-card>
 
 
