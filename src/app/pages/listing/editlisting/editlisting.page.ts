@@ -1,5 +1,13 @@
 import {Component, OnInit, SecurityContext} from '@angular/core';
-import {AlertController, LoadingController, ModalController, NavController, NavParams, PopoverController} from '@ionic/angular';
+import {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+  PopoverController
+} from '@ionic/angular';
 import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
 import {AuthService} from '../../../services/auth.service';
@@ -7,6 +15,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../../../services/env.service';
 import {IImage, ImageCompressService} from 'ng2-image-compress';
+import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 
 @Component({
   selector: 'app-editlisting',
@@ -44,7 +53,9 @@ export class EditlistingPage implements OnInit {
               private http: HttpClient,
               private env: EnvService,
               public loadingCtrl: LoadingController,
-              public popoverCtrl: PopoverController) {
+              public popoverCtrl: PopoverController,
+              private camera: Camera,
+              private  actionSheetController: ActionSheetController) {
 
 
   }
@@ -220,6 +231,7 @@ export class EditlistingPage implements OnInit {
   //     }
   //   });
   // }
+  // old method
   onUpload(fileInput: any) {
     // let fileList: FileList;
     const images: Array<IImage> = [];
@@ -263,6 +275,66 @@ export class EditlistingPage implements OnInit {
       return true;
     }
     return false;
+  }
+
+  async selectImage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select Image source',
+      buttons: [{
+        text: 'Load from Library',
+        handler: () => {
+          this.chooseImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.takePhoto(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+  takePhoto(s) {
+    const options: CameraOptions = {
+      quality: 100,
+      targetWidth: 300,
+      targetHeight: 300,
+      sourceType: s,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.photo = 'data:image/jpeg;base64,' + imageData;
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  chooseImage(x) {
+    const options: CameraOptions = {
+      quality: 100,
+      targetWidth: 300,
+      targetHeight: 300,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: x,
+      saveToPhotoAlbum: false
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.photo = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      console.log(err);
+    });
+
   }
 
 }

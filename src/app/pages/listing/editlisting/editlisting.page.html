@@ -112,13 +112,15 @@
                         <img [src]="photo" height="70" width="70">
                     </ion-item>
 
-                    <ion-item>
-                        <!--<ion-text id="profile_image">Photo &nbsp; &nbsp;</ion-text>-->
-                        <!--<ion-input type="file" accept="image/*" (change)="upload($event)" name="photo"-->
-                        <!--[ngModel]="photo"></ion-input>-->
-                        <ion-input input-style="box" id="inputImage" type="file" accept="image/*"
-                                   (change)="onUpload($event)"></ion-input>
-                    </ion-item>
+                    <!--<ion-item>-->
+                        <!--&lt;!&ndash;<ion-text id="profile_image">Photo &nbsp; &nbsp;</ion-text>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<ion-input type="file" accept="image/*" (change)="upload($event)" name="photo"&ndash;&gt;-->
+                        <!--&lt;!&ndash;[ngModel]="photo"></ion-input>&ndash;&gt;-->
+                        <!--<ion-input input-style="box" id="inputImage" type="file" accept="image/*"-->
+                                   <!--(change)="onUpload($event)"></ion-input>-->
+                    <!--</ion-item>-->
+                    <ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>
+
 
                 </ion-item-group>
                 <!--<ion-button type="submit" no-margin no-padding position="bottom" expand="full" color="primary">Save Changes</ion-button>-->

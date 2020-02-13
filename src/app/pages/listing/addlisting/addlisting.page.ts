@@ -9,6 +9,7 @@ import {EnvService} from '../../../services/env.service';
 import {map} from 'rxjs/operators';
 import {IImage, ImageCompressService} from 'ng2-image-compress';
 import {error} from 'selenium-webdriver';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class AddlistingPage implements OnInit {
   selectedCity: string;
   processedImages: any = [];
   private ngForm: FormGroup;
+  private file: any;
 
   constructor(
       private navCtrl: NavController,
@@ -89,8 +91,11 @@ export class AddlistingPage implements OnInit {
     this.navCtrl.navigateBack('/profile-menu');
   }
 
+  // old way of uploading and resizing, dont remove
   onUpload(fileInput: any) {
     // let fileList: FileList;
+    this.alertService.presentToast(fileInput.target.files);
+    console.log(fileInput.target.files);
     const images: Array<IImage> = [];
 
     ImageCompressService.filesToCompressedImageSource(fileInput.target.files).then(observableImages => {
@@ -184,47 +189,39 @@ export class AddlistingPage implements OnInit {
   }
 
 
-  pickImage(s) {
+  takePhoto(s) {
     const options: CameraOptions = {
       quality: 100,
-      targetWidth: 400,
-      targetHeight: 400,
+      targetWidth: 300,
+      targetHeight: 300,
       sourceType: s,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      const base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.photo.push(base64Image);
-      this.photo.reverse();
-
-
-
+      this.photo = 'data:image/jpeg;base64,' + imageData;
     }, err => {
       console.log(err);
     });
-      // If it's base64 (DATA_URL):
-      //   const base64Image = 'data:image/jpeg;base64,' + imageData;
-      //   this.photo = base64Image;
-      //   this.alertService.presentToast(this.photo);
-      // }, (err) => {
-      //   // Handle error
-      // });
+  }
 
-      // this.imageResizer.resize({
-      //   uri: imageData,
-      //   quality: 60,
-      //   width: 1280,
-      //   height: 1280
-      // }).then(uri => {
-      //       const base64Image = 'data:image/jpeg;base64,' + imageData;
-      //       this.photo = base64Image;
-      //       this.alertService.presentToast(this.photo);
-      // });
+  chooseImage(x) {
+    const options: CameraOptions = {
+      quality: 100,
+      targetWidth: 300,
+      targetHeight: 300,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: x,
+      saveToPhotoAlbum: false
+    };
 
+    this.camera.getPicture(options).then((imageData) => {
+        this.photo = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      console.log(err);
+    });
 
   }
 
@@ -234,13 +231,13 @@ export class AddlistingPage implements OnInit {
       buttons: [{
         text: 'Load from Library',
         handler: () => {
-          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          this.chooseImage(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
       },
       {
         text: 'Use Camera',
         handler: () => {
-          this.pickImage(this.camera.PictureSourceType.CAMERA);
+          this.takePhoto(this.camera.PictureSourceType.CAMERA);
         }
       },
       {

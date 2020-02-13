@@ -87,12 +87,10 @@
                         <img [src]="photo" height="70" width="70">
                     </ion-item>
 
-                    <ion-item>
-                        <!--<ion-text class="label-bold" id="profile_image">Photo&nbsp; &nbsp;</ion-text>-->
-                        <ion-input input-style="box" id="inputImage" type="file" accept="image/*" (change)="onUpload($event)"></ion-input>
-                        <!--<input id="inputImage" type="file" accept="image/*" (change)="onUpload($event)" multiple/>-->
-
-                    </ion-item>
+                    <!--old way of doing, dont remove!-->
+                    <!--<ion-item>-->
+                        <!--<ion-input input-style="box" id="inputImage" type="file" accept="image/*" (change)="onUpload($event)"></ion-input>-->
+                    <!--</ion-item>-->
 
                     <!-- TODO: we will use this -->
                     <ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>
