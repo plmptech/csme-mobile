@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content color="medium">
-  <form #form="ngForm" (ngSubmit)="sendEnquiry(form)" method="post">
+  <form #form="ngForm"  method="post">
   <ion-grid>
     <ion-row padding no-margin>
         <ion-textarea name="msg" ngModel maxlength="500" rows="8" style="width: 100%">
@@ -18,8 +18,11 @@
         </ion-textarea>
     </ion-row>
   </ion-grid>
-  <ion-button position="bottom" type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button>
+  <!--<ion-button position="bottom" type="submit" no-margin no-padding expand="full" color="primary">Submit</ion-button>-->
   </form>
 </ion-content>
+<ion-footer>
+  <ion-button position="bottom" type="submit" no-margin no-padding expand="full" color="primary" (click)="sendEnquiry(form)">Submit</ion-button>
+</ion-footer>
 
 

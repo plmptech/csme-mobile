@@ -68,8 +68,9 @@
 
 
   </div>
-
+  <p text-center *ngIf="showNoRecordsFound">No records found</p>
 <!--Creatanium blockchain-->
+
   <div id="header-content"><ion-button type="submit" expand="block" color="tertiary" *ngIf="showLoadMore" (click)="loadNextPage()"> <ion-spinner name="crescent" *ngIf="showSpinner"></ion-spinner> <div id="loadMoreText" *ngIf="showLoadMoreText">Load more</div> </ion-button></div>
 
 </ion-content>

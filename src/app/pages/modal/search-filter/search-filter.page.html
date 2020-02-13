@@ -65,10 +65,11 @@
     </ion-item>
     <br>
     <ion-button type="submit" expand="block" color="primary">Filter Results</ion-button>
+      <br>
+      <ion-button type="submit" expand="block" color="secondary" (click)="resetFilter()">Reset</ion-button>
   </form>
 
 </ion-content>
-
 
 <script>
     const dualRange = document.querySelector('#dual-range');

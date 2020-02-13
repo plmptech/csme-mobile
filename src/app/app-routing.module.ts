@@ -28,7 +28,9 @@ const routes: Routes = [
   { path: 'listing-detail', loadChildren: './pages/modal/listing-detail/listing-detail.module#ListingDetailPageModule' },
   { path: 'editlisting', loadChildren: './pages/listing/editlisting/editlisting.module#EditlistingPageModule' },
   { path: 'send-enquiry', loadChildren: './pages/modal/send-enquiry/send-enquiry.module#SendEnquiryPageModule' },
-  { path: 'terms-conditions', loadChildren: './pages/modal/terms-conditions/terms-conditions.module#TermsConditionsPageModule' }
+  { path: 'terms-conditions', loadChildren: './pages/modal/terms-conditions/terms-conditions.module#TermsConditionsPageModule' },
+  { path: 'forgotpassword', loadChildren: './pages/auth/forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
+  { path: 'changepassword', loadChildren: './pages/auth/changepassword/changepassword.module#ChangepasswordPageModule' },
 ];
 
 @NgModule({

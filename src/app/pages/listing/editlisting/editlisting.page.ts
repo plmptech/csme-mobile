@@ -1,5 +1,5 @@
 import {Component, OnInit, SecurityContext} from '@angular/core';
-import {LoadingController, ModalController, NavController, NavParams} from '@ionic/angular';
+import {AlertController, LoadingController, ModalController, NavController, NavParams, PopoverController} from '@ionic/angular';
 import {NgForm} from '@angular/forms';
 import {AlertService} from '../../../services/alert.service';
 import {AuthService} from '../../../services/auth.service';
@@ -40,9 +40,11 @@ export class EditlistingPage implements OnInit {
               private sanitizer: DomSanitizer,
               private authService: AuthService,
               private alertService: AlertService,
+              private alertCtrl: AlertController,
               private http: HttpClient,
               private env: EnvService,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              public popoverCtrl: PopoverController) {
 
 
   }
@@ -77,6 +79,47 @@ export class EditlistingPage implements OnInit {
 
   }
 
+  async showConfirmAlert() {
+    const alert =  await this.alertCtrl.create({
+      message: 'Do you wish to delete this listing?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Yes clicked');
+            const text = 'listing/' + this.id;
+            this.http.delete<ReturnMessage>(this.env.API_URL + text + '?token=' + localStorage.getItem('token')).subscribe(
+                response => {
+                  console.log(response);
+                  if (response.status === 'ok') {
+                    this.alertService.presentToast('Listing has been deleted');
+                    this.modalCtrl.dismiss();
+                    this.navCtrl.navigateRoot('/profile-menu');
+                    location.reload();
+
+                  } else {
+                    this.alertService.presentToast(response.status);
+                  }
+
+                },
+                error => {
+                  console.log(error.text());
+                  this.alertService.presentToast(error.text);
+                });
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   getCountries() {
     this.http.get(this.env.API_URL + '/countries')

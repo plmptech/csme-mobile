@@ -40,6 +40,7 @@ export class HomePage implements OnInit {
     tempPrice: any;
     lowerPricee: any;
     upperPricee: any;
+    showNoRecordsFound = false;
 
     slideOptions = {
         initialSlide: 0,
@@ -78,6 +79,8 @@ export class HomePage implements OnInit {
         if (this.listings !== null) {
             this.loadingCtrl.dismiss();
             this.showLoadMore = false;
+        } else {
+            this.showNoRecordsFound = true;
         }
     }
 
@@ -141,6 +144,11 @@ export class HomePage implements OnInit {
                     this.showLoadMoreText = true;
                     this.showSpinner = false;
                 });
+                if (this.totalCount === 0) {
+                    this.showNoRecordsFound = true;
+                } else {
+                    this.showNoRecordsFound = false;
+                }
             })
             .catch(err => {
                 console.log('Error', err);
@@ -208,7 +216,7 @@ export class HomePage implements OnInit {
             this.askingPrice = res.data.lowerPrice + ',' + res.data.upperPrice;
             this.showLoadMore = false;
             this.lowerPricee = res.data.lowerPrice;
-            this.upperPricee = res.data.upperPricee;
+            this.upperPricee = res.data.upperPrice;
             this.getFilteredListings();
         });
     }

@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../../../services/env.service';
 import {map} from 'rxjs/operators';
 import {IImage, ImageCompressService} from 'ng2-image-compress';
+import {error} from 'selenium-webdriver';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class AddlistingPage implements OnInit {
       private http: HttpClient,
       private env: EnvService,
       public loadingCtrl: LoadingController,
-      public formBuilder: FormBuilder
+      public formBuilder: FormBuilder,
+      private actionSheetController: ActionSheetController
   ) {
 
     // this.ngForm = new FormGroup({
@@ -182,61 +184,71 @@ export class AddlistingPage implements OnInit {
   }
 
 
-  // pickImage(s) {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     targetWidth: 400,
-  //     targetHeight: 400,
-  //     sourceType: s,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE
-  //   };
-  //
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     // imageData is either a base64 encoded string or a file URI
-  //     // If it's base64 (DATA_URL):
-  //     //   const base64Image = 'data:image/jpeg;base64,' + imageData;
-  //     //   this.photo = base64Image;
-  //     //   this.alertService.presentToast(this.photo);
-  //     // }, (err) => {
-  //     //   // Handle error
-  //     // });
-  //
-  //     // this.imageResizer.resize({
-  //     //   uri: imageData,
-  //     //   quality: 60,
-  //     //   width: 1280,
-  //     //   height: 1280
-  //     // }).then(uri => {
-  //     //       const base64Image = 'data:image/jpeg;base64,' + imageData;
-  //     //       this.photo = base64Image;
-  //     //       this.alertService.presentToast(this.photo);
-  //     // });
-  //   });
-  // }
+  pickImage(s) {
+    const options: CameraOptions = {
+      quality: 100,
+      targetWidth: 400,
+      targetHeight: 400,
+      sourceType: s,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
 
-  // async selectImage() {
-  //   const actionSheet = await this.actionSheetController.create({
-  //     header: 'Select Image source',
-  //     buttons: [{
-  //       text: 'Load from Library',
-  //       handler: () => {
-  //         this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
-  //       }
-  //     },
-  //     {
-  //       text: 'Use Camera',
-  //       handler: () => {
-  //         this.pickImage(this.camera.PictureSourceType.CAMERA);
-  //       }
-  //     },
-  //     {
-  //       text: 'Cancel',
-  //       role: 'cancel'
-  //     }
-  //     ]
-  //   });
-  //   await actionSheet.present();
-  // }
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.photo.push(base64Image);
+      this.photo.reverse();
+
+
+
+    }, err => {
+      console.log(err);
+    });
+      // If it's base64 (DATA_URL):
+      //   const base64Image = 'data:image/jpeg;base64,' + imageData;
+      //   this.photo = base64Image;
+      //   this.alertService.presentToast(this.photo);
+      // }, (err) => {
+      //   // Handle error
+      // });
+
+      // this.imageResizer.resize({
+      //   uri: imageData,
+      //   quality: 60,
+      //   width: 1280,
+      //   height: 1280
+      // }).then(uri => {
+      //       const base64Image = 'data:image/jpeg;base64,' + imageData;
+      //       this.photo = base64Image;
+      //       this.alertService.presentToast(this.photo);
+      // });
+
+
+  }
+
+  async selectImage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select Image source',
+      buttons: [{
+        text: 'Load from Library',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+      {
+        text: 'Use Camera',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.CAMERA);
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
 }

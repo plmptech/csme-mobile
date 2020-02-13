@@ -45,6 +45,10 @@ export class LoginPage implements OnInit {
         this.navCtrl.navigateBack('/home');
     }
 
+    forgotPassword() {
+        this.navCtrl.navigateBack('/forgotpassword');
+    }
+
     async registerModal() {
         this.navCtrl.navigateForward('/register');
     }
@@ -67,11 +71,17 @@ export class LoginPage implements OnInit {
             this.showAutoHideLoader();
             this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                 if (res.status !== 'error') {
-                    localStorage.setItem('token', res.token);
-                    this.alertService.presentToast('Logged In');
-                    this.authService.isLoggedIn = true;
-                    this.navCtrl.navigateRoot('/home');
-
+                    if (res.message === 'Password change required') {
+                        this.alertService.presentToast('Logged In');
+                        this.navCtrl.navigateRoot('/changepassword');
+                        localStorage.setItem('token', res.token);
+                        this.authService.isLoggedIn = true;
+                    }  else {
+                        localStorage.setItem('token', res.token);
+                        this.alertService.presentToast('Logged In');
+                        this.authService.isLoggedIn = true;
+                        this.navCtrl.navigateRoot('/home');
+                    }
                 } else {
                     this.alertService.presentToast('Invalid login. Please try again.');
                 }

@@ -1,10 +1,13 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title text-uppercase>Edit Listing</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons slot="start">
             <ion-button (click)="closeModal()" icon-only>
-                <ion-icon ios="ios-close" md="md-close"></ion-icon>
+                <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
             </ion-button>
+        </ion-buttons>
+        <ion-title text-uppercase>Edit Listing</ion-title>
+        <ion-buttons slot="end" (click)="showConfirmAlert()">
+            <ion-icon ios="ios-trash" md="md-trash" style="margin-right:10px;"></ion-icon>
         </ion-buttons>
     </ion-toolbar>
 
@@ -14,7 +17,7 @@
 <ion-content color="medium">
     <ion-grid style="height:100%;">
         <ion-row style="height: 100%; width: 100%">
-            <form #form="ngForm" (ngSubmit)="saveListing(form)" method="post">
+            <form #form="ngForm" method="post"> <!--(ngSubmit)="saveListing(form)" -->
                 <ion-item-group padding>
                     <ion-item>
                         <div text-uppercase padding-bottom style="font-weight: bolder">Basic Information</div>
@@ -118,10 +121,13 @@
                     </ion-item>
 
                 </ion-item-group>
-                <ion-button type="submit" no-margin no-padding position="bottom" expand="full" color="primary">Save Changes</ion-button>
+                <!--<ion-button type="submit" no-margin no-padding position="bottom" expand="full" color="primary">Save Changes</ion-button>-->
             </form>
         </ion-row>
     </ion-grid>
 </ion-content>
+<ion-footer>
+    <ion-button type="submit" no-margin no-padding position="bottom" expand="full" color="primary" (click)="saveListing(form)">Save Changes</ion-button>
+</ion-footer>
 
 

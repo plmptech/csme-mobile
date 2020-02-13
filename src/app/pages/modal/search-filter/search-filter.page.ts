@@ -50,6 +50,14 @@ export class SearchFilterPage implements OnInit {
 
   }
 
+  resetFilter() {
+    this.sortBy = '';
+    this.minmaxprice.lower = 1;
+    this.minmaxprice.upper = 10000000;
+    this.selectedCountry = '';
+    this.selectedIndustry = '';
+  }
+
   getCountries() {
     this.http.get(this.env.API_URL + '/countries')
         .subscribe((res: any) => {

@@ -1,7 +1,8 @@
 {
   "name": "csme-mobile-x",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

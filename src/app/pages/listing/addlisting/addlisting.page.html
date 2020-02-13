@@ -14,7 +14,7 @@
 <ion-content color="medium">
     <ion-grid >
         <ion-row >
-            <form #form="ngForm" (ngSubmit)="createListing(form)" method="post">
+            <form #form="ngForm"  method="post"> <!--(ngSubmit)="createListing(form)"-->
                 <ion-item-group padding>
                     <ion-item>
                         <div text-uppercase padding-bottom style="font-weight: bolder">Basic Information</div>
@@ -94,14 +94,18 @@
 
                     </ion-item>
 
-                    <!--<ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>-->
+                    <!-- TODO: we will use this -->
+                    <ion-button type="file" expand="block" accept="image/*" color="primary" (click)="selectImage($event)">Choose Image</ion-button>
 
                 </ion-item-group>
-                <ion-button type="submit" position="bottom" no-margin no-padding expand="full" color="primary">Submit</ion-button>
+
             </form>
         </ion-row>
     </ion-grid>
 
 
 </ion-content>
+<ion-footer>
+    <ion-button type="submit" position="bottom" no-margin no-padding expand="full" color="primary" (click)="createListing(form)">Submit</ion-button>
+</ion-footer>
 

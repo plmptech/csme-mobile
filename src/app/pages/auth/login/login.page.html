@@ -20,12 +20,14 @@
                     <ion-input ngModel type="password" name="password" placeholder="Password"
                                color="secondary"></ion-input>
                 </ion-item>
-                <p text-center (click)="goHome()">Skip for Now</p>
+
+                <br>
                 <ion-button type="submit" expand="block" color="primary">Login</ion-button>
 
-
-                <p text-center>New User?</p>
+                <br>
                 <ion-button expand="block" color="danger" (click)="registerModal()">Register</ion-button>
+                <p text-center (click)="forgotPassword()">Forgot Password?</p>
+                <p text-center (click)="goHome()">Skip for Now</p>
             </form>
         </ion-row>
     </ion-grid>
