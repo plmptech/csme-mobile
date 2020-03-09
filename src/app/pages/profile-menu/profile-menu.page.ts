@@ -124,6 +124,7 @@ export class ProfileMenuPage implements OnInit {
                 if (data.user.listings.length === 0) {
                     this.emptyListing = true;
                 }
+                console.log(data.user.listings);
                 for (const l of data.user.listings) {
                     if (l.photo.data.length !== 0) {
                         const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(l.photo.data)));

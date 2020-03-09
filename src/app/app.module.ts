@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy, NavParams} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '../../node_modules/@ionic-native/status-bar';
 import {AppComponent} from './app.component';
@@ -26,6 +26,7 @@ import {ImageCompressService, ResizeOptions} from 'ng2-image-compress';
 import {SendEnquiryPageModule} from './pages/modal/send-enquiry/send-enquiry.module';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TermsConditionsPageModule} from './pages/modal/terms-conditions/terms-conditions.module';
+import {ImageResizer, ImageResizerOptions} from '@ionic-native/image-resizer';
 
 
 @NgModule({

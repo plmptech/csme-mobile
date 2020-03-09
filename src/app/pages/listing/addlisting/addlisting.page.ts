@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {ActionSheetController, LoadingController, NavController} from '@ionic/angular';
+import {ActionSheetController, LoadingController, NavController, NavParams, Platform  } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import { AlertService } from '../../../services/alert.service';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import {HttpClient} from '@angular/common/http';
 import {EnvService} from '../../../services/env.service';
-import {map} from 'rxjs/operators';
 import {IImage, ImageCompressService} from 'ng2-image-compress';
-import {error} from 'selenium-webdriver';
 import {DomSanitizer} from '@angular/platform-browser';
-
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 
 @Component({
   selector: 'app-addlisting',
   templateUrl: './addlisting.page.html',
-  styleUrls: ['./addlisting.page.scss'],
+  styleUrls: ['./addlisting.page.scss']
 })
 export class AddlistingPage implements OnInit {
   private purpose: string;
@@ -29,6 +27,13 @@ export class AddlistingPage implements OnInit {
   processedImages: any = [];
   private ngForm: FormGroup;
   private file: any;
+  private destination: any;
+  pickedImage: any;
+  imageurlfrompicker: any;
+  imageurlfromresizer: any;
+  private tempPhoto: any;
+  smallSize: any;
+  private bigSize: any;
 
   constructor(
       private navCtrl: NavController,
@@ -40,7 +45,10 @@ export class AddlistingPage implements OnInit {
       private env: EnvService,
       public loadingCtrl: LoadingController,
       public formBuilder: FormBuilder,
-      private actionSheetController: ActionSheetController
+      private sanitizer: DomSanitizer,
+      private actionSheetController: ActionSheetController,
+      public platform: Platform,
+      // private imageResizer: ImageResizer,
   ) {
 
     // this.ngForm = new FormGroup({
@@ -59,7 +67,6 @@ export class AddlistingPage implements OnInit {
   }
 
   async ngOnInit() {
-
     this.getIndustries();
     this.getCountries();
   }
@@ -105,7 +112,7 @@ export class AddlistingPage implements OnInit {
         // console.log(images[0].compressedImage.imageDataUrl);
         this.photo = images[0].compressedImage.imageDataUrl;
 
-      }, (error) => {
+      }, (err) => {
         console.log('Error while converting');
       }, () => {
         this.processedImages = images;
@@ -151,10 +158,9 @@ export class AddlistingPage implements OnInit {
       this.alertService.presentToast('Please fill in the all fields');
     } else {
 
-
       this.loadingCtrl.create({
         message: 'Submitting enquiry',
-        duration: 3000,
+        duration: 5000,
         spinner: 'circles'
       }).then((ress) => {
         ress.present();
@@ -192,33 +198,99 @@ export class AddlistingPage implements OnInit {
   takePhoto(s) {
     const options: CameraOptions = {
       quality: 100,
-      targetWidth: 300,
-      targetHeight: 300,
+      // targetWidth: 100,
+      // targetHeight: 100,
       sourceType: s,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.photo = 'data:image/jpeg;base64,' + imageData;
-    }, err => {
-      console.log(err);
-    });
+      console.log('here');
+      console.log(imageData);
+      // this.photo = 'data:image/jpeg;base64,' + imageData;
+      this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
+      this.bigSize = this.getImageSize(this.tempPhoto);
+      this.generateFromImage(this.tempPhoto, 200, 200, 0.5, data => {
+           this.photo = data;
+           this.smallSize = this.getImageSize(this.photo);
+      });
+
+      });
   }
 
+  generateFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    const canvas: any = document.createElement('canvas');
+    const image = new Image();
+
+    image.onload = () => {
+      let width = image.width;
+      let height = image.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      ctx.drawImage(image, 0, 0, width, height);
+
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+
+      callback(dataUrl);
+    }
+    image.src = img;
+  }
+
+  getImageSize(dataUrl) {
+    const head = 'data:image/jpeg;base64,';
+    return ((dataUrl.length - head.length) * 3 / 4 / (1024 * 1024)).toFixed(4);
+  }
+
+  getPlatform() {
+    if (this.platform.is('ios')) {
+      this.destination = this.camera.DestinationType.NATIVE_URI;
+    } else if (this.platform.is('android')) {
+      this.destination = this.camera.DestinationType.FILE_URI;
+    } else {
+      this.destination = this.camera.DestinationType.DATA_URL;
+    }
+  }
   chooseImage(x) {
     const options: CameraOptions = {
       quality: 100,
-      targetWidth: 300,
-      targetHeight: 300,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      // targetWidth: 100,
+      // targetHeight: 100,
+      destinationType: this.camera.DestinationType.DATA_URL, // this.camera.DestinationType.DATA_URL,
       sourceType: x,
-      saveToPhotoAlbum: false
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: false,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options).then((imageData) => {
-        this.photo = 'data:image/jpeg;base64,' + imageData;
+      console.log(imageData);
+      // this.photo = 'data:image/jpeg;base64,' + imageData;
+      this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
+      this.bigSize = this.getImageSize(this.tempPhoto);
+      this.generateFromImage(this.tempPhoto, 200, 200, 0.5, data => {
+        this.photo = data;
+        this.smallSize = this.getImageSize(this.photo);
+      });
+
     }, (err) => {
       console.log(err);
     });
