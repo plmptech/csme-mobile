@@ -23,6 +23,10 @@ export class ChangepasswordPage implements OnInit {
   ngOnInit() {
   }
 
+  goHome() {
+      this.navCtrl.navigateForward('/home');
+  }
+
   changePassword(form: NgForm) {
     console.log(localStorage.getItem('token'), form.value.password, form.value.confirmpassword);
     const result = this.checkPassword(form.value.password, form.value.confirmpassword);

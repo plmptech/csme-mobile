@@ -71,6 +71,8 @@ export class LoginPage implements OnInit {
             this.showAutoHideLoader();
             this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                 if (res.status !== 'error') {
+
+                    this.loadingCtrl.dismiss();
                     if (res.message === 'Password change required') {
                         this.alertService.presentToast('Logged In');
                         this.navCtrl.navigateRoot('/changepassword');

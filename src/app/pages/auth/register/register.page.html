@@ -9,9 +9,9 @@
 <!--</ion-toolbar>-->
 <!--</ion-header>-->
 <ion-content class="background">
-    <ion-button icon-only (click)="goHome()" fill="clear">
-        <ion-icon name="arrow-dropleft"></ion-icon>&nbsp;Back
-    </ion-button>
+    <!--<ion-button icon-only (click)="goHome()" fill="clear">-->
+        <!--<ion-icon name="arrow-dropleft"></ion-icon>&nbsp;Back-->
+    <!--</ion-button>-->
 
     <ion-grid style="height:90%;">
         <ion-row justify-content-center align-items-center style="height: 100%; width: 100%">
@@ -48,9 +48,13 @@
                 <br>
 
                 <ion-button type="submit" expand="block" color="primary">Register</ion-button>
+                <br>
+                <ion-button expand="block" color="danger" (click)="goHome()">Back</ion-button>
             </form>
+
         </ion-row>
     </ion-grid>
+
 </ion-content>
 <!--<ion-footer><div class="footer-text" text-center>Powered by Creatanium blockchain</div></ion-footer>-->
 

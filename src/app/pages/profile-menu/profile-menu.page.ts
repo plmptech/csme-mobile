@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ModalController, NavController} from '@ionic/angular';
+import {LoadingController, ModalController, NavController} from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
@@ -34,7 +34,8 @@ export class ProfileMenuPage implements OnInit {
         private env: EnvService,
         private alertService: AlertService,
         private modalCtrl: ModalController,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        private loadingCtrl: LoadingController) {
         this.appPages = [
             {
                 title: 'MY LISTING',
@@ -118,6 +119,14 @@ export class ProfileMenuPage implements OnInit {
     }
 
     getOwnListing() {
+        const loading = this.loadingCtrl.create({
+            message: 'Retrieve listings',
+            duration: 3000,
+            spinner: 'circles'
+        }).then((res) => {
+            res.present();
+        });
+
         this.ownListings = this.http.get(this.env.API_URL + 'user/listing?token=' + localStorage.getItem('token'))
             .toPromise()
             .then((data: any) => {
@@ -134,6 +143,7 @@ export class ProfileMenuPage implements OnInit {
                     }
                 }
                 console.log(data.user.listings);
+                this.loadingCtrl.dismiss();
                 return data.user.listings;
             })
             .catch(err => {

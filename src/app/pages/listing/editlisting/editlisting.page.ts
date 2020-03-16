@@ -43,6 +43,10 @@ export class EditlistingPage implements OnInit {
   private listOfCountryAndCity: any;
   processedImages: any = [];
 
+  private tempPhoto: any;
+  smallSize: any;
+  private bigSize: any;
+
   constructor(private modalCtrl: ModalController,
               private navParams: NavParams,
               private navCtrl: NavController,
@@ -196,10 +200,12 @@ export class EditlistingPage implements OnInit {
         if (res.status !== 'error') {
           console.log(res);
           this.modalCtrl.dismiss();
+          this.loadingCtrl.dismiss();
           this.alertService.presentToast(res.message);
           window.location.reload();
         } else {
           this.modalCtrl.dismiss();
+          this.loadingCtrl.dismiss();
           this.alertService.presentToast(res.message);
         }
       });
@@ -304,37 +310,93 @@ export class EditlistingPage implements OnInit {
   takePhoto(s) {
     const options: CameraOptions = {
       quality: 100,
-      targetWidth: 300,
-      targetHeight: 300,
+      // targetWidth: 100,
+      // targetHeight: 100,
       sourceType: s,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.photo = 'data:image/jpeg;base64,' + imageData;
-    }, err => {
-      console.log(err);
+      console.log('here');
+      console.log(imageData);
+      // this.photo = 'data:image/jpeg;base64,' + imageData;
+      this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
+      this.bigSize = this.getImageSize(this.tempPhoto);
+      this.generateFromImage(this.tempPhoto, 200, 200, 1.0, data => {
+        this.photo = data;
+        this.smallSize = this.getImageSize(this.photo);
+      });
+
     });
   }
 
   chooseImage(x) {
     const options: CameraOptions = {
       quality: 100,
-      targetWidth: 300,
-      targetHeight: 300,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      // targetWidth: 100,
+      // targetHeight: 100,
+      destinationType: this.camera.DestinationType.DATA_URL, // this.camera.DestinationType.DATA_URL,
       sourceType: x,
-      saveToPhotoAlbum: false
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: false,
+      correctOrientation: true,
     };
 
     this.camera.getPicture(options).then((imageData) => {
-      this.photo = 'data:image/jpeg;base64,' + imageData;
+      console.log(imageData);
+      this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
+      // this.bigSize = this.getImageSize(this.tempPhoto);
+      this.generateFromImage(this.tempPhoto, 200, 200, 1.0, data => {
+        this.photo = data;
+        // this.smallSize = this.getImageSize(this.photo);
+      });
+
     }, (err) => {
       console.log(err);
     });
 
+  }
+
+  generateFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    const canvas: any = document.createElement('canvas');
+    const image = new Image();
+
+    image.onload = () => {
+      let width = image.width;
+      let height = image.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      ctx.drawImage(image, 0, 0, width, height);
+
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+
+      callback(dataUrl);
+    }
+    image.src = img;
+  }
+
+  getImageSize(dataUrl) {
+    const head = 'data:image/jpeg;base64,';
+    return ((dataUrl.length - head.length) * 3 / 4 / (1024 * 1024)).toFixed(4);
   }
 
 }

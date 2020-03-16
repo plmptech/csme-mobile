@@ -164,23 +164,22 @@ export class AddlistingPage implements OnInit {
         spinner: 'circles'
       }).then((ress) => {
         ress.present();
+      });
 
-        this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry,
-            form.value.selectedCity, form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow,
-            form.value.description, this.photo,
-            localStorage.getItem('token')).subscribe((res: any) => {
-          if (res.status !== 'error') {
-            console.log(res);
-            this.navCtrl.pop();
-            this.loadingCtrl.dismiss();
-            this.alertService.presentToast(res.message);
-          } else {
-            this.loadingCtrl.dismiss();
-            this.navCtrl.pop();
-            this.alertService.presentToast(res.message);
-          }
-        });
-
+      this.authService.createListingNow(form.value.name, this.purpose, this.selectedIndustry, this.selectedCountry,
+          form.value.selectedCity, form.value.age, form.value.askingPrice, form.value.revenue, form.value.cashFlow,
+          form.value.description, this.photo,
+          localStorage.getItem('token')).subscribe((res: any) => {
+        if (res.status !== 'error') {
+          console.log(res);
+          this.navCtrl.pop();
+          this.loadingCtrl.dismiss();
+          this.alertService.presentToast(res.message);
+        } else {
+          this.navCtrl.pop();
+          this.loadingCtrl.dismiss();
+          this.alertService.presentToast(res.message);
+        }
       });
     }
   }
@@ -202,8 +201,8 @@ export class AddlistingPage implements OnInit {
       // targetHeight: 100,
       sourceType: s,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
     };
 
@@ -213,7 +212,7 @@ export class AddlistingPage implements OnInit {
       // this.photo = 'data:image/jpeg;base64,' + imageData;
       this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
       this.bigSize = this.getImageSize(this.tempPhoto);
-      this.generateFromImage(this.tempPhoto, 200, 200, 0.5, data => {
+      this.generateFromImage(this.tempPhoto, 200, 200, 1.0, data => {
            this.photo = data;
            this.smallSize = this.getImageSize(this.photo);
       });
@@ -275,8 +274,8 @@ export class AddlistingPage implements OnInit {
       // targetHeight: 100,
       destinationType: this.camera.DestinationType.DATA_URL, // this.camera.DestinationType.DATA_URL,
       sourceType: x,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
       saveToPhotoAlbum: false,
       correctOrientation: true,
     };
@@ -286,7 +285,7 @@ export class AddlistingPage implements OnInit {
       // this.photo = 'data:image/jpeg;base64,' + imageData;
       this.tempPhoto = 'data:image/jpeg;base64,' + imageData;
       this.bigSize = this.getImageSize(this.tempPhoto);
-      this.generateFromImage(this.tempPhoto, 200, 200, 0.5, data => {
+      this.generateFromImage(this.tempPhoto, 200, 200, 1.0, data => {
         this.photo = data;
         this.smallSize = this.getImageSize(this.photo);
       });

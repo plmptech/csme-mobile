@@ -44,6 +44,7 @@ export class ForgotpasswordPage implements OnInit {
     this.http.put<ReturnMessage>(this.env.API_URL + 'user/forget', body).subscribe(
           response => {
             console.log(response);
+            this.loadingCtrl.dismiss();
             if (response.status === 'ok') {
               this.alertService.presentToast('An email will be sent to you shortly.');
               this.navCtrl.navigateBack('/login');

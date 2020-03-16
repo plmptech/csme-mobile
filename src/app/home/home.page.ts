@@ -66,15 +66,7 @@ export class HomePage implements OnInit {
     }
 
     async ngOnInit() {
-        const loading = this.loadingCtrl.create({
-            message: 'Retrieve listings',
-            duration: 3000,
-            spinner: 'circles'
-        }).then((res) => {
-            res.present();
-
-            this.listings = this.getListing();
-        });
+        this.listings = this.getListing();
 
         if (this.listings !== null) {
             this.loadingCtrl.dismiss();
@@ -98,6 +90,17 @@ export class HomePage implements OnInit {
 
     // fresh listing
     async getListing() {
+
+        this.showLoadMore = false;
+        this.showLoadMoreText = false;
+        const loading = this.loadingCtrl.create({
+            message: 'Retrieve listings',
+            duration: 3000,
+            spinner: 'circles'
+        }).then((res) => {
+            res.present();
+        });
+
         console.log('getting listing');
         let url = this.env.API_URL + 'listings/search?page=' + this.currentPage + '&perPage=' + this.perPage;
         if (this.searchKey) {
@@ -143,6 +146,7 @@ export class HomePage implements OnInit {
 
                     this.showLoadMoreText = true;
                     this.showSpinner = false;
+                    this.loadingCtrl.dismiss();
                 });
                 if (this.totalCount === 0) {
                     this.showNoRecordsFound = true;
@@ -171,14 +175,15 @@ export class HomePage implements OnInit {
     async refreshListings(event) {
         this.currentPage = 1;
         this.allListing = [];
-        const loading = this.loadingCtrl.create({
-            message: 'Refresh listings',
-            duration: 2000,
-            spinner: 'circles'
-        }).then(async (res) => {
-            res.present();
 
-            await this.getListing();
+        const loading = this.loadingCtrl.create({
+             message: 'Refresh listings',
+             duration: 3000,
+             spinner: 'circles'
+            }).then(async (res) => {
+             res.present();
+
+             await this.getListing();
         });
         event.target.complete();
     }

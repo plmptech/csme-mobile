@@ -45,27 +45,27 @@ export class SendEnquiryPage implements OnInit {
   //   });
   // }
   sendEnquiry(form: NgForm) {
-      this.loadingCtrl.create({
+    this.loadingCtrl.create({
         message: 'Submitting enquiry',
         duration: 3000,
         spinner: 'circles'
       }).then((res) => {
         res.present();
-
-        console.log(form.value.msg);
-        this.authService.sendEmail(form.value.msg, this.listingId, localStorage.getItem('token')).subscribe((ress: any) => {
-          if (ress.status === 'ok') {
-            console.log(ress);
-            this.loadingCtrl.dismiss();
-            this.modalCtrl.dismiss();
-            this.alertService.presentToast('Enquiry sent!');
-
-          } else {
-            this.loadingCtrl.dismiss();
-            this.modalCtrl.dismiss();
-            this.alertService.presentToast('Unable to send enquiry, please contact admin.');
-          }
-        });
       });
+
+    console.log(form.value.msg);
+    this.authService.sendEmail(form.value.msg, this.listingId, localStorage.getItem('token')).subscribe((ress: any) => {
+      if (ress.status === 'ok') {
+        console.log(ress);
+        this.loadingCtrl.dismiss();
+        this.modalCtrl.dismiss();
+        this.alertService.presentToast('Enquiry sent!');
+
+      } else {
+        this.loadingCtrl.dismiss();
+        this.modalCtrl.dismiss();
+        this.alertService.presentToast('Unable to send enquiry, please contact admin.');
+      }
+    });
     }
 }

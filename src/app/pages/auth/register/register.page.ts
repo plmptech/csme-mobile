@@ -90,6 +90,7 @@ export class RegisterPage implements OnInit {
           this.authService.login(form.value.email, form.value.password).subscribe((res: any) => {
                 if (res.status !== 'error') {
                   localStorage.setItem('token', res.token);
+                  this.loadingCtrl.dismiss();
                   this.alertService.presentToast('Logged In');
                   this.authService.isLoggedIn = true;
                   this.navCtrl.navigateRoot('/home');
