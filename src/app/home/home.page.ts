@@ -69,7 +69,6 @@ export class HomePage implements OnInit {
         this.listings = this.getListing();
 
         if (this.listings !== null) {
-            this.loadingCtrl.dismiss();
             this.showLoadMore = false;
         } else {
             this.showNoRecordsFound = true;
@@ -95,7 +94,7 @@ export class HomePage implements OnInit {
         this.showLoadMoreText = false;
         const loading = this.loadingCtrl.create({
             message: 'Retrieve listings',
-            duration: 3000,
+            // duration: 3000,
             spinner: 'circles'
         }).then((res) => {
             res.present();
@@ -146,11 +145,13 @@ export class HomePage implements OnInit {
 
                     this.showLoadMoreText = true;
                     this.showSpinner = false;
-                    this.loadingCtrl.dismiss();
+
                 });
                 if (this.totalCount === 0) {
+                    this.loadingCtrl.dismiss();
                     this.showNoRecordsFound = true;
                 } else {
+                    this.loadingCtrl.dismiss();
                     this.showNoRecordsFound = false;
                 }
             })
